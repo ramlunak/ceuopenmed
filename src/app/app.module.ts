@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { EnfermedadesComponent } from './component/enfermedades/enfermedades.component';
+import { SintomaDetalleComponent } from './component/sintoma/sintoma-detalle/sintoma-detalle.component';
 
 const routes:Routes = [
   { path: 'enfermedades', component: EnfermedadesComponent },  
@@ -21,7 +22,9 @@ const routes:Routes = [
     AppComponent,
     MenuComponent,
     HeaderComponent,
-    EnfermedadesComponent
+    EnfermedadesComponent,
+    SintomaDetalleComponent,
+    
     
   ],
   imports: [
