@@ -11,9 +11,16 @@ import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { EnfermedadesComponent } from './component/enfermedades/enfermedades.component';
 import { SintomaDetalleComponent } from './component/sintoma/sintoma-detalle/sintoma-detalle.component';
+import { SintomasComponent } from './component/sintoma/sintomas/sintomas.component';
+import { FormSintomaComponent } from './component/form-sintoma/form-sintoma.component';
+import { FormTratamientoComponent } from './component/form-tratamiento/form-tratamiento.component';
+import { FormAnatomiaComponent } from './component/form-anatomia/form-anatomia.component';
+import { SintomaService } from './services/sintoma.service';
+import { ValidatorService } from './services/validator.service';
 
 const routes:Routes = [
   { path: 'enfermedades', component: EnfermedadesComponent },  
+  { path: 'sintomas', component: FormSintomaComponent },  
   { path: '', component: AppComponent }
  ];
 
@@ -24,16 +31,21 @@ const routes:Routes = [
     HeaderComponent,
     EnfermedadesComponent,
     SintomaDetalleComponent,
-    
-    
+    SintomasComponent,
+    FormSintomaComponent,
+    FormTratamientoComponent,
+    FormAnatomiaComponent,
+        
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,   
     RouterModule.forRoot(routes),
     angularMaterial,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ValidatorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

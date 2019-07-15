@@ -1,24 +1,5 @@
-<div class="m10 p60">
-    <form>
-        <table>
-            <tr>
-                <td class="p100">
-                    <mat-form-field class="p100">
-                        <input matInput placeholder="Escriba el síntoma">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button class="m5 green-color" type="button" mat-raised-button >Agregar</button>
 
-                </td>
-            </tr>
-        </table>
-
-    </form>
-
-</div>
-
-<mat-card class="m10 p60">
+<mat-card class="m10">
 
     <table>
         <tr>
@@ -27,16 +8,16 @@
                     <div mat-card-avatar class="img-sintoma"></div>
                     <mat-card-subtitle>
                         <p style="color:black">
-                            The Shiba Inu is the smallest of the s.
+                            {{sintomaDetalle.sintoma}}
                         </p>
 
                     </mat-card-subtitle>
                 </mat-card-header>
             </td>
             <td>
-                <mat-icon class="green-icon">done_all</mat-icon>
-                <mat-icon color="primary">hourglass_full</mat-icon>
-                <mat-icon color="warn">error</mat-icon>
+                <mat-icon *ngIf="!sintomaDetalle.estado" color="primary">hourglass_full</mat-icon>
+                <mat-icon *ngIf="sintomaDetalle.estado && sintomaDetalle.nota" class="green-icon">done_all</mat-icon>
+                <mat-icon *ngIf="sintomaDetalle.estado && !sintomaDetalle.nota" color="warn">cancel</mat-icon>
             </td>
         </tr>
     </table>
@@ -46,32 +27,31 @@
         <hr>
     </div>
     <mat-card-content>
-        <table border="0">
-            <tr>
+        <table border="0" >
+            <tr *ngIf="sintomaDetalle.estado">
                 <td class="text-align-top-right">
                     <mat-icon>school</mat-icon>
                 </td>
                 <td>
                     <mat-card-subtitle>
-                        Dr. Fulano Perez
+                        {{sintomaDetalle.nombre_profesor}}
                     </mat-card-subtitle>
                 </td>
             </tr>
 
-            <tr>
+            <tr *ngIf="sintomaDetalle.comentario && sintomaDetalle.estado">
                 <td class="text-align-top-right">
                     <mat-icon>message</mat-icon>
-
                 </td>
                 <td>
                     <mat-card-subtitle>
-                        Recomendaciones o comentarios.
+                        {{sintomaDetalle.comentario}}
                     </mat-card-subtitle>
                 </td>
             </tr>
-            <tr>
+            <tr *ngIf="!sintomaDetalle.estado">
                 <td colspan="2" class="p100">
-                    <button mat-icon-button color="warn" style="float: right">
+                    <button (click)="deleteClick()" mat-icon-button color="warn" style="float: right">
                         <mat-icon>delete</mat-icon>
                     </button>
 
