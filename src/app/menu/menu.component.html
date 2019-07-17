@@ -1,47 +1,47 @@
-<div class="nav-bottom bg-white">
-  <h3 class="title-menu d-flex d-lg-none">
-    Menu
-    <div class="close-menu"> <i class="flaticon-cross"></i></div>
-  </h3>
-  <div class="container d-flex flex-row">
-    <ul class="nav page-navigation page-navigation-success">
+<!-- Sidebar -->
+<div class="sidebar">
+	<div class="sidebar-wrapper scrollbar scrollbar-inner">
+		<div class="sidebar-content">
 
+			<div class="user" style="color: black">
+				MENU
+			</div>
 
-      <li class="nav-item submenu">
-        <a class="nav-link" routerLink="enfermedades">
-          <i class="link-icon icon-grid"></i>
-          <span class="menu-title">Entidades</span>
-        </a>
-        <div class="navbar-dropdown animated fadeIn">
-          <ul>
+			<ul class="nav nav-primary">
+<!-- 
+				<li class="nav-section">
+					<span class="sidebar-mini-icon">
+						<i class="fa fa-ellipsis-h"></i>
+					</span>
+					<h4 class="text-section">Snippets</h4>
+				</li> -->
 
-            <li>
-              <a routerLink="sintomas">Síntomas</a>
-            </li>
-            <li>
-              <a routerLink="tratamientos">Tratamientos</a>
-            </li>
-            <li>
-              <a routerLink="anatomia">Anatomía</a>
-            </li>
-            <li>
-              <a routerLink="poblacin">Población</a>
-            </li>
+				<li class="nav-item">
+					<a data-toggle="collapse" href="#email-nav">
+					<mat-icon>format_list_bulleted</mat-icon>
+						<p>Administrar</p>
+						<span class="caret"></span>
+					</a>
+					<div class="collapse" id="email-nav">
+						<ul class="nav nav-collapse">						
+							<li >
+								<a routerLink="roles">
+									<span class="sub-item">Roles</span>
+								</a>
+							</li>
+							<li>
+								<a routerLink="sintomas">
+									<span class="sub-item">Tipo de Entidades</span>
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+				</li>
 
-          </ul>
-        </div>
-      </li>
+			</ul>
 
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="enfermedades">
-          <i class="link-icon icon-grid"></i>
-          <span class="menu-title">Enfermedades</span>
-        </a>
-
-      </li>
-
-
-    </ul>
-  </div>
+		</div>
+	</div>
 </div>
+<!-- End Sidebar -->

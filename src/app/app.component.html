@@ -1,17 +1,21 @@
-<div class="wrapper">
-		
-  <div class="main-header" data-background-color="green2">
-    
-    <app-header></app-header>
-   
-    <app-menu></app-menu>
+<div class="wrapper overlay-sidebar">
 
-  </div>
+  <app-header></app-header>
+  <app-menu></app-menu>
 
-  <div class="main-panel container">
+  <div class="main-panel">
     <div class="content">
-       <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
+    
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="copyright ml-auto">
+          Ceouopenmed 2019
+        </div>
+      </div>
+    </footer>
+
   </div>
 
 </div>

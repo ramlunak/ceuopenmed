@@ -17,11 +17,15 @@ import { FormTratamientoComponent } from './component/form-tratamiento/form-trat
 import { FormAnatomiaComponent } from './component/form-anatomia/form-anatomia.component';
 import { SintomaService } from './services/sintoma.service';
 import { ValidatorService } from './services/validator.service';
+import { TipoEntidadComponent } from './component/tipo-entidad/tipo-entidad.component';
+import { EntidadComponent } from './component/entidad/entidad.component';
+import { RolComponent } from './component/rol/rol.component';
 
-const routes:Routes = [
+const routes:Routes = [ 
+  { path: 'roles', component: RolComponent },  
   { path: 'enfermedades', component: EnfermedadesComponent },  
   { path: 'sintomas', component: FormSintomaComponent },  
-  { path: '', component: AppComponent }
+  { path: '', component: EntidadComponent }
  ];
 
 @NgModule({
@@ -35,8 +39,12 @@ const routes:Routes = [
     FormSintomaComponent,
     FormTratamientoComponent,
     FormAnatomiaComponent,
+    TipoEntidadComponent,
+    EntidadComponent,
+    RolComponent,
         
   ],
+  
   imports: [
     BrowserModule,
     BrowserAnimationsModule,   
