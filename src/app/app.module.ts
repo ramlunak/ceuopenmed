@@ -22,9 +22,9 @@ import { EntidadComponent } from './component/entidad/entidad.component';
 import { RolComponent } from './component/rol/rol.component';
 
 const routes:Routes = [ 
-  { path: 'roles', component: RolComponent },  
-  { path: 'enfermedades', component: EnfermedadesComponent },  
-  { path: 'sintomas', component: FormSintomaComponent },  
+  { path: 'RolComponent', component: RolComponent },  
+  { path: 'TipoEntidadComponent', component: TipoEntidadComponent },  
+  { path: 'EntidadComponent', component: EntidadComponent },  
   { path: '', component: EntidadComponent }
  ];
 

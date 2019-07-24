@@ -1,5 +1,5 @@
 export interface Entidad{   
-    id:number,
-    idTipoEntidad:number,
-    nombre:string,   
+    id:number,   
+    nombre:string,
+    nombreEvaluador:string,
 }
