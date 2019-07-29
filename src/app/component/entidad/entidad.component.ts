@@ -13,12 +13,12 @@ import {ValidatorService} from '../../services/validator.service';
 export class EntidadComponent implements OnInit {
 
   Array: Entidad[] = [
-    {id:1,nombre:'Sintoma',nombreEvaluador:'Dr.Fulano Perez M.'},
-    {id:2,nombre:'Enfermedad',nombreEvaluador:'Dr.Fulano Perez M.'},
-    {id:3,nombre:'Poblacion',nombreEvaluador:'Dr.Fulano Perez M.'}
+    {id:1,nombre:'Sintoma',profesor:'Dr. Fulano Perez P'},
+    {id:2,nombre:'Enfermedad',profesor:'Dr. Fulano Perez P'},
+    {id:3,nombre:'Poblacion',profesor:'Dr. Fulano Perez P'}
   ]; 
   //DataTable --
-  displayedColumns: string[] = ['id', 'nombre','nombreEvaluador','commands',];
+  displayedColumns: string[] = ['id', 'nombre','commands',];
   dataSource = new MatTableDataSource<Entidad>(this.Array);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -53,8 +53,7 @@ export class EntidadComponent implements OnInit {
 
       this.Array.push({
         id:1,
-        nombre:this.nombre,
-        nombreEvaluador:this.nombreEvaluador
+        nombre:this.nombre       
       });
       this.dataSource = new MatTableDataSource<Entidad>(this.Array);
       this.dataSource.paginator = this.paginator;

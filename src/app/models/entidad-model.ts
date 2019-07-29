@@ -1,5 +1,9 @@
 export interface Entidad{   
     id:number,   
-    nombre:string,
-    nombreEvaluador:string,
+    nombre:string ,
+    TipoEntidad ?:string,
+    estado ?:boolean,
+    evaluacion ?:boolean,
+    comentario ?:string,
+    profesor ?:string,
 }

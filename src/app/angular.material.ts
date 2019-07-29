@@ -13,7 +13,9 @@ import {
     MatFormFieldModule,
     MatCardModule,
     MatGridListModule,
-    MatDividerModule    
+    MatDividerModule,
+    MatRadioModule,
+    MatCheckboxModule
    
 } from '@angular/material'
 
@@ -31,7 +33,9 @@ import {
         MatTabsModule,
         MatCardModule,
         MatGridListModule,
-        MatDividerModule
+        MatDividerModule,
+        MatRadioModule,
+        MatCheckboxModule
     ],
     exports:[      
         MatTableModule,
@@ -46,7 +50,9 @@ import {
         MatTabsModule,
         MatCardModule,
         MatGridListModule,
-        MatDividerModule
+        MatDividerModule,
+        MatRadioModule,
+        MatCheckboxModule
     ]
 })
 

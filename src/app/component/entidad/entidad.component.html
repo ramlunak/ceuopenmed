@@ -1,149 +1,143 @@
-<!-- TOOL BAR-->
-
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
+<div style="margin: 10px !important">
+<mat-card class="example-card">
+    <mat-card-header>
+      <table>
+        <tr>
+          <td>
+              <div mat-card-avatar class="documento-image"></div>
       
-      <button mat-button (click)="setTransaccionNew()" data-dismiss="modal" data-toggle="modal"
-        data-target="#formularioSintomas">
-        <mat-icon>add</mat-icon>
-        Basic
-      </button>
-  
-      <span class="material-spacer"></span>
-  
-      <mat-form-field id="mat-form-field-search">
-        <input matInput (keyup)="applyFilter($event.target.value)">
-        <mat-placeholder class="placeholder">Search</mat-placeholder>
-      </mat-form-field>
-  
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <!--END TOOL BAR-->
-  
-  <div class="shadow-sm p-3 mb-5 bg-white rounded">
-  
-    <!-- FORMULARIO -->
-    <div class="modal fade" id="formularioSintomas" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Nuevo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="validator.form" class="example-form">
-  
-              <mat-form-field class="example-full-width">
-                <mat-label>Tipo de Entidad</mat-label>
-                <select matNativeControl required>
-                  <option value="volvo">Sintoma</option>
-                  <option value="saab">Enfermedad</option>
-                  <option value="mercedes">Poblacion</option>                  
-                </select>
-              </mat-form-field>
+          </td>
+          <td class="p100">
+             <mat-card-title>Hepatitis</mat-card-title>
+      <mat-card-subtitle>Enfermedad</mat-card-subtitle>
+    
+          </td>
+<td>
+   <table>
+     <tr>
+       <td>
+          <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon">
+              <img width="20" src="../../../assets/img/edit.png">
+             </button>
+            
+       </td>
+       <td>
+          <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon">
+              <img width="20" src="../../../assets/img/Recycle_Bin_Full.png">
+             </button>
+       </td>
+       <td>
+          <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon">
+              <img width="20" src="../../../assets/img/detalle.png">
+             </button>
+       </td>
+     </tr>
+   </table>
+    </td>
 
-              <mat-form-field class="example-full-width">
-                <input matInput type="text" required formControlName="nombre" placeholder="Nombre" [value]="nombre"
-                  (keyup)="nombre = $event.target.value">
-                <mat-error>Este campo es obligatorio</mat-error>
-              </mat-form-field>
-  
-            </form>
-  
-          </div>
-          <div class="modal-footer">
-            <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-  
-            <button [disabled]="validator.form.invalid" *ngIf="transaccionIsNew" (click)="guardarClick()"
-              mat-raised-button color='primary'>Guardar</button>
-            <button [disabled]="validator.form.invalid" *ngIf="!transaccionIsNew" (click)="guardarClick()"
-              data-dismiss="modal" mat-raised-button color='primary'>Guardar</button>
-  
-  
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--END FORMULARIO -->
-  
-  
-    <!-- ELIMINAR -->
-    <div class="modal fade" id="delete_rol" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
-          </div>
-          <div class="modal-footer">
-            <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-            <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
-  
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--END ELIMINAR -->
-  
-    <!-- GRID -->
-    <table mat-table [dataSource]="dataSource">
-  
-  
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-  
-  
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-      </ng-container>
+        </tr>
+      </table>
+    </mat-card-header>
+    <mat-card-content>
 
-      <ng-container matColumnDef="nombreEvaluador">
-        <th mat-header-cell *matHeaderCellDef> Nombre del Evaluador </th>
-        <td mat-cell *matCellDef="let element"><mat-icon >person</mat-icon>{{element.nombreEvaluador}} </td>
-      </ng-container>
-  
-  
-      <ng-container matColumnDef="commands">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let row = index;">
-  
-          <button  mat-icon-button data-toggle="modal" data-target="#delete_rol">
-            <mat-icon >hourglass_full</mat-icon>
-          </button>
+        <mat-divider></mat-divider>
+      <mat-card-header style="margin-top: 15px">
+        <div mat-card-avatar  class="profe-image"></div>
+        <mat-card-title style="font-size: 14px !important">Dr. Fulano Perez P.</mat-card-title>
+        <mat-card-subtitle>
+          Comentario
+            <button mat-icon-button color="warn" aria-label="Example icon-button with a heart icon">
+                <img width="20" src="../../../assets/img/edit.png">
+               </button>
+        </mat-card-subtitle>
+      </mat-card-header>
+       
+    </mat-card-content>
+    <mat-card-actions>       
+        <mat-checkbox  class="m20" [(ngModel)]="Correcto"  [disabled]="Incorrecto"><samp style="color: green">Correcto</samp></mat-checkbox>
+        <mat-checkbox  class="m20" [(ngModel)]="Incorrecto" [disabled]="Correcto"><samp style="color: red">Incorrecto</samp></mat-checkbox>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
-          <button  mat-icon-button data-toggle="modal" data-target="#exampleModalCenter">
-            <mat-icon color='primary'>shuffle</mat-icon>
-          </button>
-  
-          <button  mat-icon-button data-toggle="modal" data-target="#delete_rol">
-            <mat-icon color='green'>edit</mat-icon>
-          </button>
 
-          <button (click)="id = row" mat-icon-button data-toggle="modal" data-target="#delete_rol">
-            <mat-icon color='warn'>delete</mat-icon>
-          </button>
 
-         
+<!-- <div style="margin: 10px !important">
+  <mat-card>
+      <table class="p100" border="0" >
+          <tr>
+            <td>Tipo de Entidad</td>
+            <td>Entidad</td>
+           
+          </tr>
           
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-    <!--END GRID -->
-  
-  </div>
+          <tr>
+            <td>asd</td>
+            <td>
+              <table >
+               
+                <tr>
+                  <td><img width="15" src="../../../assets/img/incorrecto-icono-png-2.png"></td>
+                  <td class="p100">Sintoma</td>
+                  <td >
+                    
+                    <table>
+                      <tr>
+          
+                        <td>
+                            <img class="float-right" width="30" src="../../../assets/img/Edit-01-512.png">
+                       
+                        </td>
+                        <td>
+                            <img class="float-right" width="25" src="../../../assets/img/Recycle_Bin_Full.png">
+                       
+                        </td>
+                        <td>
+                            <img class="float-right" width="25" src="../../../assets/img/detalle.png">
+                       
+                        </td>
+                        
+                      </tr>
+                    </table>
+                  
+                   </td>
+                </tr>
+          
+                <tr>       
+                  <td class="p100" colspan="3" style="border-top:groove 1px;"></td>
+                </tr>
+          
+                <tr>
+                  <td><img width="20" src="../../../assets/img/profe.png"></td>
+                  <td colspan="2" class="p100">Dr. Fulano Perez P.</td>
+                  
+                </tr>
+          
+                <tr>
+                    <td><img width="20" src="../../../assets/img/comentario.png"></td>
+                    <td colspan="2" class="p100">Comentario.</td>
+                    
+                  </tr>
+          
+              </table>
+          
+             <table>
+          <tr>
+            <td>
+              <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button  style="margin-right: 25px" value="1">No evaluar</mat-radio-button>
+                  <mat-radio-button style="margin-right: 25px" value="2">Correcto</mat-radio-button>
+                  <mat-radio-button style="margin: 5px" value="2">Incorrecto</mat-radio-button>
+                </mat-radio-group>
+            </td>
+          </tr>
+             </table>
+          
+            </td>
+            
+          </tr>
+          
+          </table>  
+  </mat-card>
+
+</div> -->
