@@ -1,0 +1,45 @@
+<section id="login" class="mb-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+
+                <mat-card>
+                    <mat-card-content class="text-center">
+
+                        <mat-card-title-group>
+                            <img mat-card-sm-image src="../../../../assets/img/key-icon.png">
+                            <mat-card-title>Acceder</mat-card-title>
+                            <mat-card-subtitle>CeuOpenMed</mat-card-subtitle>
+                        </mat-card-title-group>
+
+                        <form [formGroup]="authService.form" class="ceu-form" (ngSubmit)="loginUser()">
+                            <div>
+                                <mat-form-field class="ceu-full-width">
+                                    <input formControlName="username" matInput name="username" placeholder="Usuario">
+                                    <mat-error>Este campo es requerido.</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="ceu-full-width">
+                                    <input formControlName="password" matInput type="password" name="password"
+                                        placeholder="Contraseña">
+                                    <mat-error>Este campo es requerido.</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <button mat-raised-button color="primary" class="ceu-full-width mb-1"
+                                [disabled]="authService.form.invalid" type="submit">
+                                <mat-icon *ngIf="authService.loading$ | async">
+                                    <mat-spinner diameter="20" color="accent">
+                                    </mat-spinner>
+                                </mat-icon>
+                                Entrar
+                            </button>
+                        </form>
+                        <div class="d-block p-2 bg-light text-muted align-bottom">Copyright © 2019. {{ussername}}</div>
+                    </mat-card-content>
+                </mat-card>
+
+            </div>
+        </div>
+    </div>
+</section>

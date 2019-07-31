@@ -1,21 +1,21 @@
 <div class="wrapper overlay-sidebar">
-
-  <app-header></app-header>
-  <app-menu></app-menu>
-
-  <div class="main-panel">
-    <div class="content">
-      <router-outlet></router-outlet>
+    <div *ngIf="authService.showMenus">
+        <app-header></app-header>
+        <app-menu></app-menu>
     </div>
-    
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="copyright ml-auto">
-          Ceouopenmed 2019
-        </div>
-      </div>
-    </footer>
 
-  </div>
+    <div class="main-panel">
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="copyright ml-auto">
+                    Ceouopenmed 2019
+                </div>
+            </div>
+        </footer>
+    </div>
 
 </div>

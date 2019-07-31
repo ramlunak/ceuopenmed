@@ -1,59 +1,63 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http'
-import { FormsModule,ReactiveFormsModule} from '@angular/forms';
-import {RouterModule,Routes} from '@angular/router';
-import {angularMaterial} from './angular.material';
-
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuComponent } from './menu/menu.component';
-import { HeaderComponent } from './header/header.component';
-import { EnfermedadesComponent } from './component/enfermedades/enfermedades.component';
-import { SintomaDetalleComponent } from './component/sintoma/sintoma-detalle/sintoma-detalle.component';
-import { SintomasComponent } from './component/sintoma/sintomas/sintomas.component';
-import { FormSintomaComponent } from './component/form-sintoma/form-sintoma.component';
-import { FormTratamientoComponent } from './component/form-tratamiento/form-tratamiento.component';
-import { FormAnatomiaComponent } from './component/form-anatomia/form-anatomia.component';
-import { SintomaService } from './services/sintoma.service';
-import { ValidatorService } from './services/validator.service';
-import { TipoEntidadComponent } from './component/tipo-entidad/tipo-entidad.component';
-import { EntidadComponent } from './component/entidad/entidad.component';
-import { RolComponent } from './component/rol/rol.component';
 
-const routes:Routes = [ 
-  { path: 'RolComponent', component: RolComponent },  
-  { path: 'TipoEntidadComponent', component: TipoEntidadComponent },  
-  { path: 'EntidadComponent', component: EntidadComponent },  
-  { path: '', component: EntidadComponent }
- ];
+import { RouterModule } from '@angular/router';
+
+// Módulo de importación de Bibliotecas de Angular Material
+import { MaterialModule } from './modules/material.module';
+
+// Módulo de Importacion de Componentes para Routing
+import { AppRoutesModule } from './modules/app-routes.module';
+
+// Módulo de Importacion de Servicios
+import { AppServicesModule } from './modules/app-services.module';
+
+// Componentes de la aplicación
+import { AppComponent } from './app.component';
+import { HomeComponent } from './componentes/home/home.component';
+import { HeaderComponent } from './header/header.component';
+import { MenuComponent } from './menu/menu.component';
+import { NotFoundComponent } from './componentes/errorPages/not-found/not-found.component';
+import { ServerErrorComponent } from './componentes/errorPages/server-error/server-error.component';
+import { LoginComponent } from './componentes/Seguridad/login/login.component';
+import { SegRolComponent } from './componentes/Seguridad/seg-rol/seg-rol.component';
+import { AdmPersonaComponent } from './componentes/Administracion/adm-persona/adm-persona.component';
+import { DocEspecialidadComponent } from './componentes/Docencia/doc-especialidad/doc-especialidad.component';
+import { DocGrupoComponent } from './componentes/Docencia/doc-grupo/doc-grupo.component';
+import { DocEstudianteComponent } from './componentes/Docencia/doc-estudiante/doc-estudiante.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     HeaderComponent,
-    EnfermedadesComponent,
-    SintomaDetalleComponent,
-    SintomasComponent,
-    FormSintomaComponent,
-    FormTratamientoComponent,
-    FormAnatomiaComponent,
-    TipoEntidadComponent,
-    EntidadComponent,
-    RolComponent,
-        
+    MenuComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
+    LoginComponent,
+    HomeComponent,
+    SegRolComponent,
+    AdmPersonaComponent,
+    DocEspecialidadComponent,
+    DocGrupoComponent,
+    DocEstudianteComponent
   ],
-  
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,   
-    RouterModule.forRoot(routes),
-    angularMaterial,
+    RouterModule,
+    AppRoutesModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MaterialModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ValidatorService],
+  providers: [
+    AppServicesModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

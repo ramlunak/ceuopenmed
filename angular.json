@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ceuopenmed": {
+    "goldtext": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ceuopenmed",
+            "outputPath": "dist/goldtext",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ceuopenmed:build"
+            "browserTarget": "goldtext:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ceuopenmed:build:production"
+              "browserTarget": "goldtext:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ceuopenmed:build"
+            "browserTarget": "goldtext:build"
           }
         },
         "test": {
@@ -112,16 +112,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ceuopenmed:serve"
+            "devServerTarget": "goldtext:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ceuopenmed:serve:production"
+              "devServerTarget": "goldtext:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ceuopenmed"
+  "defaultProject": "goldtext"
 }
