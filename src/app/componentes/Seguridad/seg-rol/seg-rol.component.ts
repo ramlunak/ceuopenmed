@@ -13,7 +13,7 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 @Component({
   selector: 'app-seg-rol',
   templateUrl: './seg-rol.component.html',
-  styleUrls: ['./seg-rol.component.less']
+  styleUrls: ['./seg-rol.component.css']
 })
 export class SegRolComponent implements OnInit {
 

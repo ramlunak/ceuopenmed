@@ -28,7 +28,7 @@ export class ErrorHandlerService {
 
   private handle500Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
-    this.router.navigateByUrl('/500');
+    // this.router.navigateByUrl('/500');
   }
 
   private handle401Error = (error: HttpErrorResponse) => {
@@ -49,7 +49,7 @@ export class ErrorHandlerService {
   private handleOtherError = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
     // TODO: this will be fixed later;
-    this.router.navigateByUrl('/500');
+    // this.router.navigateByUrl('/500');
   }
 
   private createErrorMessage(error: HttpErrorResponse) {

@@ -1,20 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-		<base href="/">
+	<base href="/">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>CeuOpenMed</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="assets/img/ceo_logo.png" type="image/x-icon"/>
+	<link rel="icon" href="assets/img/ceo_logo.png" type="image/x-icon" />
 
 	<!-- Fonts and icons -->
 	<!-- Fonts and icons -->
 	<script src="../assets/js/plugin/webfont/webfont.min.js"></script>
 	<script>
 		WebFont.load({
-			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css']},
-			active: function() {
+			google: { "families": ["Lato:300,400,700,900"] },
+			custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css'] },
+			active: function () {
 				sessionStorage.fonts = true;
 			}
 		});
@@ -26,10 +27,11 @@
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="../assets/css/demo.css">
-   </head>
+</head>
+
 <body>
-	
-<app-root></app-root>
+
+	<app-root></app-root>
 
 	<!--   Core JS Files   -->
 	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
@@ -97,10 +99,17 @@
 
 	<!-- Sweet Alert -->
 	<script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-    <!-- Datatables -->
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>  
+	<!-- Datatables -->
+	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
 	<!-- Millenium JS -->
 	<script src="../assets/js/millenium.min.js"></script>
-	
+
+	<script type="text/javascript">
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+	</script>
+
 </body>
+
 </html>

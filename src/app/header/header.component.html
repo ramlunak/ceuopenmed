@@ -46,7 +46,7 @@
           </a>
         </li>
         <li class="nav-item dropdown hidden-caret">
-          <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" routerLink="" id="messageDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-envelope"></i>
           </a>
@@ -54,13 +54,13 @@
             <li>
               <div class="dropdown-title d-flex justify-content-between align-items-center">
                 Messages
-                <a href="#" class="small">Mark all as read</a>
+                <a routerLink="" class="small">Mark all as read</a>
               </div>
             </li>
             <li>
               <div class="message-notif-scroll scrollbar-outer">
                 <div class="notif-center">
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-img">
                       <img src="https://via.placeholder.com/50x50" alt="Img Profile">
                     </div>
@@ -72,7 +72,7 @@
                       <span class="time">5 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-img">
                       <img src="https://via.placeholder.com/50x50" alt="Img Profile">
                     </div>
@@ -84,7 +84,7 @@
                       <span class="time">12 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-img">
                       <img src="https://via.placeholder.com/50x50" alt="Img Profile">
                     </div>
@@ -96,7 +96,7 @@
                       <span class="time">12 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-img">
                       <img src="https://via.placeholder.com/50x50" alt="Img Profile">
                     </div>
@@ -117,7 +117,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown hidden-caret">
-          <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" routerLink="" id="notifDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-bell"></i>
             <span class="notification">4</span>
@@ -129,7 +129,7 @@
             <li>
               <div class="notif-scroll scrollbar-outer">
                 <div class="notif-center">
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
                     <div class="notif-content">
                       <span class="block">
@@ -138,7 +138,7 @@
                       <span class="time">5 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
                     <div class="notif-content">
                       <span class="block">
@@ -147,7 +147,7 @@
                       <span class="time">12 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-img">
                       <img src="https://via.placeholder.com/50x50" alt="Img Profile">
                     </div>
@@ -158,7 +158,7 @@
                       <span class="time">12 minutes ago</span>
                     </div>
                   </a>
-                  <a href="#">
+                  <a routerLink="">
                     <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
                     <div class="notif-content">
                       <span class="block">
@@ -176,39 +176,38 @@
           </ul>
         </li>
         <li class="nav-item dropdown hidden-caret">
-          <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-            <div class="avatar-sm">
-              <img src="https://via.placeholder.com/50x50" alt="..." class="avatar-img rounded-circle">
+          <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
+            <div class="avatar-sm" data-toggle="tooltip" data-placement="bottom" title="{{authService.currentUser.NombreCompleto}}">
+              <img src="../assets/img/avatar.png" alt="..." class="avatar-img rounded-circle">
             </div>
           </a>
           <ul class="dropdown-menu dropdown-user animated fadeIn">
             <div class="dropdown-user-scroll scrollbar-outer">
               <li>
                 <div class="user-box">
-                  <div class="avatar-lg"><img src="https://via.placeholder.com/50x50" alt="image profile"
+                  <div class="avatar-lg"><img src="../assets/img/avatar.png" alt="image profile"
                       class="avatar-img rounded"></div>
                   <div class="u-text">
-                    <h4>Hizrian</h4>
-                    <p class="text-muted">hello@example.com</p><a href="profile.html"
-                      class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                    <h4>{{authService.currentUser.username}} <p class="text-muted">({{authService.currentUser.Rol}})</p>
+                    </h4>
+                    <p class="text-muted">{{authService.currentUser.email}}</p>
+                    <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">My Profile</a>
-                <a class="dropdown-item" href="#">My Balance</a>
-                <a class="dropdown-item" href="#">Inbox</a>
+                <a class="dropdown-item" routerLink="">Inbox</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Account Setting</a>
+                <a class="dropdown-item" routerLink="">Cambiar Contraseña</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" (click)="Logout()">Cerrar Sección</a>
               </li>
             </div>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link quick-sidebar-toggler">
+          <a routerLink="" class="nav-link quick-sidebar-toggler">
             <i class="fa fa-th"></i>
           </a>
         </li>

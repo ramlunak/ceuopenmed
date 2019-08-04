@@ -10,10 +10,11 @@ import { LoginComponent } from '../componentes/Seguridad/login/login.component';
 import { NotFoundComponent } from '../componentes/errorPages/not-found/not-found.component';
 import { ServerErrorComponent } from '../componentes/errorPages/server-error/server-error.component';
 import { SegRolComponent } from '../componentes/Seguridad/seg-rol/seg-rol.component';
-import { AdmPersonaComponent } from '../componentes/Administracion/adm-persona/adm-persona.component';
+import { AdmPersonaComponent } from '../componentes/Administracion/adm-persona/adm-persona.component';  // Posible Eliminacion
 import { DocEspecialidadComponent } from '../componentes/Docencia/doc-especialidad/doc-especialidad.component';
 import { DocGrupoComponent } from '../componentes/Docencia/doc-grupo/doc-grupo.component';
 import { DocEstudianteComponent } from '../componentes/Docencia/doc-estudiante/doc-estudiante.component';
+import { DocProfesorComponent } from '../componentes/Docencia/doc-profesor/doc-profesor.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },
   { path: 'docEstudiante', component: DocEstudianteComponent, canActivate: [AuthVerifyService] },
+  { path: 'docProfesor', component: DocProfesorComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent},
   { path: '500', component: ServerErrorComponent },
 

@@ -1,22 +1,23 @@
 <!-- TOOL BAR-->
 <mat-toolbar color="primary">
-        <mat-toolbar-row>
-    
-            <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
-                <mat-icon>add</mat-icon>
-                Nuevo
-            </button>
-    
-            <span class="material-spacer"></span>
-    
-            <mat-form-field id="mat-form-field-search">
-                <input matInput (keyup)="applyFilter($event.target.value)">
-                <mat-placeholder class="placeholder">Buscar</mat-placeholder>
-            </mat-form-field>
-    
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <!--END TOOL BAR-->
+    <mat-toolbar-row>
+
+        <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal"
+            data-target="#OperationModalDialog">
+            <mat-icon>add</mat-icon>
+            Nuevo
+        </button>
+
+        <span class="material-spacer"></span>
+
+        <mat-form-field id="mat-form-field-search">
+            <input matInput (keyup)="applyFilter($event.target.value)">
+            <mat-placeholder class="placeholder">Buscar</mat-placeholder>
+        </mat-form-field>
+
+    </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
 
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
 
@@ -33,20 +34,34 @@
                 </div>
                 <div class="modal-body">
 
-                    <form [formGroup]="estudianteService.form" class="ceu-form">
+                    <form [formGroup]="personaService.form" class="ceu-form">
                         <mat-form-field class="ceu-full-width">
-                            <input type="hidden" formControlName="IdEstudiante">
-
-                            <mat-label>Persona</mat-label>
-                            <mat-select formControlName="IdPersona" name="persona">
-                                <mat-option *ngFor="let persona of listPersonas" [value]="persona.IdPersona">
-                                    {{persona.NombreCompleto}}
-                                </mat-option>
-                            </mat-select>
+                            <input type="hidden" formControlName="IdPersona">
+                            <input formControlName="PrimerNombre" matInput name="PrimerNombre"
+                                placeholder="Primer Nombre">
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="SegundoNombre" matInput name="SegundoNombre"
+                                placeholder="Segundo Nombre">
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="ApellidoPaterno" matInput name="ApellidoPaterno"
+                                placeholder="Apellido Paterno">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="ApellidoMaterno" matInput name="ApellidoMaterno"
+                                placeholder="Apellido Materno">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                    </form>
+
+                    <form [formGroup]="estudianteService.form" class="ceu-form">
 
                         <mat-form-field class="ceu-full-width">
+                            <input type="hidden" formControlName="IdEstudiante">
+                            <input type="hidden" formControlName="IdPersona">
                             <mat-label>Grupo</mat-label>
                             <mat-select formControlName="IdGrupo" name="grupo">
                                 <mat-option *ngFor="let grupo of listGrupos" [value]="grupo.IdGrupo">
@@ -60,11 +75,17 @@
 
                 </div>
                 <div class="modal-footer">
+                    <mat-icon *ngIf="personaService.loading$ | async">
+                        <mat-spinner diameter="20" color="accent">
+                        </mat-spinner>
+                    </mat-icon>
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-                    <button mat-raised-button color='primary' [disabled]="estudianteService.form.invalid"
+                    <button mat-raised-button color='primary'
+                        [disabled]="estudianteService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
                         *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
-                    <button mat-raised-button color='primary' [disabled]="estudianteService.form.invalid"
+                    <button mat-raised-button color='primary'
+                        [disabled]="estudianteService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
                         *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
                 </div>
@@ -125,12 +146,12 @@
 
                 <button (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
                     data-target="#OperationModalDialog">
-                    <mat-icon color='primary'>edit</mat-icon>
+                    <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
                 </button>
 
                 <button (click)="ROW_NUMBER = row; setOperationsData()" mat-icon-button data-toggle="modal"
                     data-target="#DeleteDialog">
-                    <mat-icon color='warn'>delete</mat-icon>
+                    <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
                 </button>
 
             </td>

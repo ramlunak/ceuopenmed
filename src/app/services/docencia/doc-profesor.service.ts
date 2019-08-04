@@ -11,9 +11,9 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DocEstudianteService {
+export class DocProfesorService {
 
-  private BaseURL = 'doc-estudiante/';
+  private BaseURL = 'doc-profesor/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -21,20 +21,20 @@ export class DocEstudianteService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdEstudiante: new FormControl(null),
+    IdProfesor: new FormControl(null),
     IdPersona: new FormControl(null),
-    IdGrupo: new FormControl('', Validators.required)
+    IdEspecialidad: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdEstudiante: null,
+      IdProfesor: null,
       IdPersona: '',
-      IdGrupo: ''
+      IdEspecialidad: ''
     });
   }
 
-  getEstudiantes(): Observable<any> {
+  getProfesores(): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -49,11 +49,11 @@ export class DocEstudianteService {
       );
   }
 
-  viewEstudiante(IdEstudiante: number) {
+  viewProfesor(IdProfesor: number) {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'view/' + IdEstudiante),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'view/' + IdProfesor),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -62,12 +62,12 @@ export class DocEstudianteService {
       );
   }
 
-  setEstudiante(IdPersona: number, IdGrupo: number) {
+  setProfesor(IdPersona: number, IdEspecialidad: number) {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { IdPersona, IdGrupo },
+        { IdPersona, IdEspecialidad },
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -76,12 +76,12 @@ export class DocEstudianteService {
       );
   }
 
-  updateEstudiante(IdEstudiante: number, IdPersona: number, IdGrupo: number) {
+  updateProfesor(IdProfesor: number, IdPersona: number, IdEspecialidad: number) {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdEstudiante),
-        { IdPersona, IdGrupo },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdProfesor),
+        { IdPersona, IdEspecialidad },
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -90,11 +90,11 @@ export class DocEstudianteService {
       );
   }
 
-  deleteEstudiante(IdEstudiante: number) {
+  deleteProfesor(IdProfesor: number) {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdEstudiante),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdProfesor),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

@@ -8,11 +8,9 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  accesToken: string;
 
   constructor(private authService: AuthService, private errorService: ErrorHandlerService, private router: Router) { }
 
@@ -42,7 +40,8 @@ export class LoginComponent implements OnInit {
     this.authService.getMyInformations(accesToken).subscribe(result => {
       this.authService.setUser(result.data);
       this.authService.setToken(accesToken);
-      this.router.navigateByUrl('');
+      this.authService.form.reset();
+      this.authService.InicializarValoresFormGroup();
       this.router.navigateByUrl('');
     }, (error) => {
       this.errorService.handleError(error);

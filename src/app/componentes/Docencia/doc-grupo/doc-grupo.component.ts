@@ -12,7 +12,7 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 @Component({
   selector: 'app-doc-grupo',
   templateUrl: './doc-grupo.component.html',
-  styleUrls: ['./doc-grupo.component.less']
+  styleUrls: ['./doc-grupo.component.css']
 })
 export class DocGrupoComponent implements OnInit {
 

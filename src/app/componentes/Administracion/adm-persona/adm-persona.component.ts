@@ -12,7 +12,7 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 @Component({
   selector: 'app-adm-persona',
   templateUrl: './adm-persona.component.html',
-  styleUrls: ['./adm-persona.component.less']
+  styleUrls: ['./adm-persona.component.css']
 })
 export class AdmPersonaComponent implements OnInit {
 

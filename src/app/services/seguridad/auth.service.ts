@@ -8,8 +8,6 @@ import { map, finalize } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { BehaviorSubject } from 'rxjs';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +16,7 @@ export class AuthService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
   public showMenus = false;
+  currentUser: SegUsuario;
 
   constructor(private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
@@ -25,6 +24,13 @@ export class AuthService {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
+
+  InicializarValoresFormGroup() {
+    this.form.setValue({
+      username: '',
+      password: ''
+    });
+  }
 
   loginUser(username: string, password: string) {
     this.loadingSubject.next(true);
@@ -41,7 +47,7 @@ export class AuthService {
   }
 
   // tslint:disable-next-line: variable-name
-  requestAccesToken( authorization_code: string) {
+  requestAccesToken(authorization_code: string) {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
@@ -55,7 +61,7 @@ export class AuthService {
       );
   }
 
-  getMyInformations( accesToken: string) {
+  getMyInformations(accesToken: string) {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -84,8 +90,8 @@ export class AuthService {
   getCurrentUser(): SegUsuario {
     const userString = localStorage.getItem('currentUser');
     if (!isNullOrUndefined(userString)) {
-      const user: SegUsuario = JSON.parse(userString);
-      return user;
+      this.currentUser = JSON.parse(userString);
+      return this.currentUser;
     } else {
       return null;
     }

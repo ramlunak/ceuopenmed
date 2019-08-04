@@ -34,12 +34,41 @@
                 </div>
                 <div class="modal-body">
 
-                    <form [formGroup]="rolService.form" class="ceu-form">
+                    <form [formGroup]="personaService.form" class="ceu-form">
+                        <mat-form-field class="ceu-full-width">
+                            <input type="hidden" formControlName="IdPersona">
+                            <input formControlName="PrimerNombre" matInput name="PrimerNombre"
+                                placeholder="Primer Nombre">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="SegundoNombre" matInput name="SegundoNombre"
+                                placeholder="Segundo Nombre">
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="ApellidoPaterno" matInput name="ApellidoPaterno"
+                                placeholder="Apellido Paterno">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="ApellidoMaterno" matInput name="ApellidoMaterno"
+                                placeholder="Apellido Materno">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                    </form>
 
+                    <form [formGroup]="profesorService.form" class="ceu-form">
 
                         <mat-form-field class="ceu-full-width">
-                            <input type="hidden" formControlName="IdRol">
-                            <input formControlName="Rol" matInput name="Rol" placeholder="Rol">
+                            <input type="hidden" formControlName="IdProfesor">
+                            <input type="hidden" formControlName="IdPersona">
+                            <mat-label>Especialidad</mat-label>
+                            <mat-select formControlName="IdEspecialidad" name="especialidad">
+                                <mat-option *ngFor="let especialidad of listEspecialidades"
+                                    [value]="especialidad.IdEspecialidad">
+                                    {{especialidad.Especialidad}}
+                                </mat-option>
+                            </mat-select>
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
 
@@ -47,17 +76,17 @@
 
                 </div>
                 <div class="modal-footer">
-                    <mat-icon *ngIf="rolService.loading$ | async">
+                    <mat-icon *ngIf="personaService.loading$ | async">
                         <mat-spinner diameter="20" color="accent">
                         </mat-spinner>
                     </mat-icon>
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
                     <button mat-raised-button color='primary'
-                        [disabled]="rolService.form.invalid || (rolService.loading$ | async)"
+                        [disabled]="profesorService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
                         *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
                     <button mat-raised-button color='primary'
-                        [disabled]="rolService.form.invalid || (rolService.loading$ | async)"
+                        [disabled]="profesorService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
                         *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
                 </div>
@@ -73,7 +102,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Rol</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Profesor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -91,20 +120,25 @@
         </div>
     </div>
 
-    <div class="spinner-container" *ngIf="rolService.loading$ | async">
+    <div class="spinner-container" *ngIf="profesorService.loading$ | async">
         <mat-spinner diameter="50"></mat-spinner>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="ceu-table">
 
-        <ng-container matColumnDef="IdRol">
+        <ng-container matColumnDef="IdProfesor">
             <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.IdRol}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.IdProfesor}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Rol">
-            <th mat-header-cell *matHeaderCellDef> Rol </th>
-            <td mat-cell *matCellDef="let element"> {{element.Rol}} </td>
+        <ng-container matColumnDef="NombreCompleto">
+            <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+            <td mat-cell *matCellDef="let element"> {{element.NombreCompleto}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Especialidad">
+            <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.Especialidad}} </td>
         </ng-container>
 
         <ng-container matColumnDef="commands">

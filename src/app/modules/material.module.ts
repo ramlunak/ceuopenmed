@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSortModule } from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatCardModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
   ],
   exports: [
     MatTableModule,
@@ -65,7 +67,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatCardModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
 ]
 })
 export class MaterialModule { }

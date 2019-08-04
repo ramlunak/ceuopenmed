@@ -1,6 +1,6 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,10 +25,11 @@ import { NotFoundComponent } from './componentes/errorPages/not-found/not-found.
 import { ServerErrorComponent } from './componentes/errorPages/server-error/server-error.component';
 import { LoginComponent } from './componentes/Seguridad/login/login.component';
 import { SegRolComponent } from './componentes/Seguridad/seg-rol/seg-rol.component';
-import { AdmPersonaComponent } from './componentes/Administracion/adm-persona/adm-persona.component';
+import { AdmPersonaComponent } from './componentes/Administracion/adm-persona/adm-persona.component';  // Posible Eliminacion
 import { DocEspecialidadComponent } from './componentes/Docencia/doc-especialidad/doc-especialidad.component';
 import { DocGrupoComponent } from './componentes/Docencia/doc-grupo/doc-grupo.component';
 import { DocEstudianteComponent } from './componentes/Docencia/doc-estudiante/doc-estudiante.component';
+import { DocProfesorComponent } from './componentes/Docencia/doc-profesor/doc-profesor.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DocEstudianteComponent } from './componentes/Docencia/doc-estudiante/do
     AdmPersonaComponent,
     DocEspecialidadComponent,
     DocGrupoComponent,
-    DocEstudianteComponent
+    DocEstudianteComponent,
+    DocProfesorComponent
   ],
   imports: [
     BrowserModule,

@@ -3,38 +3,38 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { DocEstudianteService } from '../../../services/docencia/doc-estudiante.service';
-import { DocEstudiante } from 'src/app/models/Docencia/doc-estudiante';
+import { DocProfesorService } from '../../../services/docencia/doc-profesor.service';
+import { DocProfesor } from 'src/app/models/Docencia/doc-profesor';
 import { AdmPersonaService } from '../../../services/administracion/adm-persona.service';
 import { AdmPersona } from 'src/app/models/Administracion/adm-persona';
-import { DocGrupoService } from '../../../services/docencia/doc-grupo.service';
-import { DocGrupo } from 'src/app/models/Docencia/doc-grupo';
+import { DocEspecialidadService } from '../../../services/docencia/doc-especialidad.service';
+import { DocEspecialidad } from 'src/app/models/Docencia/doc-especialidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
 @Component({
-  selector: 'app-doc-estudiante',
-  templateUrl: './doc-estudiante.component.html',
-  styleUrls: ['./doc-estudiante.component.css']
+  selector: 'app-doc-profesor',
+  templateUrl: './doc-profesor.component.html',
+  styleUrls: ['./doc-profesor.component.css']
 })
-export class DocEstudianteComponent implements OnInit {
+export class DocProfesorComponent implements OnInit {
 
   transaccionIsNew = true;
   ROW_NUMBER: number;
-  dialogTittle = 'Nuevo Estudiante';
+  dialogTittle = 'Nuevo Profesor';
 
   // DataTable --
-  dataSource: MatTableDataSource<DocEstudiante>;
-  displayedColumns = ['IdEstudiante', 'NombreCompleto', 'Grupo', 'commands'];
+  dataSource: MatTableDataSource<DocProfesor>;
+  displayedColumns = ['IdProfesor', 'NombreCompleto', 'Especialidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   // Selects
   listPersonas: AdmPersona[];
-  listGrupos: DocGrupo[];
+  listEspecialidades: DocEspecialidad[];
 
-  constructor(private estudianteService: DocEstudianteService,
+  constructor(private profesorService: DocProfesorService,
               private personaService: AdmPersonaService,
-              private grupoService: DocGrupoService,
+              private especialidadService: DocEspecialidadService,
               private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
@@ -49,8 +49,8 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   CargarDgvElements() {
-    this.estudianteService.getEstudiantes().subscribe(result => {
-      this.dataSource = new MatTableDataSource<DocEstudiante>(result.data);
+    this.profesorService.getProfesores().subscribe(result => {
+      this.dataSource = new MatTableDataSource<DocProfesor>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
@@ -62,8 +62,8 @@ export class DocEstudianteComponent implements OnInit {
       this.listPersonas = result.data;
     });
 
-    this.grupoService.getGrupos().subscribe(result => {
-      this.listGrupos = result.data;
+    this.especialidadService.getEspecialidades().subscribe(result => {
+      this.listEspecialidades = result.data;
     });
   }
 
@@ -75,7 +75,7 @@ export class DocEstudianteComponent implements OnInit {
   guardarClick() {
 
     const formDataPersona = this.personaService.form.value;
-    const formDataEstudiante = this.estudianteService.form.value;
+    const formDataProfesor = this.profesorService.form.value;
 
     if (this.transaccionIsNew) {
       this.personaService.setPersona(
@@ -89,7 +89,7 @@ export class DocEstudianteComponent implements OnInit {
 
           const persona: AdmPersona = result.data;
 
-          this.estudianteService.setEstudiante(persona.IdPersona, formDataEstudiante.IdGrupo).subscribe(result2 => {
+          this.profesorService.setProfesor(persona.IdPersona, formDataProfesor.IdEspecialidad).subscribe(result2 => {
 
             if (result2.status === 1) {
               this.CargarDgvElements();
@@ -120,7 +120,7 @@ export class DocEstudianteComponent implements OnInit {
 
         if (result.status === 1) {
 
-          this.estudianteService.updateEstudiante(formDataEstudiante.IdEstudiante, formDataEstudiante.IdPersona, formDataEstudiante.IdGrupo)
+          this.profesorService.updateProfesor(formDataProfesor.IdProfesor, formDataProfesor.IdPersona, formDataProfesor.IdEspecialidad)
             .subscribe(result2 => {
 
               if (result2.status === 1) {
@@ -144,8 +144,8 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   eliminarClick() {
-    const formData = this.estudianteService.form.value;
-    this.estudianteService.deleteEstudiante(formData.IdEstudiante).subscribe(result => {
+    const formData = this.profesorService.form.value;
+    this.profesorService.deleteProfesor(formData.IdProfesor).subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();
@@ -162,9 +162,9 @@ export class DocEstudianteComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+    const profesor = this.dataSource.data[this.ROW_NUMBER];
 
-    this.personaService.viewPersona(estudiante.IdPersona).subscribe(result => {
+    this.personaService.viewPersona(profesor.IdPersona).subscribe(result => {
 
       if (result.status === 1) {
         this.personaService.form.patchValue(result.data);
@@ -176,21 +176,21 @@ export class DocEstudianteComponent implements OnInit {
       this.errorService.handleError(error);
     });
 
-    this.estudianteService.form.patchValue({
-      IdEstudiante: estudiante.IdEstudiante,
-      IdPersona: estudiante.IdPersona,
-      IdGrupo: estudiante.IdGrupo
+    this.profesorService.form.patchValue({
+      IdProfesor: profesor.IdProfesor,
+      IdPersona: profesor.IdPersona,
+      IdEspecialidad: profesor.IdEspecialidad
     });
-    this.dialogTittle = 'Modificar Estudiante';
+    this.dialogTittle = 'Modificar Profesor';
   }
 
   Limpiar() {
     this.transaccionIsNew = true;
     this.personaService.form.reset();
     this.personaService.InicializarValoresFormGroup();
-    this.estudianteService.form.reset();
-    this.estudianteService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Estudiante';
+    this.profesorService.form.reset();
+    this.profesorService.InicializarValoresFormGroup();
+    this.dialogTittle = 'Nuevo Profesor';
   }
 
 }
