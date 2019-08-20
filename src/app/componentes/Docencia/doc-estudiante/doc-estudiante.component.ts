@@ -74,22 +74,20 @@ export class DocEstudianteComponent implements OnInit {
 
   guardarClick() {
 
-    const formDataPersona = this.personaService.form.value;
-    const formDataEstudiante = this.estudianteService.form.value;
-
     if (this.transaccionIsNew) {
-      this.personaService.setPersona(
-        formDataPersona.PrimerNombre,
-        formDataPersona.SegundoNombre,
-        formDataPersona.ApellidoPaterno,
-        formDataPersona.ApellidoMaterno
-      ).subscribe(result => {
+      this.personaService.setPersona().subscribe(result => {
 
         if (result.status === 1) {
 
           const persona: AdmPersona = result.data;
+          const formDataEstudiante = this.estudianteService.form.value;
+          this.estudianteService.form.patchValue({
+            IdEstudiante: formDataEstudiante.IdEstudiante,
+            IdPersona: persona.IdPersona,
+            IdGrupo: formDataEstudiante.IdGrupo
+          });
 
-          this.estudianteService.setEstudiante(persona.IdPersona, formDataEstudiante.IdGrupo).subscribe(result2 => {
+          this.estudianteService.setEstudiante().subscribe(result2 => {
 
             if (result2.status === 1) {
               this.CargarDgvElements();
@@ -110,18 +108,11 @@ export class DocEstudianteComponent implements OnInit {
       });
     } else {
 
-      this.personaService.updatePersona(
-        formDataPersona.IdPersona,
-        formDataPersona.PrimerNombre,
-        formDataPersona.SegundoNombre,
-        formDataPersona.ApellidoPaterno,
-        formDataPersona.ApellidoMaterno
-      ).subscribe(result => {
+      this.personaService.updatePersona().subscribe(result => {
 
         if (result.status === 1) {
 
-          this.estudianteService.updateEstudiante(formDataEstudiante.IdEstudiante, formDataEstudiante.IdPersona, formDataEstudiante.IdGrupo)
-            .subscribe(result2 => {
+          this.estudianteService.updateEstudiante().subscribe(result2 => {
 
               if (result2.status === 1) {
                 this.CargarDgvElements();
@@ -145,7 +136,7 @@ export class DocEstudianteComponent implements OnInit {
 
   eliminarClick() {
     const formData = this.estudianteService.form.value;
-    this.estudianteService.deleteEstudiante(formData.IdEstudiante).subscribe(result => {
+    this.personaService.deletePersona(formData.IdPersona).subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();

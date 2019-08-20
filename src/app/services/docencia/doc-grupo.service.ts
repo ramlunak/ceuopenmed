@@ -60,12 +60,12 @@ export class DocGrupoService {
       );
   }
 
-  setGrupo(Grupo: string) {
+  setGrupo() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { Grupo },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -74,12 +74,12 @@ export class DocGrupoService {
       );
   }
 
-  updateGrupo(IdGrupo: number, Grupo: string) {
+  updateGrupo() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdGrupo),
-        { Grupo },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdGrupo),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -88,11 +88,11 @@ export class DocGrupoService {
       );
   }
 
-  deleteGrupo(IdGrupo: number) {
+  deleteGrupo() {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdGrupo),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdGrupo),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

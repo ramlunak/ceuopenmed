@@ -25,11 +25,17 @@ import { NotFoundComponent } from './componentes/errorPages/not-found/not-found.
 import { ServerErrorComponent } from './componentes/errorPages/server-error/server-error.component';
 import { LoginComponent } from './componentes/Seguridad/login/login.component';
 import { SegRolComponent } from './componentes/Seguridad/seg-rol/seg-rol.component';
-import { AdmPersonaComponent } from './componentes/Administracion/adm-persona/adm-persona.component';  // Posible Eliminacion
 import { DocEspecialidadComponent } from './componentes/Docencia/doc-especialidad/doc-especialidad.component';
 import { DocGrupoComponent } from './componentes/Docencia/doc-grupo/doc-grupo.component';
 import { DocEstudianteComponent } from './componentes/Docencia/doc-estudiante/doc-estudiante.component';
 import { DocProfesorComponent } from './componentes/Docencia/doc-profesor/doc-profesor.component';
+import { DocProfesorGruposComponent } from './componentes/Docencia/doc-profesor-grupos/doc-profesor-grupos.component';
+import { TipoEntidadComponent } from './componentes/tipo-entidad/tipo-entidad.component';
+import { IdiomaComponent } from './componentes/idioma/idioma.component';
+// tslint:disable-next-line: max-line-length
+import { DocProfesorEspecialidadesComponent } from './componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
+import { SegUsuarioComponent } from './componentes/Seguridad/seg-usuario/seg-usuario.component';
+import { EntidadComponent } from './componentes/entidad/entidad.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +47,16 @@ import { DocProfesorComponent } from './componentes/Docencia/doc-profesor/doc-pr
     LoginComponent,
     HomeComponent,
     SegRolComponent,
-    AdmPersonaComponent,
     DocEspecialidadComponent,
     DocGrupoComponent,
     DocEstudianteComponent,
-    DocProfesorComponent
+    DocProfesorComponent,
+    DocProfesorGruposComponent,
+    TipoEntidadComponent,
+    IdiomaComponent,
+    DocProfesorEspecialidadesComponent,
+    SegUsuarioComponent,
+    EntidadComponent
   ],
   imports: [
     BrowserModule,

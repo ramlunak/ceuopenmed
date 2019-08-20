@@ -10,21 +10,33 @@ import { LoginComponent } from '../componentes/Seguridad/login/login.component';
 import { NotFoundComponent } from '../componentes/errorPages/not-found/not-found.component';
 import { ServerErrorComponent } from '../componentes/errorPages/server-error/server-error.component';
 import { SegRolComponent } from '../componentes/Seguridad/seg-rol/seg-rol.component';
-import { AdmPersonaComponent } from '../componentes/Administracion/adm-persona/adm-persona.component';  // Posible Eliminacion
+import { SegUsuarioComponent } from '../componentes/Seguridad/seg-usuario/seg-usuario.component';
 import { DocEspecialidadComponent } from '../componentes/Docencia/doc-especialidad/doc-especialidad.component';
 import { DocGrupoComponent } from '../componentes/Docencia/doc-grupo/doc-grupo.component';
 import { DocEstudianteComponent } from '../componentes/Docencia/doc-estudiante/doc-estudiante.component';
 import { DocProfesorComponent } from '../componentes/Docencia/doc-profesor/doc-profesor.component';
+import { DocProfesorGruposComponent } from '../componentes/Docencia/doc-profesor-grupos/doc-profesor-grupos.component';
+import { TipoEntidadComponent } from '../componentes/tipo-entidad/tipo-entidad.component';
+import { IdiomaComponent } from '../componentes/idioma/idioma.component';
+import { EntidadComponent } from '../componentes/entidad/entidad.component';
+// tslint:disable-next-line: max-line-length
+import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
   { path: 'login', component: LoginComponent },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
-  { path: 'admPersona', component: AdmPersonaComponent, canActivate: [AuthVerifyService] },
+  { path: 'segUsuario', component: SegUsuarioComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },
   { path: 'docEstudiante', component: DocEstudianteComponent, canActivate: [AuthVerifyService] },
   { path: 'docProfesor', component: DocProfesorComponent, canActivate: [AuthVerifyService] },
+  { path: 'docProfesorGrupos/:id', component: DocProfesorGruposComponent, canActivate: [AuthVerifyService] },
+  { path: 'docProfesorEspecialidades/:id', component: DocProfesorEspecialidadesComponent, canActivate: [AuthVerifyService] },
+  { path: 'tipoEntidad', component: TipoEntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent},
   { path: '500', component: ServerErrorComponent },
 

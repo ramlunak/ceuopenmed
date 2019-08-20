@@ -122,9 +122,8 @@ body {
   text-align    : right !important
 }
 
-.green-color {
-  background-color: green !important;
-  color: white !important;
+.green-color { 
+  color: green !important;
 }
 
 .green-icon {

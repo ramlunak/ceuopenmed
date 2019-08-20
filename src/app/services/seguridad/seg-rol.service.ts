@@ -60,12 +60,12 @@ export class SegRolService {
       );
   }
 
-  setRol(Rol: string) {
+  setRol() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { Rol },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -74,12 +74,12 @@ export class SegRolService {
       );
   }
 
-  updateRol(IdRol: number, Rol: string) {
+  updateRol() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdRol),
-        { Rol },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRol),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -88,11 +88,11 @@ export class SegRolService {
       );
   }
 
-  deleteRol(IdRol: number) {
+  deleteRol() {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdRol),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRol),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

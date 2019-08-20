@@ -22,15 +22,37 @@ export class DocProfesorService {
 
   form: FormGroup = new FormGroup({
     IdProfesor: new FormControl(null),
-    IdPersona: new FormControl(null),
+    IdPersona: new FormControl(null)
+  });
+
+  formEspecialidad: FormGroup = new FormGroup({
+    IdProfesor: new FormControl(null),
     IdEspecialidad: new FormControl('', Validators.required)
+  });
+
+  formGrupos: FormGroup = new FormGroup({
+    IdProfesor: new FormControl(null),
+    IdGrupo: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
       IdProfesor: null,
-      IdPersona: '',
+      IdPersona: ''
+    });
+  }
+
+  InicializarValoresFormEspecialidadGroup() {
+    this.formEspecialidad.setValue({
+      IdProfesor: null,
       IdEspecialidad: ''
+    });
+  }
+
+  InicializarValoresFormGruposGroup() {
+    this.formGrupos.setValue({
+      IdProfesor: null,
+      IdGrupo: ''
     });
   }
 
@@ -62,12 +84,12 @@ export class DocProfesorService {
       );
   }
 
-  setProfesor(IdPersona: number, IdEspecialidad: number) {
+  setProfesor() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { IdPersona, IdEspecialidad },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -76,12 +98,12 @@ export class DocProfesorService {
       );
   }
 
-  updateProfesor(IdProfesor: number, IdPersona: number, IdEspecialidad: number) {
+  updateProfesor() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdProfesor),
-        { IdPersona, IdEspecialidad },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdProfesor),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -90,11 +112,120 @@ export class DocProfesorService {
       );
   }
 
-  deleteProfesor(IdProfesor: number) {
+  deleteProfesor() {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdProfesor),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdProfesor),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  // Especialidades
+  getEspecialidades(IdProfesor: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'especialidades/' + IdProfesor),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  getUnsolicitedEspecialidades(IdProfesor: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'unsolicited-especialidades/' + IdProfesor),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  setProfesorEspecialidad() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .post<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'create-especialidad'),
+        this.formEspecialidad.value,
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  deleteProfesorEspecialidad() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .delete<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete-especialidad/' + this.formEspecialidad.value.IdProfesor +
+          '/' + this.formEspecialidad.value.IdEspecialidad),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  // Grupos
+  getGrupos(IdProfesor: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'grupos/' + IdProfesor),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  getUnsolicitedGroups(IdProfesor: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'unsolicited-groups/' + IdProfesor),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  setProfesorGrupo() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .post<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'create-grupo'),
+        this.formGrupos.value,
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  deleteProfesorGrupo() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .delete<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete-grupo/' + this.formGrupos.value.IdProfesor + '/' + this.formGrupos.value.IdGrupo),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

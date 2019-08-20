@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,8 +8,6 @@ import { DocProfesorService } from '../../../services/docencia/doc-profesor.serv
 import { DocProfesor } from 'src/app/models/Docencia/doc-profesor';
 import { AdmPersonaService } from '../../../services/administracion/adm-persona.service';
 import { AdmPersona } from 'src/app/models/Administracion/adm-persona';
-import { DocEspecialidadService } from '../../../services/docencia/doc-especialidad.service';
-import { DocEspecialidad } from 'src/app/models/Docencia/doc-especialidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -26,16 +25,13 @@ export class DocProfesorComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DocProfesor>;
-  displayedColumns = ['IdProfesor', 'NombreCompleto', 'Especialidad', 'commands'];
+  displayedColumns = ['IdProfesor', 'NombreCompleto', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  // Selects
-  listPersonas: AdmPersona[];
-  listEspecialidades: DocEspecialidad[];
 
   constructor(private profesorService: DocProfesorService,
               private personaService: AdmPersonaService,
-              private especialidadService: DocEspecialidadService,
-              private errorService: ErrorHandlerService) { }
+              private errorService: ErrorHandlerService,
+              private router: Router) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -44,7 +40,6 @@ export class DocProfesorComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
-    this.CargarSelects();
 
   }
 
@@ -57,16 +52,6 @@ export class DocProfesorComponent implements OnInit {
     });
   }
 
-  CargarSelects() {
-    this.personaService.getPersonas().subscribe(result => {
-      this.listPersonas = result.data;
-    });
-
-    this.especialidadService.getEspecialidades().subscribe(result => {
-      this.listEspecialidades = result.data;
-    });
-  }
-
   applyFilter(filterValue: string) {
     console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -74,22 +59,20 @@ export class DocProfesorComponent implements OnInit {
 
   guardarClick() {
 
-    const formDataPersona = this.personaService.form.value;
-    const formDataProfesor = this.profesorService.form.value;
-
     if (this.transaccionIsNew) {
-      this.personaService.setPersona(
-        formDataPersona.PrimerNombre,
-        formDataPersona.SegundoNombre,
-        formDataPersona.ApellidoPaterno,
-        formDataPersona.ApellidoMaterno
-      ).subscribe(result => {
+      this.personaService.setPersona().subscribe(result => {
 
         if (result.status === 1) {
 
           const persona: AdmPersona = result.data;
+          const formDataEstudiante = this.profesorService.form.value;
+          this.profesorService.form.patchValue({
+            IdEstudiante: formDataEstudiante.IdEstudiante,
+            IdPersona: persona.IdPersona,
+            IdGrupo: formDataEstudiante.IdGrupo
+          });
 
-          this.profesorService.setProfesor(persona.IdPersona, formDataProfesor.IdEspecialidad).subscribe(result2 => {
+          this.profesorService.setProfesor().subscribe(result2 => {
 
             if (result2.status === 1) {
               this.CargarDgvElements();
@@ -110,17 +93,11 @@ export class DocProfesorComponent implements OnInit {
       });
     } else {
 
-      this.personaService.updatePersona(
-        formDataPersona.IdPersona,
-        formDataPersona.PrimerNombre,
-        formDataPersona.SegundoNombre,
-        formDataPersona.ApellidoPaterno,
-        formDataPersona.ApellidoMaterno
-      ).subscribe(result => {
+      this.personaService.updatePersona().subscribe(result => {
 
         if (result.status === 1) {
 
-          this.profesorService.updateProfesor(formDataProfesor.IdProfesor, formDataProfesor.IdPersona, formDataProfesor.IdEspecialidad)
+          this.profesorService.updateProfesor()
             .subscribe(result2 => {
 
               if (result2.status === 1) {
@@ -145,7 +122,7 @@ export class DocProfesorComponent implements OnInit {
 
   eliminarClick() {
     const formData = this.profesorService.form.value;
-    this.profesorService.deleteProfesor(formData.IdProfesor).subscribe(result => {
+    this.personaService.deletePersona(formData.IdPersona).subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();
@@ -178,8 +155,7 @@ export class DocProfesorComponent implements OnInit {
 
     this.profesorService.form.patchValue({
       IdProfesor: profesor.IdProfesor,
-      IdPersona: profesor.IdPersona,
-      IdEspecialidad: profesor.IdEspecialidad
+      IdPersona: profesor.IdPersona
     });
     this.dialogTittle = 'Modificar Profesor';
   }
@@ -191,6 +167,18 @@ export class DocProfesorComponent implements OnInit {
     this.profesorService.form.reset();
     this.profesorService.InicializarValoresFormGroup();
     this.dialogTittle = 'Nuevo Profesor';
+  }
+
+  public redirectToEspecialidades = () => {
+    const profesor = this.dataSource.data[this.ROW_NUMBER];
+    const url = `docProfesorEspecialidades/${profesor.IdProfesor}`;
+    this.router.navigate([url]);
+  }
+
+  public redirectToGroups = () => {
+    const profesor = this.dataSource.data[this.ROW_NUMBER];
+    const url = `docProfesorGrupos/${profesor.IdProfesor}`;
+    this.router.navigate([url]);
   }
 
 }

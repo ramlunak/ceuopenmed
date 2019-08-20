@@ -63,12 +63,12 @@ export class AdmPersonaService {
       );
   }
 
-  setPersona(PrimerNombre: string, SegundoNombre: string, ApellidoPaterno: string, ApellidoMaterno: string) {
+  setPersona() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl( this.BaseURL + 'create' ),
-        { PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders( this.authService.getToken() ) }
       )
       .pipe(
@@ -77,12 +77,12 @@ export class AdmPersonaService {
       );
   }
 
-  updatePersona(IdPersona: number, PrimerNombre: string, SegundoNombre: string, ApellidoPaterno: string, ApellidoMaterno: string) {
+  updatePersona() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl( this.BaseURL + 'update/' + IdPersona ),
-        { PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno },
+        this.CONSTANS.getApiUrl( this.BaseURL + 'update/' + this.form.value.IdPersona ),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders( this.authService.getToken() ) }
       )
       .pipe(

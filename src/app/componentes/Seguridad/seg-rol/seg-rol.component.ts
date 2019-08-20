@@ -52,10 +52,8 @@ export class SegRolComponent implements OnInit {
 
   guardarClick() {
 
-    const formData = this.rolService.form.value;
-
     if (this.transaccionIsNew) {
-      this.rolService.setRol(formData.Rol).subscribe(result => {
+      this.rolService.setRol().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -67,7 +65,7 @@ export class SegRolComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.rolService.updateRol(formData.IdRol, formData.Rol).subscribe(result => {
+      this.rolService.updateRol().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -83,8 +81,7 @@ export class SegRolComponent implements OnInit {
   }
 
   eliminarClick() {
-    const formData = this.rolService.form.value;
-    this.rolService.deleteRol(formData.IdRol).subscribe(result => {
+    this.rolService.deleteRol().subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();

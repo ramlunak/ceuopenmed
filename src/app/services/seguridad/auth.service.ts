@@ -32,12 +32,12 @@ export class AuthService {
     });
   }
 
-  loginUser(username: string, password: string) {
+  loginUser() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl('authorize'),
-        { username, password },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders() }
       )
       .pipe(

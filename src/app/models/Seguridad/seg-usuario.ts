@@ -8,6 +8,6 @@ export interface SegUsuario {
     IdRol: number;
     IdPersona: number;
     // Extra Info
-    NombreCompleto: string;
     Rol: string;
+    NombreCompleto: string;
 }

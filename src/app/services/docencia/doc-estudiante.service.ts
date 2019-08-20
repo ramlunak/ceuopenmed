@@ -62,12 +62,12 @@ export class DocEstudianteService {
       );
   }
 
-  setEstudiante(IdPersona: number, IdGrupo: number) {
+  setEstudiante() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { IdPersona, IdGrupo },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -76,12 +76,12 @@ export class DocEstudianteService {
       );
   }
 
-  updateEstudiante(IdEstudiante: number, IdPersona: number, IdGrupo: number) {
+  updateEstudiante() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdEstudiante),
-        { IdPersona, IdGrupo },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdEstudiante),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -90,11 +90,11 @@ export class DocEstudianteService {
       );
   }
 
-  deleteEstudiante(IdEstudiante: number) {
+  deleteEstudiante() {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdEstudiante),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdEstudiante),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

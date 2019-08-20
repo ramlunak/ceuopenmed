@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    const loginData = this.authService.form.value;
-    this.authService.loginUser(loginData.username, loginData.password).subscribe(result => {
+    this.authService.loginUser().subscribe(result => {
 
       if (result.status === 1) {
         this.authService.requestAccesToken(result.data.authorization_code).subscribe(result2 => {

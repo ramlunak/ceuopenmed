@@ -60,12 +60,12 @@ export class DocEspecialidadService {
       );
   }
 
-  setEspecialidad(Especialidad: string) {
+  setEspecialidad() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        { Especialidad },
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -74,12 +74,12 @@ export class DocEspecialidadService {
       );
   }
 
-  updateEspecialidad(IdEspecialidad: number, Especialidad: string) {
+  updateEspecialidad() {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + IdEspecialidad),
-        { Especialidad },
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdEspecialidad),
+        this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -88,11 +88,11 @@ export class DocEspecialidadService {
       );
   }
 
-  deleteEspecialidad(IdEspecialidad: number) {
+  deleteEspecialidad() {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + IdEspecialidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdEspecialidad),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

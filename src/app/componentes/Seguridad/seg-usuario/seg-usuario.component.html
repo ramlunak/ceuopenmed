@@ -1,0 +1,188 @@
+<!-- TOOL BAR-->
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+
+        <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal"
+            data-target="#OperationModalDialog">
+            <mat-icon>add</mat-icon>
+            Nuevo
+        </button>
+
+        <span class="material-spacer"></span>
+
+        <mat-form-field id="mat-form-field-search">
+            <input matInput (keyup)="applyFilter($event.target.value)">
+            <mat-placeholder class="placeholder">Buscar</mat-placeholder>
+        </mat-form-field>
+
+    </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+<div class="shadow-sm p-3 mb-5 bg-white rounded">
+
+    <!-- FORMULARIO -->
+    <div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
+        aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">{{dialogTittle}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="usuarioService.form" class="ceu-form">
+
+
+                        <mat-form-field class="ceu-full-width">
+                            <input type="hidden" formControlName="id">
+                            <input formControlName="username" matInput name="username" placeholder="Usuario">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="email" matInput name="email" placeholder="Email">
+                            <mat-error>Formato de email no válido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="password" matInput name="password" placeholder="Contraseña" type="password">
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="passwordconf" matInput name="passwordconf" placeholder="Confirmar Contraseña" type="password">
+                            <mat-error>Las Contraseñas no coinciden.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">                            
+                            <mat-label>Rol</mat-label>
+                            <mat-select formControlName="IdRol" name="rol">
+                                <mat-option *ngFor="let rol of listRoles" [value]="rol.IdRol">
+                                    {{rol.Rol}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">                            
+                            <mat-label>Persona</mat-label>
+                            <mat-select formControlName="IdPersona" name="persona">
+                                <mat-option *ngFor="let persona of listPersonas" [value]="persona.IdPersona">
+                                    {{persona.NombreCompleto}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <mat-icon *ngIf="usuarioService.loading$ | async">
+                        <mat-spinner diameter="20" color="accent">
+                        </mat-spinner>
+                    </mat-icon>
+                    <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
+
+                    <button mat-raised-button color='primary'
+                        [disabled]="usuarioService.form.invalid || (usuarioService.loading$ | async)"
+                        *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+                    <button mat-raised-button color='primary'
+                        [disabled]="usuarioService.form.invalid || (usuarioService.loading$ | async)"
+                        *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END FORMULARIO -->
+
+
+    <!-- ELIMINAR -->
+    <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+                </div>
+                <div class="modal-footer">
+                    <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+                    <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button
+                        color='warn'>Eliminar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="spinner-container" *ngIf="usuarioService.loading$ | async">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="ceu-table">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef> Creado </th>
+            <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updated_at">
+            <th mat-header-cell *matHeaderCellDef> Actualizado </th>
+            <td mat-cell *matCellDef="let element"> {{element.updated_at}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Rol">
+            <th mat-header-cell *matHeaderCellDef> Rol </th>
+            <td mat-cell *matCellDef="let element"> {{element.Rol}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NombreCompleto">
+            <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+            <td mat-cell *matCellDef="let element"> {{element.NombreCompleto}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="commands">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let row = index;">
+
+                <button (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+                    data-target="#OperationModalDialog">
+                    <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
+                </button>
+
+                <button (click)="ROW_NUMBER = row; setOperationsData()" mat-icon-button data-toggle="modal"
+                    data-target="#DeleteDialog">
+                    <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+                </button>
+
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+    <!--END GRID -->
+
+</div>

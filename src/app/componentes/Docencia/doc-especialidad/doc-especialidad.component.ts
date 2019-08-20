@@ -52,10 +52,8 @@ export class DocEspecialidadComponent implements OnInit {
 
   guardarClick() {
 
-    const formData = this.especialidadService.form.value;
-
     if (this.transaccionIsNew) {
-      this.especialidadService.setEspecialidad(formData.Especialidad).subscribe(result => {
+      this.especialidadService.setEspecialidad().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -67,7 +65,7 @@ export class DocEspecialidadComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.especialidadService.updateEspecialidad(formData.IdEspecialidad, formData.Especialidad).subscribe(result => {
+      this.especialidadService.updateEspecialidad().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -83,8 +81,7 @@ export class DocEspecialidadComponent implements OnInit {
   }
 
   eliminarClick() {
-    const formData = this.especialidadService.form.value;
-    this.especialidadService.deleteEspecialidad(formData.IdEspecialidad).subscribe(result => {
+    this.especialidadService.deleteEspecialidad().subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();

@@ -52,10 +52,8 @@ export class DocGrupoComponent implements OnInit {
 
   guardarClick() {
 
-    const formData = this.grupoService.form.value;
-
     if (this.transaccionIsNew) {
-      this.grupoService.setGrupo(formData.Grupo).subscribe(result => {
+      this.grupoService.setGrupo().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -67,7 +65,7 @@ export class DocGrupoComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.grupoService.updateGrupo(formData.IdGrupo, formData.Grupo).subscribe(result => {
+      this.grupoService.updateGrupo().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
@@ -83,8 +81,7 @@ export class DocGrupoComponent implements OnInit {
   }
 
   eliminarClick() {
-    const formData = this.grupoService.form.value;
-    this.grupoService.deleteGrupo(formData.IdGrupo).subscribe(result => {
+    this.grupoService.deleteGrupo().subscribe(result => {
 
       if (result.status === 1) {
         this.CargarDgvElements();
