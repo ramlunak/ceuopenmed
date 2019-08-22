@@ -24,6 +24,12 @@ import { ErrorHandlerService } from '../../services/error-handler.service';
 
 export class EntidadComponent implements OnInit {
 
+
+   //para cargar evaluacion
+   EstadoEntidad=0;
+   EvaluacionEntidad=0;
+   ComentarioEntidad=null;
+
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
@@ -129,6 +135,16 @@ export class EntidadComponent implements OnInit {
   setOperationsData() {
     this.transaccionIsNew = false;
     const Entidad = this.dataSource.data[this.ROW_NUMBER];
+    this.Service.form.patchValue({ IdEntidad: Entidad.IdEntidad, Entidad: Entidad.Entidad });
+    this.dialogTittle = 'Modificar';
+  }
+
+  cargarEvaluacion() {
+    this.transaccionIsNew = false;
+    const Entidad = this.dataSource.data[this.ROW_NUMBER];    
+    this.EstadoEntidad = parseInt(Entidad.Estado);  
+    this.EvaluacionEntidad = parseInt(Entidad.Evaluacion);    
+    this.ComentarioEntidad = Entidad.Comentario; 
     this.Service.form.patchValue({ IdEntidad: Entidad.IdEntidad, Entidad: Entidad.Entidad });
     this.dialogTittle = 'Modificar';
   }
