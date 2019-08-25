@@ -29,14 +29,15 @@ export class EntidadComponent implements OnInit {
    EstadoEntidad=0;
    EvaluacionEntidad=0;
    ComentarioEntidad=null;
-
+   _Entidad:Entidad;
+   
   transaccionIsNew = true;
-  ROW_NUMBER: number;
+   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
   
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['IdEntidad', 'Entidad','Evaluacion','Estado','info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad','Idioma','Entidad','Evaluacion','Estado','info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -93,10 +94,7 @@ export class EntidadComponent implements OnInit {
           this.errorService.handleError(result.error);
         }
 
-      }, (error) => {
-
-        //{"status":0,"error_code":400,"errors":{"Estado":["Estado debe ser un n\u00famero entero."],
-        //"IdProfesor":["El profesor que seleccion\u00f3 no existe en la Base de Datos del Sistema."]}}
+      }, (error) => {       
         this.errorService.handleError(error);
        
       });
@@ -114,6 +112,7 @@ export class EntidadComponent implements OnInit {
       });
     }
     this.Limpiar();
+    this.CargarDgvElements();
   }
 
   eliminarClick() {
@@ -135,18 +134,38 @@ export class EntidadComponent implements OnInit {
   setOperationsData() {
     this.transaccionIsNew = false;
     const Entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.Service.form.patchValue({ IdEntidad: Entidad.IdEntidad, Entidad: Entidad.Entidad });
+    this.Service.form.patchValue(
+      {
+         IdEntidad: Entidad.IdEntidad, 
+         Entidad: Entidad.Entidad,
+         IdTipoEntidad:Entidad.IdTipoEntidad,
+         IdIdioma : Entidad.IdIdioma
+        });
     this.dialogTittle = 'Modificar';
   }
 
-  cargarEvaluacion() {
+  setEvalucacion(estado,evaluacion) {
+    this.EstadoEntidad = parseInt(estado);  
+    this.EvaluacionEntidad = parseInt(evaluacion); 
+  }
+
+  cargarEvaluacion() {    
     this.transaccionIsNew = false;
     const Entidad = this.dataSource.data[this.ROW_NUMBER];    
+    this._Entidad= this.dataSource.data[this.ROW_NUMBER];    
     this.EstadoEntidad = parseInt(Entidad.Estado);  
     this.EvaluacionEntidad = parseInt(Entidad.Evaluacion);    
     this.ComentarioEntidad = Entidad.Comentario; 
     this.Service.form.patchValue({ IdEntidad: Entidad.IdEntidad, Entidad: Entidad.Entidad });
     this.dialogTittle = 'Modificar';
+  }
+
+  ActualizarEvaluacion() {   
+    this.transaccionIsNew = false;    
+    this._Entidad.Estado = this.EstadoEntidad.toString();
+    this._Entidad.Evaluacion = this.EvaluacionEntidad.toString();
+    this._Entidad.Comentario = this.Service.form.value.Comentario;
+    this.Service.form.setValue(this._Entidad);    
   }
 
   Limpiar() {

@@ -9,7 +9,6 @@ export class AppConstantsService {
 
   private API_URL = 'http://api.ceuopenmed.com:8080/';
 
-
   constructor() { }
 
   getApiUrl(module?: string) {

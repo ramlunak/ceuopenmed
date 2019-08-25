@@ -36,8 +36,8 @@
 
                 <mat-form-field class="ceu-full-width">
                     <mat-label>TipoEntidad</mat-label>
-                    <mat-select formControlName="IdTipoEntidad" name="TipoEntidad">
-                        <mat-option *ngFor="let TipoEntidad of listTiposEntidad" [value]="TipoEntidad.IdTipoEntidad">
+                    <mat-select formControlName="IdTipoEntidad" name="TipoEntidad" >
+                        <mat-option  *ngFor="let TipoEntidad of listTiposEntidad" [value]="TipoEntidad.IdTipoEntidad">
                             {{TipoEntidad.TipoEntidad}}
                         </mat-option>
                     </mat-select>
@@ -83,6 +83,29 @@
 </div>
 <!--END FORMULARIO -->
 
+ <!-- ELIMINAR -->
+ <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+         </div>
+         <div class="modal-footer">
+             <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+             <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button
+                 color='warn'>Eliminar</button>
+         </div>
+     </div>
+ </div>
+</div>
+
  <!-- GRID -->
 <table mat-table [dataSource]="dataSource" class="ceu-table">
 
@@ -90,6 +113,17 @@
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="TipoEntidad">
+        <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
+        <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Idioma">
+        <th mat-header-cell *matHeaderCellDef> Idioma </th>
+        <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+    </ng-container>
+
 
     <ng-container matColumnDef="Entidad">
         <th mat-header-cell *matHeaderCellDef> Entidad </th>
@@ -149,27 +183,23 @@
             </button>
 
             <button (click)="ROW_NUMBER = row; setOperationsData()" mat-icon-button data-toggle="modal"
-                data-target="#DeleteDialog">
-                <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+                    data-target="#DeleteDialog">
+                    <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
             </button>
-
+<!-- 
             <button (click)="ROW_NUMBER = row; goTo('/negRelacion')" mat-icon-button 
             data-target="#DeleteDialog">
-            <mat-icon class="orange-color" matTooltip="Relaciones">report</mat-icon>
-        </button>
+            <mat-icon class="orange-color" matTooltip="Relaciones">shuffle</mat-icon>
+        </button> -->
 
         </td>
-    </ng-container>
-
-   
+    </ng-container>   
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
 <!--END GRID -->
-
-
 
  <!-- EVALUAR -->
  <div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog"
@@ -190,7 +220,7 @@
     
     <tr>
         <td class="p30">
-                <button  mat-icon-button >
+                <button (click)="setEvalucacion('1','1')" mat-icon-button >
                     <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
                 </button>
                 <mat-icon class="green-color" matTooltip="Correcto"
@@ -198,24 +228,30 @@
         </td>
        
         <td class="p30">
-                <button  mat-icon-button >
-                        <mat-icon color="warn" matTooltip="Correcto">report</mat-icon>
+                <button (click)="setEvalucacion('1','0')" mat-icon-button >
+                        <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
                     </button>
                     <mat-icon class="green-color" matTooltip="Correcto"
                     *ngIf="EstadoEntidad == 1 && EvaluacionEntidad == 0">done</mat-icon>
         </td>
         <td class="p20">
-                <button  mat-icon-button >
+                <button (click)="setEvalucacion('0','0')" mat-icon-button >
                         <mat-icon class="darkblue-color" matTooltip="Correcto">hourglass_empty</mat-icon>
                     </button>
-                    <mat-icon class="green-color" matTooltip="Correcto"
+                    <mat-icon class="green-color" matTooltip="En espera"
                     *ngIf="EstadoEntidad == 0 && EvaluacionEntidad == 0">done</mat-icon>
+
         </td>
     </tr>   
+    <tr>
+        <td colspan="3">
+            <div class="dropdown-divider"></div>
+        </td>
+    </tr>
 </table>
 
                  <mat-form-field class="ceu-full-width">
-                    
+                  
                      <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario" placeholder="Comentario"></textarea>
                      <mat-error>Este campo es requerido.</mat-error>
                  </mat-form-field>
@@ -228,11 +264,9 @@
                  <mat-spinner diameter="20" color="accent">
                  </mat-spinner>
              </mat-icon>
-             <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
-
-            
+             <button mat-stroked-button data-dismiss="modal" >Cancelar</button>            
              <button mat-raised-button color='primary'                
-                 data-dismiss="modal" (click)="guardarClick()">Guardar</button>
+                 data-dismiss="modal" (click)="ROW_NUMBER = row; ActualizarEvaluacion()">Guardar</button>
 
          </div>
      </div>

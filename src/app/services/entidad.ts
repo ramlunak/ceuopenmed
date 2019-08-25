@@ -24,11 +24,11 @@ export class EntidadService {
     IdEntidad: new FormControl(null),
     IdTipoEntidad: new FormControl('', Validators.required),
     IdIdioma: new FormControl('', Validators.required),
-    IdEstudiante: new FormControl('', Validators.required),
+    IdEstudiante:  new FormControl(null),
     IdProfesor: new FormControl(null),
     Entidad: new FormControl('', Validators.required),
-    Evaluacion: new FormControl('', Validators.required),
-    Estado: new FormControl('', Validators.required),
+    Evaluacion:  new FormControl(null),
+    Estado:  new FormControl(null),
     Comentario: new FormControl(null),
   });
 
