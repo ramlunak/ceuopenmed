@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/seguridad/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { isString } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ export class ErrorHandlerService {
 
   errorMessage = '';
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private snackBar: MatSnackBar) { }
 
   handleError = (error: HttpErrorResponse) => {
     if (error.status === 500) { // Error Interno del Servidor
@@ -28,31 +30,51 @@ export class ErrorHandlerService {
 
   private handle500Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
-    // this.router.navigateByUrl('/500');
+    this.snackBar.open(this.errorMessage, 'OK', {
+      duration: 8000,
+    });
   }
 
   private handle401Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
     this.authService.logoutUser().subscribe();
     this.router.navigateByUrl('/login');
+    this.snackBar.open('Su sección a caducado, vuelva a iniciar sección.', 'OK', {
+      duration: 8000,
+    });
   }
 
   private handle404Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
-    this.router.navigateByUrl('/404');
+    this.snackBar.open('Servicio desconocido en Servidor API Rest o Servidor API Rest desconectado.', 'OK', {
+      duration: 8000,
+    });
   }
 
   private handle400Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
+    this.snackBar.open(this.errorMessage, 'OK', {
+      duration: 8000,
+    });
   }
 
   private handleOtherError = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
-    // TODO: this will be fixed later;
-    // this.router.navigateByUrl('/500');
+    this.snackBar.open(this.errorMessage, 'OK', {
+      duration: 8000,
+    });
   }
 
   private createErrorMessage(error: HttpErrorResponse) {
-    this.errorMessage = error.error ? error.error : error.statusText;
+    if (isString(error.error)) {
+      this.errorMessage = error.error ? error.error : error.statusText;
+    } else {
+      let str: string = error.error ? JSON.stringify(error.error.errors) : error.statusText;
+      str = str.replace('{', '');
+      str = str.replace('}', '');
+      str = str.replace('[', ' ');
+      str = str.replace(']', ' ');
+      this.errorMessage = str;
+    }
   }
 }

@@ -10,7 +10,6 @@ import { LoginComponent } from '../componentes/Seguridad/login/login.component';
 import { NotFoundComponent } from '../componentes/errorPages/not-found/not-found.component';
 import { ServerErrorComponent } from '../componentes/errorPages/server-error/server-error.component';
 import { SegRolComponent } from '../componentes/Seguridad/seg-rol/seg-rol.component';
-import { SegUsuarioComponent } from '../componentes/Seguridad/seg-usuario/seg-usuario.component';
 import { DocEspecialidadComponent } from '../componentes/Docencia/doc-especialidad/doc-especialidad.component';
 import { DocGrupoComponent } from '../componentes/Docencia/doc-grupo/doc-grupo.component';
 import { DocEstudianteComponent } from '../componentes/Docencia/doc-estudiante/doc-estudiante.component';
@@ -27,7 +26,6 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
   { path: 'login', component: LoginComponent },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
-  { path: 'segUsuario', component: SegUsuarioComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },
   { path: 'docEstudiante', component: DocEstudianteComponent, canActivate: [AuthVerifyService] },

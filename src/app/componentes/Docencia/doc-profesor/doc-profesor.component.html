@@ -57,6 +57,33 @@
                         </mat-form-field>
                     </form>
 
+                    <div *ngIf="transaccionIsNew">
+                        <form [formGroup]="usuarioService.form" class="ceu-form">
+                            <mat-form-field class="ceu-full-width">
+                                <input type="hidden" formControlName="id">
+                                <input formControlName="username" matInput name="username" placeholder="Usuario">
+                                <mat-error>Este campo es requerido.</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="ceu-full-width">
+                                <input formControlName="email" matInput name="email" placeholder="Email">
+                                <mat-error>Formato de email no válido.</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="ceu-full-width">
+                                <input formControlName="password" matInput name="password" placeholder="Contraseña"
+                                    type="password">
+                                <mat-error *ngIf="usuarioService.form.controls['password'].errors?.required">Este campo
+                                    es requerido.</mat-error>
+                                <mat-error *ngIf="usuarioService.form.controls['password'].errors?.minlength">La
+                                    contraseña debe contener como mínimo 6 caracteres.</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="ceu-full-width">
+                                <input formControlName="passwordconf" matInput name="passwordconf"
+                                    placeholder="Confirmar Contraseña" type="password">
+                                <mat-error>Las Contraseñas no coinciden.</mat-error>
+                            </mat-form-field>
+                        </form>
+                    </div>
+
                     <form [formGroup]="profesorService.form" class="ceu-form">
                         <input type="hidden" formControlName="IdProfesor">
                         <input type="hidden" formControlName="IdPersona">
@@ -64,17 +91,20 @@
 
                 </div>
                 <div class="modal-footer">
-                    <mat-icon *ngIf="personaService.loading$ | async">
+                    <mat-icon
+                        *ngIf="(personaService.loading$ | async) || (usuarioService.loading$ | async) || (profesorService.loading$ | async)">
                         <mat-spinner diameter="20" color="accent">
                         </mat-spinner>
                     </mat-icon>
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
                     <button mat-raised-button color='primary'
-                        [disabled]="profesorService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
+                        [disabled]="profesorService.form.invalid || personaService.form.invalid || usuarioService.form.invalid
+                        || (personaService.loading$ | async) || (usuarioService.loading$ | async) || (profesorService.loading$ | async)"
                         *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
                     <button mat-raised-button color='primary'
-                        [disabled]="profesorService.form.invalid || personaService.form.invalid || (personaService.loading$ | async)"
+                        [disabled]="profesorService.form.invalid || personaService.form.invalid
+                        || (personaService.loading$ | async) || (profesorService.loading$ | async)"
                         *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
                 </div>
@@ -107,9 +137,69 @@
             </div>
         </div>
     </div>
+    <!-- END ELIMINAR -->
 
-    <div class="spinner-container" *ngIf="profesorService.loading$ | async">
-        <mat-spinner diameter="50"></mat-spinner>
+    <!-- FORMULARIO USUARIO -->
+    <div class="modal fade" id="UsuarioModalDialog" tabindex="-1" role="dialog" aria-labelledby="UsuarioModalDialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="usuarioService.formChangePass" class="ceu-form">
+
+                        <mat-form-field class="ceu-full-width">
+                            <input type="hidden" formControlName="id">
+                            <input formControlName="upassword" matInput name="upassword" placeholder="Contraseña"
+                                type="password">
+                            <mat-error *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.required">Este
+                                campo
+                                es requerido.</mat-error>
+                            <mat-error *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.minlength">La
+                                contraseña debe contener como mínimo 6 caracteres.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="ceu-full-width">
+                            <input formControlName="upasswordconf" matInput name="upasswordconf"
+                                placeholder="Confirmar Contraseña" type="password">
+                            <mat-error>Las Contraseñas no coinciden.</mat-error>
+                        </mat-form-field>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <mat-icon *ngIf="usuarioService.loading$ | async">
+                        <mat-spinner diameter="20" color="accent">
+                        </mat-spinner>
+                    </mat-icon>
+                    <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
+
+                    <button mat-raised-button color='primary'
+                        [disabled]="usuarioService.formChangePass.invalid || (usuarioService.loading$ | async)"
+                        data-dismiss="modal" (click)="guardarUsuarioClick()">Modificar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END FORMULARIO USUARIO -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <div class="spinner-container" *ngIf="profesorService.loading$ | async">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="ceu-table">
@@ -124,9 +214,29 @@
             <td mat-cell *matCellDef="let element"> {{element.NombreCompleto}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> Usuario </th>
+            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.status | exchangeStatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> IdUsuario </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="commands">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row = index;">
+
+                <button (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+                    data-target="#UsuarioModalDialog">
+                    <mat-icon color='primary' matTooltip="Usuario">account_circle</mat-icon>
+                </button>
 
                 <button (click)='ROW_NUMBER = row; redirectToEspecialidades()' mat-icon-button>
                     <mat-icon color='primary' matTooltip="Especialidades">assignment</mat-icon>

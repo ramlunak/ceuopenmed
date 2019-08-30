@@ -26,6 +26,9 @@
                                     <mat-error>Este campo es requerido.</mat-error>
                                 </mat-form-field>
                             </div>
+                            <div>
+                                <mat-checkbox formControlName="rememberMe">Recordarme</mat-checkbox>
+                            </div>
                             <button mat-raised-button color="primary" class="ceu-full-width mb-1"
                                 [disabled]="authService.form.invalid" type="submit">
                                 <mat-icon *ngIf="authService.loading$ | async">

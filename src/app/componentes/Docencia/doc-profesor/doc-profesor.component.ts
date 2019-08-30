@@ -8,6 +8,8 @@ import { DocProfesorService } from '../../../services/docencia/doc-profesor.serv
 import { DocProfesor } from 'src/app/models/Docencia/doc-profesor';
 import { AdmPersonaService } from '../../../services/administracion/adm-persona.service';
 import { AdmPersona } from 'src/app/models/Administracion/adm-persona';
+import { SegUsuarioService } from 'src/app/services/seguridad/seg-usuario.service';
+import { AppConstantsService } from 'src/app/utils/app-constants.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -25,13 +27,15 @@ export class DocProfesorComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DocProfesor>;
-  displayedColumns = ['IdProfesor', 'NombreCompleto', 'commands'];
+  displayedColumns = ['IdProfesor', 'NombreCompleto', 'username', 'status', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private profesorService: DocProfesorService,
-              private personaService: AdmPersonaService,
-              private errorService: ErrorHandlerService,
-              private router: Router) { }
+    private personaService: AdmPersonaService,
+    private usuarioService: SegUsuarioService,
+    private errorService: ErrorHandlerService,
+    private router: Router,
+    private CONSTANS: AppConstantsService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -65,20 +69,43 @@ export class DocProfesorComponent implements OnInit {
         if (result.status === 1) {
 
           const persona: AdmPersona = result.data;
-          const formDataEstudiante = this.profesorService.form.value;
-          this.profesorService.form.patchValue({
-            IdEstudiante: formDataEstudiante.IdEstudiante,
-            IdPersona: persona.IdPersona,
-            IdGrupo: formDataEstudiante.IdGrupo
+          const roles = this.CONSTANS.getRoles();
+          const formDataUsuario = this.usuarioService.form.value;
+          this.usuarioService.form.patchValue({
+            username: formDataUsuario.username,
+            email: formDataUsuario.email,
+            password: formDataUsuario.password,
+            passwordconf: formDataUsuario.passwordconf,
+            IdRol: roles.Profesor,
+            IdPersona: persona.IdPersona
           });
 
-          this.profesorService.setProfesor().subscribe(result2 => {
+
+          this.usuarioService.setUsuario().subscribe(result2 => {
 
             if (result2.status === 1) {
-              this.CargarDgvElements();
+
+              const formDataEstudiante = this.profesorService.form.value;
+              this.profesorService.form.patchValue({
+                IdProfesor: formDataEstudiante.IdProfesor,
+                IdPersona: persona.IdPersona
+              });
+              this.profesorService.setProfesor().subscribe(result3 => {
+
+                if (result3.status === 1) {
+                  this.CargarDgvElements();
+                } else {
+                  this.errorService.handleError(result3.error);
+                }
+
+              }, (error) => {
+                this.errorService.handleError(error);
+              });
+
             } else {
               this.errorService.handleError(result2.error);
             }
+            this.Limpiar();
 
           }, (error) => {
             this.errorService.handleError(error);
@@ -87,7 +114,7 @@ export class DocProfesorComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-        this.Limpiar();
+
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -179,6 +206,10 @@ export class DocProfesorComponent implements OnInit {
     const profesor = this.dataSource.data[this.ROW_NUMBER];
     const url = `docProfesorGrupos/${profesor.IdProfesor}`;
     this.router.navigate([url]);
+  }
+
+  guardarUsuarioClick() {
+
   }
 
 }

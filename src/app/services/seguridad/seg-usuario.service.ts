@@ -14,7 +14,7 @@ import { CustomValidators } from 'src/app/utils/custom-validators';
 })
 export class SegUsuarioService {
 
-  private BaseURL = 'seg-usuario/';
+  private BaseURL = '';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -23,15 +23,24 @@ export class SegUsuarioService {
     id: new FormControl(null),
     username: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     passwordconf: new FormControl('', Validators.required),
-    IdRol: new FormControl('', Validators.required),
-    IdPersona: new FormControl('', Validators.required)
+    IdRol: new FormControl(''),
+    IdPersona: new FormControl('')
+  });
+
+  formChangePass: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    upassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    upasswordconf: new FormControl('', Validators.required)
   });
 
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) {
     this.form.get('passwordconf').setValidators(
       CustomValidators.equalsValidator(this.form.get('password'))
+    );
+    this.formChangePass.get('upasswordconf').setValidators(
+      CustomValidators.equalsValidator(this.formChangePass.get('upassword'))
     );
   }
 
@@ -47,39 +56,19 @@ export class SegUsuarioService {
     });
   }
 
-  getUsuarios(): Observable<any> {
-    this.loadingSubject.next(true);
-    return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL),
-        {
-          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-        }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
-  }
-
-  viewUsuario(IdUsuario: number) {
-    this.loadingSubject.next(true);
-    return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'view/' + IdUsuario),
-        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
+  InicializarValoresFormChangePassGroup() {
+    this.formChangePass.setValue({
+      id: null,
+      upassword: '',
+      upasswordconf: ''
+    });
   }
 
   setUsuario() {
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
+        this.CONSTANS.getApiUrl('register'),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -103,16 +92,4 @@ export class SegUsuarioService {
       );
   }
 
-  deleteUsuario() {
-    this.loadingSubject.next(true);
-    return this.httpClient
-      .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdUsuario),
-        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
-  }
 }

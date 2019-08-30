@@ -2,11 +2,10 @@
   <!-- Logo Header -->
   <div class="logo-header" data-background-color="blue">
 
-    <a href="index.html" class="logo">
-      <img src="../../assets/img/ceo_logo.png" width="50" alt="navbar brand" class="navbar-brand">
+    <a href="../index.html" class="logo">
+      <img src="../../assets/img/ceo_logo.png" alt="CEUOPENMED" class="navbar-brand">
       <span style="color: white;font-size: 14px;font-weight:900">CEUOPENMED</span>
     </a>
-
     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon">
@@ -15,7 +14,7 @@
     </button>
     <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
     <div class="nav-toggle">
-      <button class="btn btn-toggle sidenav-overlay-toggler">
+      <button class="btn btn-toggle toggle-sidebar">
         <i class="icon-menu"></i>
       </button>
     </div>
@@ -24,7 +23,6 @@
 
   <!-- Navbar Header -->
   <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue">
-
     <div class="container-fluid">
       <div class="collapse" id="search-nav">
         <form class="navbar-left navbar-form nav-search mr-md-3">
@@ -43,7 +41,6 @@
             <i class="fa fa-search"></i>
           </a>
         </li>
-       
       
         <li class="nav-item dropdown hidden-caret">
           <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
@@ -66,13 +63,13 @@
                 </div>
               </li>
               <li>
-                <div class="dropdown-divider"></div>
-               <!--  <a class="dropdown-item" routerLink="">Inbox</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" routerLink="">Cambiar Contraseña</a>
-                <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" (click)="Logout()">Cerrar Sección</a>
-              </li>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" routerLink="">Inbox</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" routerLink="">Cambiar Contraseña</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" (click)="Logout()">Cerrar Sección</a>
+                </li>
             </div>
           </ul>
         </li>

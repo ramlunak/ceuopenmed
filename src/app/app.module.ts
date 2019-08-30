@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { RouterModule } from '@angular/router';
 
 // Módulo de importación de Bibliotecas de Angular Material
@@ -34,7 +33,7 @@ import { TipoEntidadComponent } from './componentes/tipo-entidad/tipo-entidad.co
 import { IdiomaComponent } from './componentes/idioma/idioma.component';
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from './componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
-import { SegUsuarioComponent } from './componentes/Seguridad/seg-usuario/seg-usuario.component';
+import { ExchangeStatusPipe } from './utils/pipes/exchange-status.pipe';
 import { EntidadComponent } from './componentes/entidad/entidad.component';
 
 @NgModule({
@@ -55,7 +54,7 @@ import { EntidadComponent } from './componentes/entidad/entidad.component';
     TipoEntidadComponent,
     IdiomaComponent,
     DocProfesorEspecialidadesComponent,
-    SegUsuarioComponent,
+    ExchangeStatusPipe,
     EntidadComponent
   ],
   imports: [
@@ -66,7 +65,7 @@ import { EntidadComponent } from './componentes/entidad/entidad.component';
     HttpClientModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AppServicesModule

@@ -8,6 +8,7 @@ import { isNullOrUndefined } from 'util';
 export class AppConstantsService {
 
   private API_URL = 'http://api.ceuopenmed.com:8080/';
+  private ROLES = {Administrador: 1, Profesor: 2, Estudiante: 3 };
 
   constructor() { }
 
@@ -30,5 +31,9 @@ export class AppConstantsService {
         'X-Access-Token': accesstoken
       });
     }
+  }
+
+  getRoles() {
+    return this.ROLES;
   }
 }

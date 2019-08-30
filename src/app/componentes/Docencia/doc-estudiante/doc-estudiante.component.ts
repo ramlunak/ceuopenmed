@@ -9,6 +9,8 @@ import { AdmPersonaService } from '../../../services/administracion/adm-persona.
 import { AdmPersona } from 'src/app/models/Administracion/adm-persona';
 import { DocGrupoService } from '../../../services/docencia/doc-grupo.service';
 import { DocGrupo } from 'src/app/models/Docencia/doc-grupo';
+import { SegUsuarioService } from '../../../services/seguridad/seg-usuario.service';
+import { AppConstantsService } from 'src/app/utils/app-constants.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -26,16 +28,18 @@ export class DocEstudianteComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DocEstudiante>;
-  displayedColumns = ['IdEstudiante', 'NombreCompleto', 'Grupo', 'commands'];
+  displayedColumns = ['IdEstudiante', 'NombreCompleto', 'Grupo', 'username', 'status', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   // Selects
   listPersonas: AdmPersona[];
   listGrupos: DocGrupo[];
 
   constructor(private estudianteService: DocEstudianteService,
-              private personaService: AdmPersonaService,
-              private grupoService: DocGrupoService,
-              private errorService: ErrorHandlerService) { }
+    private personaService: AdmPersonaService,
+    private usuarioService: SegUsuarioService,
+    private grupoService: DocGrupoService,
+    private errorService: ErrorHandlerService,
+    private CONSTANS: AppConstantsService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -80,21 +84,42 @@ export class DocEstudianteComponent implements OnInit {
         if (result.status === 1) {
 
           const persona: AdmPersona = result.data;
-          const formDataEstudiante = this.estudianteService.form.value;
-          this.estudianteService.form.patchValue({
-            IdEstudiante: formDataEstudiante.IdEstudiante,
-            IdPersona: persona.IdPersona,
-            IdGrupo: formDataEstudiante.IdGrupo
+          const roles = this.CONSTANS.getRoles();
+          const formDataUsuario = this.usuarioService.form.value;
+          this.usuarioService.form.patchValue({
+            username: formDataUsuario.username,
+            email: formDataUsuario.email,
+            password: formDataUsuario.password,
+            passwordconf: formDataUsuario.passwordconf,
+            IdRol: roles.Estudiante,
+            IdPersona: persona.IdPersona
           });
 
-          this.estudianteService.setEstudiante().subscribe(result2 => {
+          this.usuarioService.setUsuario().subscribe(result2 => {
 
             if (result2.status === 1) {
-              this.CargarDgvElements();
+              const formDataEstudiante = this.estudianteService.form.value;
+              this.estudianteService.form.patchValue({
+                IdEstudiante: formDataEstudiante.IdEstudiante,
+                IdPersona: persona.IdPersona,
+                IdGrupo: formDataEstudiante.IdGrupo
+              });
+              this.estudianteService.setEstudiante().subscribe(result3 => {
+
+                if (result3.status === 1) {
+                  this.CargarDgvElements();
+                } else {
+                  this.errorService.handleError(result3.error);
+                }
+
+              }, (error) => {
+                this.errorService.handleError(error);
+              });
+
             } else {
               this.errorService.handleError(result2.error);
             }
-
+            this.Limpiar();
           }, (error) => {
             this.errorService.handleError(error);
           });
@@ -102,7 +127,7 @@ export class DocEstudianteComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-        this.Limpiar();
+
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -114,15 +139,15 @@ export class DocEstudianteComponent implements OnInit {
 
           this.estudianteService.updateEstudiante().subscribe(result2 => {
 
-              if (result2.status === 1) {
-                this.CargarDgvElements();
-              } else {
-                this.errorService.handleError(result2.error);
-              }
+            if (result2.status === 1) {
+              this.CargarDgvElements();
+            } else {
+              this.errorService.handleError(result2.error);
+            }
 
-            }, (error) => {
-              this.errorService.handleError(error);
-            });
+          }, (error) => {
+            this.errorService.handleError(error);
+          });
         } else {
           this.errorService.handleError(result.error);
         }
@@ -182,6 +207,10 @@ export class DocEstudianteComponent implements OnInit {
     this.estudianteService.form.reset();
     this.estudianteService.InicializarValoresFormGroup();
     this.dialogTittle = 'Nuevo Estudiante';
+  }
+
+  guardarUsuarioClick() {
+
   }
 
 }

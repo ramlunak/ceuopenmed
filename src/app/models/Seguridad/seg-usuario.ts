@@ -10,4 +10,6 @@ export interface SegUsuario {
     // Extra Info
     Rol: string;
     NombreCompleto: string;
+    IdEstudiante: number;
+    IdProfesor: number;
 }

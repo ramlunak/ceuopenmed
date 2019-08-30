@@ -22,13 +22,15 @@ export class AuthService {
 
   form: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    rememberMe: new FormControl(false)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
       username: '',
-      password: ''
+      password: '',
+      rememberMe: false
     });
   }
 

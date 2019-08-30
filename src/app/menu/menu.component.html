@@ -1,39 +1,38 @@
 <!-- Sidebar -->
 <div class="sidebar">
-	<div class="sidebar-wrapper scrollbar scrollbar-inner">
-		<div class="sidebar-content">
-
-			<div class="user" style="color: black">
-				MENU
-			</div>
-
-			<ul class="nav nav-primary">
-<!-- 
-				<li class="nav-section">
-					<span class="sidebar-mini-icon">
-						<i class="fa fa-ellipsis-h"></i>
-					</span>
-					<h4 class="text-section">Snippets</h4>
-				</li> -->
-
-				<li class="nav-item">
-					<a data-toggle="collapse" href="#email-nav">
-					<mat-icon>format_list_bulleted</mat-icon>
-						<p>Administrar</p>
-						<span class="caret"></span>
-					</a>
-					<div class="collapse" id="email-nav">
-						<ul class="nav nav-collapse">
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="dashboard">
+                        <ul class="nav nav-collapse">
                             <li>
                                 <a routerLink="">
                                     <span class="sub-item">Home</span>
                                 </a>
-                            </li>                            
-                            <li>
-                                <a routerLink="/segRol">
-                                    <span class="sub-item">Roles de Usuarios</span>
-                                </a>
                             </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Administración</h4>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#admDocencia">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Docencia</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="admDocencia">
+                        <ul class="nav nav-collapse">
                             <li>
                                 <a routerLink="/docEspecialidad">
                                     <span class="sub-item">Especialidades</span>
@@ -44,6 +43,23 @@
                                     <span class="sub-item">Grupos</span>
                                 </a>
                             </li>
+                        </ul>
+                    </div>
+                </li>                
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Docencia</h4>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#docencia-nav">
+                        <i class="far fa-envelope"></i>
+                        <p>Docencia</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="docencia-nav">
+                        <ul class="nav nav-collapse">
                             <li>
                                 <a routerLink="/docEstudiante">
                                     <span class="sub-item">Estudiantes</span>
@@ -54,33 +70,17 @@
                                     <span class="sub-item">Profesores</span>
                                 </a>
                             </li>
-                            <li>
-                                <a routerLink="/tipoEntidad">
-                                    <span class="sub-item">Tipo Entidad</span>
-                                </a>
-                            </li>
-                            <li>
+                         <li>
                                 <a routerLink="/entidad">
-                                    <span class="sub-item">Entidad</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a routerLink="/idioma">
-                                    <span class="sub-item">Idioma</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a routerLink="/segUsuario">
-                                    <span class="sub-item">Usuarios</span>
+                                    <span class="sub-item">entidad</span>
                                 </a>
                             </li>
                         </ul>
-					</div>
-				</li>
-
-			</ul>
-
-		</div>
-	</div>
+                    </div>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- End Sidebar -->

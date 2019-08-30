@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Servicios de Utileria
 import { AppConstantsService } from '../utils/app-constants.service';
@@ -23,6 +24,7 @@ import { DocEstudianteService } from '../services/docencia/doc-estudiante.servic
   ],
   providers: [
     AppConstantsService,
+    MatSnackBar,
     AuthService,
     AuthVerifyService,
     ErrorHandlerService,
