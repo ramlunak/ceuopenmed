@@ -47,12 +47,12 @@
                         </mat-form-field>
                         <mat-form-field class="ceu-full-width">
                             <input formControlName="ApellidoPaterno" matInput name="ApellidoPaterno"
-                                placeholder="Apellido Paterno">
+                                placeholder="Primer Apellido">
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
                         <mat-form-field class="ceu-full-width">
                             <input formControlName="ApellidoMaterno" matInput name="ApellidoMaterno"
-                                placeholder="Apellido Materno">
+                                placeholder="Segundo Apellido">
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </form>
@@ -62,7 +62,11 @@
                             <mat-form-field class="ceu-full-width">
                                 <input type="hidden" formControlName="id">
                                 <input formControlName="username" matInput name="username" placeholder="Usuario">
-                                <mat-error>Este campo es requerido.</mat-error>
+                                <mat-spinner diameter="25" *ngIf="validationsService.loading$ | async" matSuffix></mat-spinner>
+                                <mat-error *ngIf="usuarioService.form.controls['username'].errors?.required">
+                                    Este campo es requerido.</mat-error>
+                                <mat-error *ngIf="usuarioService.form.controls['username'].errors?.loginExist">
+                                    Este Nombre de Usuario ya está en uso.</mat-error>                                
                             </mat-form-field>
                             <mat-form-field class="ceu-full-width">
                                 <input formControlName="email" matInput name="email" placeholder="Email">
@@ -100,7 +104,8 @@
 
                     <button mat-raised-button color='primary'
                         [disabled]="profesorService.form.invalid || personaService.form.invalid || usuarioService.form.invalid
-                        || (personaService.loading$ | async) || (usuarioService.loading$ | async) || (profesorService.loading$ | async)"
+                        || (personaService.loading$ | async) || (usuarioService.loading$ | async) 
+                        || (profesorService.loading$ | async) || (validationsService.loading$ | async)"
                         *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
                     <button mat-raised-button color='primary'
                         [disabled]="profesorService.form.invalid || personaService.form.invalid
@@ -145,32 +150,51 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLongTitle">Usuario</h4>
+                    <h4 class="modal-title" id="exampleModalLongTitle">Usuario - {{dialogUserName}}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
 
-                    <form [formGroup]="usuarioService.formChangePass" class="ceu-form">
+                    <form [formGroup]="usuarioService.formUpdate" class="ceu-form">
 
                         <mat-form-field class="ceu-full-width">
                             <input type="hidden" formControlName="id">
-                            <input formControlName="upassword" matInput name="upassword" placeholder="Contraseña"
-                                type="password">
-                            <mat-error *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.required">Este
-                                campo
-                                es requerido.</mat-error>
-                            <mat-error *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.minlength">La
-                                contraseña debe contener como mínimo 6 caracteres.</mat-error>
+                            <input formControlName="email" matInput name="email" placeholder="Email">
+                            <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
                         <mat-form-field class="ceu-full-width">
-                            <input formControlName="upasswordconf" matInput name="upasswordconf"
-                                placeholder="Confirmar Contraseña" type="password">
-                            <mat-error>Las Contraseñas no coinciden.</mat-error>
-                        </mat-form-field>
-
+                                <mat-label>Estado</mat-label>
+                                <mat-select formControlName="status" name="status">
+                                    <mat-option *ngFor="let stat of listStatus" [value]="stat.value">
+                                        {{stat.type}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>                        
+                        <mat-checkbox formControlName="changePass">Cambiar Contraseña</mat-checkbox>
                     </form>
+                    <div *ngIf="usuarioService.formUpdate.controls['changePass'].value">
+                        <form [formGroup]="usuarioService.formChangePass" class="ceu-form">
+                            <mat-form-field class="ceu-full-width">
+                                <input formControlName="upassword" matInput name="upassword" placeholder="Contraseña"
+                                    type="password">
+                                <mat-error *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.required">
+                                    Este campo es requerido.</mat-error>
+                                <mat-error
+                                    *ngIf="usuarioService.formChangePass.controls['upassword'].errors?.minlength">La
+                                    contraseña debe contener como mínimo 6 caracteres.</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="ceu-full-width">
+                                <input formControlName="upasswordconf" matInput name="upasswordconf"
+                                    placeholder="Confirmar Contraseña" type="password">
+                                <mat-error>Las Contraseñas no coinciden.</mat-error>
+                            </mat-form-field>
+
+                        </form>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">
@@ -181,8 +205,9 @@
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
                     <button mat-raised-button color='primary'
-                        [disabled]="usuarioService.formChangePass.invalid || (usuarioService.loading$ | async)"
-                        data-dismiss="modal" (click)="guardarUsuarioClick()">Modificar</button>
+                        [disabled]="usuarioService.formUpdate.invalid || (usuarioService.loading$ | async) 
+                        || (usuarioService.formUpdate.controls['changePass'].value && usuarioService.formChangePass.invalid)"
+                        data-dismiss="modal" (click)="upateUsuarioClick()">Modificar</button>
 
                 </div>
             </div>
@@ -233,7 +258,7 @@
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let row = index;">
 
-                <button (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+                <button (click)='ROW_NUMBER = row; setOperationDataUsuario()' mat-icon-button data-toggle="modal"
                     data-target="#UsuarioModalDialog">
                     <mat-icon color='primary' matTooltip="Usuario">account_circle</mat-icon>
                 </button>

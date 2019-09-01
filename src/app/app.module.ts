@@ -35,6 +35,7 @@ import { IdiomaComponent } from './componentes/idioma/idioma.component';
 import { DocProfesorEspecialidadesComponent } from './componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { ExchangeStatusPipe } from './utils/pipes/exchange-status.pipe';
 import { EntidadComponent } from './componentes/entidad/entidad.component';
+import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { EntidadComponent } from './componentes/entidad/entidad.component';
     IdiomaComponent,
     DocProfesorEspecialidadesComponent,
     ExchangeStatusPipe,
-    EntidadComponent
+    EntidadComponent,
+    FormEntidadComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,7 @@ import { EntidadComponent } from './componentes/entidad/entidad.component';
     HttpClientModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AppServicesModule

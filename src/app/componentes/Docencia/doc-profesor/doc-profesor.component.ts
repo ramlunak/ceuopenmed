@@ -10,6 +10,7 @@ import { AdmPersonaService } from '../../../services/administracion/adm-persona.
 import { AdmPersona } from 'src/app/models/Administracion/adm-persona';
 import { SegUsuarioService } from 'src/app/services/seguridad/seg-usuario.service';
 import { AppConstantsService } from 'src/app/utils/app-constants.service';
+import { ValidationsService } from 'src/app/services/validations.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -24,18 +25,22 @@ export class DocProfesorComponent implements OnInit {
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo Profesor';
+  dialogUserName: string;
 
   // DataTable --
   dataSource: MatTableDataSource<DocProfesor>;
   displayedColumns = ['IdProfesor', 'NombreCompleto', 'username', 'status', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  // Selects
+  listStatus: object;
 
   constructor(private profesorService: DocProfesorService,
-    private personaService: AdmPersonaService,
-    private usuarioService: SegUsuarioService,
-    private errorService: ErrorHandlerService,
-    private router: Router,
-    private CONSTANS: AppConstantsService) { }
+              private personaService: AdmPersonaService,
+              private usuarioService: SegUsuarioService,
+              private errorService: ErrorHandlerService,
+              private router: Router,
+              private CONSTANS: AppConstantsService,
+              private validationsService: ValidationsService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -44,7 +49,7 @@ export class DocProfesorComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
-
+    this.CargarSelects();
   }
 
   CargarDgvElements() {
@@ -54,6 +59,10 @@ export class DocProfesorComponent implements OnInit {
     }, (error) => {
       this.errorService.handleError(error);
     });
+  }
+
+  CargarSelects() {
+    this.listStatus = [{ type: 'Activo', value: 10 }, { type: 'Inactivo', value: 0 }];
   }
 
   applyFilter(filterValue: string) {
@@ -193,6 +202,8 @@ export class DocProfesorComponent implements OnInit {
     this.personaService.InicializarValoresFormGroup();
     this.profesorService.form.reset();
     this.profesorService.InicializarValoresFormGroup();
+    this.usuarioService.form.reset();
+    this.usuarioService.InicializarValoresFormGroup();
     this.dialogTittle = 'Nuevo Profesor';
   }
 
@@ -208,8 +219,42 @@ export class DocProfesorComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  guardarUsuarioClick() {
+  upateUsuarioClick() {
+    this.usuarioService.updateUsuario().subscribe(result => {
 
+      if (result.status === 1) {
+        this.CargarDgvElements();
+      } else {
+        this.errorService.handleError(result.error);
+      }
+      this.LimpiarUsuario();
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
+  setOperationDataUsuario() {
+    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+
+    this.usuarioService.viewUsuario(estudiante.id).subscribe(result => {
+
+      if (result.status === 1) {
+        this.usuarioService.formUpdate.patchValue(result.data);
+        this.dialogUserName = result.data.username;
+      } else {
+        this.errorService.handleError(result.error);
+      }
+
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
+  LimpiarUsuario() {
+    this.usuarioService.formUpdate.reset();
+    this.usuarioService.InicializarValoresFormUpdateGroup();
+    this.usuarioService.formChangePass.reset();
+    this.usuarioService.InicializarValoresFormChangePassGroup();
   }
 
 }

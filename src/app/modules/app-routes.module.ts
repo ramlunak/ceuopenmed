@@ -18,6 +18,7 @@ import { DocProfesorGruposComponent } from '../componentes/Docencia/doc-profesor
 import { TipoEntidadComponent } from '../componentes/tipo-entidad/tipo-entidad.component';
 import { IdiomaComponent } from '../componentes/idioma/idioma.component';
 import { EntidadComponent } from '../componentes/entidad/entidad.component';
+import { FormEntidadComponent } from '../componentes/form-entidad/form-entidad.component'
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'tipoEntidad', component: TipoEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
+  { path: 'FormEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent},
   { path: '500', component: ServerErrorComponent },
 

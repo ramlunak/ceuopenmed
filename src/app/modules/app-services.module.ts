@@ -15,6 +15,7 @@ import { AdmPersonaService } from '../services/administracion/adm-persona.servic
 import { DocEspecialidadService } from '../services/docencia/doc-especialidad.service';
 import { DocGrupoService } from '../services/docencia/doc-grupo.service';
 import { DocEstudianteService } from '../services/docencia/doc-estudiante.service';
+import { ValidationsService } from '../services/validations.service';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { DocEstudianteService } from '../services/docencia/doc-estudiante.servic
     AdmPersonaService,
     DocEspecialidadService,
     DocGrupoService,
-    DocEstudianteService
+    DocEstudianteService,
+    ValidationsService
   ]
 })
 export class AppServicesModule { }

@@ -1,8 +1,8 @@
 export interface Entidad {
-    IdEntidad: number;
-    Entidad: number;
-    IdTipoEntidad: number;    
-    IdIdioma: number;    
+    IdEntidad: number;   
+    IdTipoEntidad: number; 
+    IdIdioma: number; 
+    Idioma: string; 
     IdEstudiante: number;
     IdProfesor: string;    
     Evaluacion: string;

@@ -11,6 +11,7 @@ import { DocGrupoService } from '../../../services/docencia/doc-grupo.service';
 import { DocGrupo } from 'src/app/models/Docencia/doc-grupo';
 import { SegUsuarioService } from '../../../services/seguridad/seg-usuario.service';
 import { AppConstantsService } from 'src/app/utils/app-constants.service';
+import { ValidationsService } from 'src/app/services/validations.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -25,6 +26,7 @@ export class DocEstudianteComponent implements OnInit {
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo Estudiante';
+  dialogUserName: string;
 
   // DataTable --
   dataSource: MatTableDataSource<DocEstudiante>;
@@ -33,13 +35,15 @@ export class DocEstudianteComponent implements OnInit {
   // Selects
   listPersonas: AdmPersona[];
   listGrupos: DocGrupo[];
+  listStatus: object;
 
   constructor(private estudianteService: DocEstudianteService,
-    private personaService: AdmPersonaService,
-    private usuarioService: SegUsuarioService,
-    private grupoService: DocGrupoService,
-    private errorService: ErrorHandlerService,
-    private CONSTANS: AppConstantsService) { }
+              private personaService: AdmPersonaService,
+              private usuarioService: SegUsuarioService,
+              private grupoService: DocGrupoService,
+              private errorService: ErrorHandlerService,
+              private CONSTANS: AppConstantsService,
+              private validationsService: ValidationsService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -49,7 +53,6 @@ export class DocEstudianteComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
     this.CargarSelects();
-
   }
 
   CargarDgvElements() {
@@ -69,6 +72,7 @@ export class DocEstudianteComponent implements OnInit {
     this.grupoService.getGrupos().subscribe(result => {
       this.listGrupos = result.data;
     });
+    this.listStatus = [{ type: 'Activo', value: 10 }, { type: 'Inactivo', value: 0 }];
   }
 
   applyFilter(filterValue: string) {
@@ -206,11 +210,47 @@ export class DocEstudianteComponent implements OnInit {
     this.personaService.InicializarValoresFormGroup();
     this.estudianteService.form.reset();
     this.estudianteService.InicializarValoresFormGroup();
+    this.usuarioService.form.reset();
+    this.usuarioService.InicializarValoresFormGroup();
     this.dialogTittle = 'Nuevo Estudiante';
   }
 
-  guardarUsuarioClick() {
+  upateUsuarioClick() {
+    this.usuarioService.updateUsuario().subscribe(result => {
 
+      if (result.status === 1) {
+        this.CargarDgvElements();
+      } else {
+        this.errorService.handleError(result.error);
+      }
+      this.LimpiarUsuario();
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
+  setOperationDataUsuario() {
+    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+
+    this.usuarioService.viewUsuario(estudiante.id).subscribe(result => {
+
+      if (result.status === 1) {
+        this.usuarioService.formUpdate.patchValue(result.data);
+        this.dialogUserName = result.data.username;
+      } else {
+        this.errorService.handleError(result.error);
+      }
+
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
+  LimpiarUsuario() {
+    this.usuarioService.formUpdate.reset();
+    this.usuarioService.InicializarValoresFormUpdateGroup();
+    this.usuarioService.formChangePass.reset();
+    this.usuarioService.InicializarValoresFormChangePassGroup();
   }
 
 }

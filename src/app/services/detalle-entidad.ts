@@ -8,37 +8,44 @@ import { map, finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
 
+import { EntidadService } from '../services/entidad';
+
 @Injectable({
   providedIn: 'root'
 })
-export class EntidadService {
+export class DetalleEntidadService {
 
-  private BaseURL = 'entidad/';
+  private BaseURL = 'detalle-entidad/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
+  constructor(
+    private entidadService: EntidadService,
+    private authService: AuthService,
+    private httpClient: HttpClient,
+    private CONSTANS: AppConstantsService
+  ) { }
 
   form: FormGroup = new FormGroup({
-    IdEntidad: new FormControl(null),
-    IdTipoEntidad: new FormControl('', Validators.required),
-    IdEstudiante: new FormControl(null, Validators.required),
-    IdProfesor: new FormControl(null),
-    Evaluacion: new FormControl(null),
-    Estado: new FormControl(null),
-    Comentario: new FormControl(null),
+    IdRecurso: new FormControl(null),
+    IdIdioma: new FormControl('', Validators.required),
+    IdEntidad: new FormControl('', Validators.required),    
+    Entidad: new FormControl('', Validators.required),
+    Referencia: new FormControl(null),
+    Nivel:   new FormControl('', Validators.required),
+    IsImage:  new FormControl(null)    
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdEntidad: null,
-      IdTipoEntidad: null,
-      IdEstudiante: 1,
-      IdProfesor: null,
-      Evaluacion: 0,
-      Estado: 0,
-      Comentario: '',
+      IdRecurso: null,
+      IdIdioma: null,
+      IdEntidad: this.entidadService.form.value.IdEntidad,     
+      Entidad: '',
+      Referencia: '',
+      Nivel: null,
+      IsImage: 0     
     });
   }
 
@@ -88,7 +95,7 @@ export class EntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -102,7 +109,7 @@ export class EntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecurso),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
