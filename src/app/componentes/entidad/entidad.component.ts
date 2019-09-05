@@ -97,9 +97,9 @@ export class EntidadComponent implements OnInit {
         if (result.status === 1) {
           this.CargarDgvElements();
           this.Service.form.patchValue(result.data);
+         alert(result.data.IdTipoEntidad);
           $('#OperationModalDialog').modal('hide');
          this.redirectToDetalleEntidad();
-
 
         } else {
           this.errorService.handleError(result.error);
@@ -149,6 +149,7 @@ export class EntidadComponent implements OnInit {
       {
         IdEntidad: entidad.IdEntidad,
         IdTipoEntidad: entidad.IdTipoEntidad,
+        TipoEntidad: entidad.TipoEntidad 
       });
     this.dialogTittle = 'Modificar';
   }

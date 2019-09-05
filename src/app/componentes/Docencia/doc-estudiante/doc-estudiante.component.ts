@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
 import { DocEstudianteService } from '../../../services/docencia/doc-estudiante.service';
 import { DocEstudiante } from 'src/app/models/Docencia/doc-estudiante';
 import { AdmPersonaService } from '../../../services/administracion/adm-persona.service';
@@ -15,6 +14,9 @@ import { ValidationsService } from 'src/app/services/validations.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
+
+// Selector jQuery
+declare var $: any;
 
 @Component({
   selector: 'app-doc-estudiante',
@@ -251,6 +253,7 @@ export class DocEstudianteComponent implements OnInit {
     this.usuarioService.InicializarValoresFormUpdateGroup();
     this.usuarioService.formChangePass.reset();
     this.usuarioService.InicializarValoresFormChangePassGroup();
+    $('#UsuarioModalDialog').modal('hide');
   }
 
 }

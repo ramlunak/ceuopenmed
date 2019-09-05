@@ -23,6 +23,7 @@ export class EntidadService {
   form: FormGroup = new FormGroup({
     IdEntidad: new FormControl(null),
     IdTipoEntidad: new FormControl('', Validators.required),
+    TipoEntidad: new FormControl(null),
     IdEstudiante: new FormControl(null, Validators.required),
     IdProfesor: new FormControl(null),
     Evaluacion: new FormControl(null),
@@ -34,7 +35,8 @@ export class EntidadService {
     this.form.setValue({
       IdEntidad: null,
       IdTipoEntidad: null,
-      IdEstudiante: 1,
+      TipoEntidad: null,
+      IdEstudiante: 2,
       IdProfesor: null,
       Evaluacion: 0,
       Estado: 0,

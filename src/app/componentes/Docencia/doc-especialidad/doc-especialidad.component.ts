@@ -18,7 +18,7 @@ export class DocEspecialidadComponent implements OnInit {
 
   transaccionIsNew = true;
   ROW_NUMBER: number;
-  dialogTittle = 'Nuevo Especialidad';
+  dialogTittle = 'Nueva Especialidad';
 
   // DataTable --
   dataSource: MatTableDataSource<DocEspecialidad>;
@@ -107,7 +107,7 @@ export class DocEspecialidadComponent implements OnInit {
     this.transaccionIsNew = true;
     this.especialidadService.form.reset();
     this.especialidadService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Especialidad';
+    this.dialogTittle = 'Nueva Especialidad';
   }
 
 }

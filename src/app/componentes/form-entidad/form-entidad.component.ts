@@ -37,7 +37,7 @@ export class FormEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad', 'Idioma', 'Entidad', 'commands'];
+  displayedColumns = ['Idioma', 'Entidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
