@@ -38,7 +38,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'Evaluacion', 'Estado', 'info', 'commands'];
+  displayedColumns = ['select','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'Evaluacion', 'Estado', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -96,8 +96,7 @@ export class EntidadComponent implements OnInit {
 
         if (result.status === 1) {
           this.CargarDgvElements();
-          this.Service.form.patchValue(result.data);
-         alert(result.data.IdTipoEntidad);
+          this.Service.form.patchValue(result.data);        
           $('#OperationModalDialog').modal('hide');
          this.redirectToDetalleEntidad();
 
@@ -183,6 +182,10 @@ export class EntidadComponent implements OnInit {
     this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
     this.dialogTittle = 'Nuevo';
+  }
+
+  checkboxChange(entidad) {
+   
   }
 
   applyFilter(filterValue: string) {

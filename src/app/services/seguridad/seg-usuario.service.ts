@@ -30,6 +30,9 @@ export class SegUsuarioService {
   });
 
   formChangePass: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    uusername: new FormControl(''),
+    oldpassword: new FormControl(''),
     upassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
     upasswordconf: new FormControl('', Validators.required)
   });
@@ -69,6 +72,9 @@ export class SegUsuarioService {
 
   InicializarValoresFormChangePassGroup() {
     this.formChangePass.setValue({
+      id: null,
+      uusername: '',
+      oldpassword: '',
       upassword: '',
       upasswordconf: ''
     });
@@ -123,6 +129,20 @@ export class SegUsuarioService {
       .put<any>(
         this.CONSTANS.getApiUrl('update-user/' + this.formUpdate.value.id),
         user,
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  changePassword() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .put<any>(
+        this.CONSTANS.getApiUrl('change-password/' + this.formChangePass.value.id),
+        this.formChangePass.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

@@ -1,4 +1,5 @@
 export interface Entidad {
+  
     IdEntidad: number;   
     IdTipoEntidad: number; 
     TipoEntidad: string; 

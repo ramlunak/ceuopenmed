@@ -72,6 +72,19 @@ export class EntidadService {
       );
   }
 
+  viewDetalle(Id: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'view-detalles/' + Id),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
   set() {
     this.loadingSubject.next(true);
     return this.httpClient

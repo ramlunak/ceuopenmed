@@ -36,6 +36,7 @@ import { DocProfesorEspecialidadesComponent } from './componentes/Docencia/doc-p
 import { ExchangeStatusPipe } from './utils/pipes/exchange-status.pipe';
 import { EntidadComponent } from './componentes/entidad/entidad.component';
 import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.component';
+import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-change-password/dialog-change-password.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.co
     DocProfesorEspecialidadesComponent,
     ExchangeStatusPipe,
     EntidadComponent,
-    FormEntidadComponent
+    FormEntidadComponent,
+    DialogChangePasswordComponent
   ],
   imports: [
     BrowserModule,

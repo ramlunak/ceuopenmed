@@ -17,6 +17,7 @@ import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+import { Server } from 'net';
 
 @Component({
   selector: 'app-form-entidad',
@@ -27,17 +28,18 @@ export class FormEntidadComponent implements OnInit {
 
   // para cargar evaluacion
   EstadoEntidad = 0;
+  isImage:boolean;
   EvaluacionEntidad = 0;
   ComentarioEntidad = null;
-  ENTIDAD: Entidad;
+  ENTIDAD: DetalleEntidad;
 
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
 
   // DataTable --
-  dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['Idioma', 'Entidad', 'commands'];
+  dataSource: MatTableDataSource<DetalleEntidad>;
+  displayedColumns = ['Idioma', 'Entidad','Nivel','isImage', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -61,6 +63,7 @@ export class FormEntidadComponent implements OnInit {
     this.CargarDgvElements();
     this.CargarSelects();
     this.detalleEntidadService.InicializarValoresFormGroup();
+    this.CargarTipoEntidad();
   }
 
   CargarSelects() {
@@ -68,22 +71,29 @@ export class FormEntidadComponent implements OnInit {
     this.idiomaService.get().subscribe(result => {
       this.listIdiomas = result.data;
     });
-    // Tipo Entidad
-    this.tipoEntidadService.get().subscribe(result => {
-      this.listTiposEntidad = result.data;
-    });
+       
   }
 
+  CargarTipoEntidad() {
+    // Idioma
+    this.tipoEntidadService.view(this.Service.form.value.IdTipoEntidad).subscribe(result => {
+      this.detalleEntidadService.form.patchValue({
+        TipoEntidad :  result.data.TipoEntidad
+      }) ;
+    });
+       
+  }
+
+
   CargarDgvElements() {
-    this.detalleEntidadService.get().subscribe(result => {
-      this.dataSource = new MatTableDataSource<Entidad>(result.data);
+    this.Service.viewDetalle(this.Service.form.value.IdEntidad).subscribe(result => {
+      this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
     });
 
   }
-
 
 
   guardarClick() {
@@ -95,18 +105,19 @@ export class FormEntidadComponent implements OnInit {
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);
+         
         }
 
       }, (error) => {
         this.errorService.handleError(error);
 
       });
-    } else {
+    } else {     
       this.detalleEntidadService.update().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
-        } else {
+        } else {       
           this.errorService.handleError(result.error);
         }
 
@@ -133,16 +144,35 @@ export class FormEntidadComponent implements OnInit {
     this.Limpiar();
   }
 
-
   setOperationsData() {
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.Service.form.patchValue(
-      {
-        IdEntidad: entidad.IdEntidad,
-        IdTipoEntidad: entidad.IdTipoEntidad,
+    const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
+    this.detalleEntidadService.form.patchValue(
+      {        	
+        IdRecurso:DetalleEntidad.IdRecurso,
+        IdIdioma:DetalleEntidad.IdIdioma,
+        Entidad:DetalleEntidad.Entidad,
+        Referencia:DetalleEntidad.Referencia,
+        Nivel:DetalleEntidad.Nivel,
+        IdEntidad:this.Service.form.value.IdEntidad,
+        IdTipoEntidad:this.Service.form.value.IdTipoEntidad,
       });
+      if(DetalleEntidad.IsImage == 0)
+      this.isImage = false;
+      else{
+        this.isImage = true;
+      } 
     this.dialogTittle = 'Modificar';
+  }
+
+  
+  setOperationsDataEliminar() {
+   
+    const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
+    this.detalleEntidadService.form.patchValue(
+      {        	
+        IdRecurso:DetalleEntidad.IdRecurso      
+      });     
   }
 
   setEvalucacion(estado, evaluacion) {
@@ -150,28 +180,25 @@ export class FormEntidadComponent implements OnInit {
     this.EvaluacionEntidad = parseInt(evaluacion, 11);
   }
 
-  cargarEvaluacion() {
-    this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
-    this.EstadoEntidad = parseInt(entidad.Estado, 11);
-    this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 11);
-    this.ComentarioEntidad = entidad.Comentario;
-    this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
-    this.dialogTittle = 'Modificar';
-  }
-
-  ActualizarEvaluacion() {
-    this.transaccionIsNew = false;
-    this.ENTIDAD.Estado = this.EstadoEntidad.toString();
-    this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
-    this.ENTIDAD.Comentario = this.Service.form.value.Comentario;
-    this.Service.form.setValue(this.ENTIDAD);
-  }
-
   Limpiar() {
     this.transaccionIsNew = true;   
     this.detalleEntidadService.InicializarValoresFormGroup();    
+  }
+
+  isImageChage() {
+    this.isImage = !this.isImage;    
+    if(this.isImage)
+    {
+    this.detalleEntidadService.form.patchValue({
+      IsImage:1
+    });
+  
+  }
+    else
+    {
+    this.detalleEntidadService.form.patchValue({
+      IsImage:0
+    });}
   }
 
   applyFilter(filterValue: string) {

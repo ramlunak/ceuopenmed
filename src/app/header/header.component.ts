@@ -1,7 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/seguridad/auth.service';
+import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../services/error-handler.service';
@@ -13,7 +16,12 @@ import { ErrorHandlerService } from '../services/error-handler.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService, private errorService: ErrorHandlerService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private errorService: ErrorHandlerService,
+    private router: Router,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -24,6 +32,22 @@ export class HeaderComponent implements OnInit {
       this.authService.showMenus = false;
     }, (error) => {
       this.errorService.handleError(error);
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogChangePasswordComponent, {
+      width: '450px',
+      data: this.authService.currentUser
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open(result.OK, 'OK', {
+          duration: 8000,
+        });
+      }
+
     });
   }
 

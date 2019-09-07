@@ -94,6 +94,19 @@
  <!-- GRID -->
 <table mat-table [dataSource]="dataSource" class="ceu-table">
 
+
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+        <mat-checkbox 
+         (change)="checkboxChange(element)"        
+           
+         >
+        </mat-checkbox>
+      </td>
+</ng-container>
+
     <ng-container matColumnDef="IdEntidad">
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
