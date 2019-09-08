@@ -43,7 +43,6 @@
  </div>
 </div>
 
-
 <table style="width: 100% !important;margin-top: 15px">
     <tr>
         <td style="width: 280px">
@@ -53,7 +52,7 @@
    
     <mat-form-field class="ceu-full-width">  
             <input type="hidden" formControlName="IdRecurso">
-        <input  disabled = "true" matInput name="TipoEntidad" [value]="this.Service.form.value.TipoEntidad" placeholder="TipoEntidad">
+        <input  disabled = "true" matInput name="TipoEntidad" [value]="this.detalleEntidadService.form.value.TipoEntidad" placeholder="TipoEntidad">
         <mat-error>Este campo es requerido.</mat-error>
     </mat-form-field>
 

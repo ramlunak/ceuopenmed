@@ -36,7 +36,7 @@ export class EntidadService {
       IdEntidad: null,
       IdTipoEntidad: null,
       TipoEntidad: null,
-      IdEstudiante: 2,
+      IdEstudiante: 4,
       IdProfesor: null,
       Evaluacion: 0,
       Estado: 0,

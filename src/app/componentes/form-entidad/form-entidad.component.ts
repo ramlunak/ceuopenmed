@@ -53,16 +53,16 @@ export class FormEntidadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  
+   // alert(this.Service.form.value.IdTipoEntidad);
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
+    this.CargarTipoEntidad();
     this.CargarDgvElements();
     this.CargarSelects();
-    this.detalleEntidadService.InicializarValoresFormGroup();
-    this.CargarTipoEntidad();
+    this.detalleEntidadService.InicializarValoresFormGroup();  
   }
 
   CargarSelects() {
