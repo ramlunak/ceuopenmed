@@ -17,7 +17,6 @@ import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
-import { Server } from 'net';
 
 @Component({
   selector: 'app-form-entidad',
@@ -75,7 +74,7 @@ export class FormEntidadComponent implements OnInit {
   }
 
   CargarTipoEntidad() {
-    // Idioma
+
     this.tipoEntidadService.view(this.Service.form.value.IdTipoEntidad).subscribe(result => {
       this.detalleEntidadService.form.patchValue({
         TipoEntidad :  result.data.TipoEntidad
@@ -127,6 +126,7 @@ export class FormEntidadComponent implements OnInit {
     }
     this.Limpiar();
     this.CargarDgvElements();
+    this.CargarTipoEntidad();
   }
 
   eliminarClick() {

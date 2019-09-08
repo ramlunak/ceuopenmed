@@ -37,6 +37,7 @@ import { ExchangeStatusPipe } from './utils/pipes/exchange-status.pipe';
 import { EntidadComponent } from './componentes/entidad/entidad.component';
 import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.component';
 import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-change-password/dialog-change-password.component';
+import { TipoSociacionComponent } from './componentes/tipo-sociacion/tipo-sociacion.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-ch
     ExchangeStatusPipe,
     EntidadComponent,
     FormEntidadComponent,
-    DialogChangePasswordComponent
+    DialogChangePasswordComponent,
+    TipoSociacionComponent
   ],
   imports: [
     BrowserModule,

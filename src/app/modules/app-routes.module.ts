@@ -19,6 +19,7 @@ import { TipoEntidadComponent } from '../componentes/tipo-entidad/tipo-entidad.c
 import { IdiomaComponent } from '../componentes/idioma/idioma.component';
 import { EntidadComponent } from '../componentes/entidad/entidad.component';
 import { FormEntidadComponent } from '../componentes/form-entidad/form-entidad.component'
+import { TipoSociacionComponent } from '../componentes/tipo-sociacion/tipo-sociacion.component'
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'TipoSociacion', component: TipoSociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent},
   { path: '500', component: ServerErrorComponent },

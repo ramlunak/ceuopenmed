@@ -50,11 +50,10 @@
          
  <!-- FORMULARIO -->
  <form [formGroup]="detalleEntidadService.form" >
-
    
     <mat-form-field class="ceu-full-width">  
             <input type="hidden" formControlName="IdRecurso">
-        <input formControlName="TipoEntidad"  matInput name="TipoEntidad" placeholder="TipoEntidad">
+        <input  disabled = "true" matInput name="TipoEntidad" [value]="this.Service.form.value.TipoEntidad" placeholder="TipoEntidad">
         <mat-error>Este campo es requerido.</mat-error>
     </mat-form-field>
 
