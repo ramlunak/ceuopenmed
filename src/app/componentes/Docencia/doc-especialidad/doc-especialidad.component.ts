@@ -9,6 +9,9 @@ import { DocEspecialidad } from 'src/app/models/Docencia/doc-especialidad';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
+// Selector jQuery
+declare var $: any;
+
 @Component({
   selector: 'app-doc-especialidad',
   templateUrl: './doc-especialidad.component.html',
@@ -60,7 +63,7 @@ export class DocEspecialidadComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -72,12 +75,12 @@ export class DocEspecialidadComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
+
   }
 
   eliminarClick() {
@@ -104,10 +107,13 @@ export class DocEspecialidadComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
     this.especialidadService.form.reset();
     this.especialidadService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nueva Especialidad';
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nueva Especialidad';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
 }

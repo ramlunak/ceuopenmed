@@ -9,6 +9,9 @@ import { DocGrupo } from 'src/app/models/Docencia/doc-grupo';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
+// Selector jQuery
+declare var $: any;
+
 @Component({
   selector: 'app-doc-grupo',
   templateUrl: './doc-grupo.component.html',
@@ -60,7 +63,7 @@ export class DocGrupoComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -72,12 +75,12 @@ export class DocGrupoComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
+
   }
 
   eliminarClick() {
@@ -88,11 +91,10 @@ export class DocGrupoComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 
@@ -104,10 +106,13 @@ export class DocGrupoComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
     this.grupoService.form.reset();
     this.grupoService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Grupo';
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Grupo';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
 }

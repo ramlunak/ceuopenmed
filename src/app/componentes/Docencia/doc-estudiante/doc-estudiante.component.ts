@@ -39,13 +39,15 @@ export class DocEstudianteComponent implements OnInit {
   listGrupos: DocGrupo[];
   listStatus: object;
 
-  constructor(private estudianteService: DocEstudianteService,
-              private personaService: AdmPersonaService,
-              private usuarioService: SegUsuarioService,
-              private grupoService: DocGrupoService,
-              private errorService: ErrorHandlerService,
-              private CONSTANS: AppConstantsService,
-              private validationsService: ValidationsService) { }
+  constructor(
+    private estudianteService: DocEstudianteService,
+    private personaService: AdmPersonaService,
+    private usuarioService: SegUsuarioService,
+    private grupoService: DocGrupoService,
+    private errorService: ErrorHandlerService,
+    private CONSTANS: AppConstantsService,
+    private validationsService: ValidationsService
+  ) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -174,11 +176,11 @@ export class DocEstudianteComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
+
   }
 
 
@@ -207,14 +209,18 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
+
     this.personaService.form.reset();
     this.personaService.InicializarValoresFormGroup();
     this.estudianteService.form.reset();
     this.estudianteService.InicializarValoresFormGroup();
     this.usuarioService.form.reset();
     this.usuarioService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Estudiante';
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Estudiante';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
   upateUsuarioClick() {

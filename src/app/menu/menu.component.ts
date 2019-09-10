@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/seguridad/auth.service';
+import { AppConstantsService } from '../utils/app-constants.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  isAdmin: boolean;
+
+  constructor(private authService: AuthService, private CONSTANS: AppConstantsService) { }
 
   ngOnInit() {
+    const roles = this.CONSTANS.getRoles();
+    this.isAdmin = (this.authService.currentUser.IdRol === roles.Administrador);
   }
 
 }

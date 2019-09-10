@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './seguridad/auth.service';
 import { AppConstantsService } from '../utils/app-constants.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class EntidadService {
       IdEntidad: null,
       IdTipoEntidad: null,
       TipoEntidad: null,
-      IdEstudiante: 4,
+      IdEstudiante: this.authService.currentUser.IdEstudiante,
       IdProfesor: null,
       Evaluacion: 0,
       Estado: 0,
@@ -44,7 +45,7 @@ export class EntidadService {
     });
   }
 
-  get(): Observable<any> {
+  /* get(): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -57,7 +58,7 @@ export class EntidadService {
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
-  }
+  } */
 
   view(Id: number) {
     this.loadingSubject.next(true);
@@ -125,4 +126,56 @@ export class EntidadService {
         map(res => res)
       );
   }
+
+  getByProfesorEstado(): Observable<any> {
+    this.loadingSubject.next(true);   
+    let idestudiante: number;
+    if (isNullOrUndefined(this.authService.currentUser.IdEstudiante)) {
+      idestudiante = 0;
+    }
+    else {
+      idestudiante = this.authService.currentUser.IdEstudiante;
+    }
+    return this.httpClient
+     
+    .get<any>(       
+       
+        this.CONSTANS.getApiUrl(this.BaseURL + 'profesor-evaluations/' + this.authService.currentUser.IdProfesor+"/0"),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+
+    
+  }
+
+  getByEtudiante(): Observable<any> {
+    this.loadingSubject.next(true);   
+    let idestudiante: number;
+    if (isNullOrUndefined(this.authService.currentUser.IdEstudiante)) {
+      idestudiante = 0;
+    }
+    else {
+      idestudiante = this.authService.currentUser.IdEstudiante;
+    }
+    return this.httpClient
+      .get<any>(
+       
+         this.CONSTANS.getApiUrl(this.BaseURL),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEstudiante]', idestudiante.toString())
+        }
+     
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+              
+  }
+
 }

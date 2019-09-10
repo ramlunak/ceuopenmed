@@ -9,6 +9,9 @@ import { SegRol } from 'src/app/models/Seguridad/seg-rol';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
+// Selector jQuery
+declare var $: any;
+
 
 @Component({
   selector: 'app-seg-rol',
@@ -60,7 +63,7 @@ export class SegRolComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -72,12 +75,12 @@ export class SegRolComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
+
   }
 
   eliminarClick() {
@@ -88,11 +91,11 @@ export class SegRolComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
+
   }
 
 
@@ -104,10 +107,13 @@ export class SegRolComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
     this.rolService.form.reset();
     this.rolService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Rol';
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Rol';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
 }

@@ -37,13 +37,15 @@ export class DocProfesorComponent implements OnInit {
   // Selects
   listStatus: object;
 
-  constructor(private profesorService: DocProfesorService,
-              private personaService: AdmPersonaService,
-              private usuarioService: SegUsuarioService,
-              private errorService: ErrorHandlerService,
-              private router: Router,
-              private CONSTANS: AppConstantsService,
-              private validationsService: ValidationsService) { }
+  constructor(
+    private profesorService: DocProfesorService,
+    private personaService: AdmPersonaService,
+    private usuarioService: SegUsuarioService,
+    private errorService: ErrorHandlerService,
+    private router: Router,
+    private CONSTANS: AppConstantsService,
+    private validationsService: ValidationsService
+  ) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -168,11 +170,11 @@ export class DocProfesorComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
+
   }
 
 
@@ -200,14 +202,17 @@ export class DocProfesorComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
     this.personaService.form.reset();
     this.personaService.InicializarValoresFormGroup();
     this.profesorService.form.reset();
     this.profesorService.InicializarValoresFormGroup();
     this.usuarioService.form.reset();
     this.usuarioService.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo Profesor';
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Profesor';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
   public redirectToEspecialidades = () => {

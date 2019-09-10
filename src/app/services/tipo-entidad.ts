@@ -31,7 +31,7 @@ export class TipoEntidadService {
     this.form.setValue({
       IdTipoEntidad: null,
       IdIdioma: null,
-      IdEstudiante:4,
+      IdEstudiante:this.authService.currentUser.IdEstudiante,
       TipoEntidad:''
     });
   }

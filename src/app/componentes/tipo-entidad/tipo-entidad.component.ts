@@ -8,6 +8,7 @@ import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 import { IdiomaService } from '../../services/idioma';
 import { Idioma } from 'src/app/models/idioma';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
@@ -32,7 +33,11 @@ export class TipoEntidadComponent implements OnInit {
 
   listIdiomas: Idioma[];
 
-  constructor(private Service: TipoEntidadService,private IdiomaService: IdiomaService, private errorService: ErrorHandlerService) { }
+  constructor(
+    private Service: TipoEntidadService,
+    private IdiomaService: IdiomaService,
+    private authService: AuthService,
+    private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -42,6 +47,7 @@ export class TipoEntidadComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();   
     this.CargarSelects();
+    
   }
 
   CargarSelects() {

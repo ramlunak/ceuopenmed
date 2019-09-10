@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../../services/seguridad/auth.service';
 
 import { EntidadService } from '../../services/entidad';
 import { Entidad } from 'src/app/models/entidad';
@@ -46,6 +47,7 @@ export class EntidadComponent implements OnInit {
 
   constructor(
     private Service: EntidadService,
+    private AuthService: AuthService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
@@ -74,12 +76,25 @@ export class EntidadComponent implements OnInit {
   }
 
   CargarDgvElements() {
-    this.Service.get().subscribe(result => {
+
+    if(this.AuthService.currentUser.Rol == "Estudiante")
+   {
+    this.Service.getByEtudiante().subscribe(result => {
       this.dataSource = new MatTableDataSource<Entidad>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
     });
+  }
+ else
+  {
+    this.Service.getByProfesorEstado().subscribe(result => {
+      this.dataSource = new MatTableDataSource<Entidad>(result.data);
+      this.dataSource.paginator = this.paginator;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
 
   }
 

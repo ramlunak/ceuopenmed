@@ -13,7 +13,7 @@
                           
                                    
                 <!-- Administración -->
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="isAdmin">
                     <a data-toggle="collapse" href="#administracion-nav">
                         <i class="fa fa-user-shield"></i>
                         <p>Administración</p>
@@ -56,7 +56,7 @@
                 </li>
 
                 <!-- Operaciones -->
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!isAdmin">
                     <a data-toggle="collapse" href="#operaciones-nav">
                         <i class="fa fa-layer-group"></i>
                         <p>Operaciones</p>
