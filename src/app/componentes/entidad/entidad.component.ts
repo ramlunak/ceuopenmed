@@ -185,11 +185,35 @@ export class EntidadComponent implements OnInit {
   }
 
   ActualizarEvaluacion() {
+  
     this.transaccionIsNew = false;
     this.ENTIDAD.Estado = this.EstadoEntidad.toString();
     this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
     this.ENTIDAD.Comentario = this.Service.form.value.Comentario;
-    this.Service.form.setValue(this.ENTIDAD);
+
+    this.Service.form.patchValue({
+      IdEntidad: this.ENTIDAD.IdEntidad,
+      IdTipoEntidad: this.ENTIDAD.IdTipoEntidad,
+      TipoEntidad: this.ENTIDAD.TipoEntidad,
+      IdEstudiante: this.ENTIDAD.IdEstudiante,
+      IdProfesor: this.AuthService.currentUser.IdProfesor,
+      Evaluacion: this.ENTIDAD.Evaluacion,
+      Estado: this.ENTIDAD.Estado,
+      Comentario: this.ENTIDAD.Comentario
+    });
+   
+    this.Service.update().subscribe(result => {
+
+      if (result.status === 1) {
+        this.CargarDgvElements();
+      } else {
+        this.errorService.handleError(result.error);
+      }
+
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+
   }
 
   Limpiar() {
