@@ -45,7 +45,7 @@
 
 <table style="width: 100% !important;margin-top: 15px">
     <tr>
-        <td style="width: 280px">
+        <td *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" style="width: 280px">
          
  <!-- FORMULARIO -->
  <form [formGroup]="detalleEntidadService.form" >
@@ -143,16 +143,16 @@
     </ng-container>
 
 
-    <ng-container matColumnDef="commands">
+    <ng-container  matColumnDef="commands">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let row = index;">
          
-            <button (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+            <button *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
                 data-target="#OperationModalDialog">
                 <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
             </button>
 
-            <button (click)="ROW_NUMBER = row; setOperationsDataEliminar()" mat-icon-button data-toggle="modal"
+            <button *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" (click)="ROW_NUMBER = row; setOperationsDataEliminar()" mat-icon-button data-toggle="modal"
             data-target="#DeleteDialog">
             <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
            </button>

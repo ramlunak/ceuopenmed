@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../../services/seguridad/auth.service';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -46,6 +47,7 @@ export class FormEntidadComponent implements OnInit {
 
   constructor(
     private Service: EntidadService,
+    private AuthService: AuthService,
     private detalleEntidadService: DetalleEntidadService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,

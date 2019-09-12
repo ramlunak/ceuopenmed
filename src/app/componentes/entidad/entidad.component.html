@@ -168,6 +168,11 @@
                 <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
             </button>
 
+            <button *ngIf="this.AuthService.currentUser.Rol == 'Profesor'" (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+            routerLink="/FormEntidad">
+                <mat-icon color='primary' matTooltip="Modificar">list</mat-icon>
+            </button>
+
             <button *ngIf="element.Estado == 0 && this.AuthService.currentUser.Rol == 'Estudiante'" (click)="ROW_NUMBER = row; setOperationsData()" mat-icon-button data-toggle="modal"
                     data-target="#DeleteDialog">
                     <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
