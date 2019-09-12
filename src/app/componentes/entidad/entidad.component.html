@@ -132,17 +132,17 @@
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let row = index;let element">
 
-            <button *ngIf="element.Estado == 1 && element.Evaluacion == 1" (click)='ROW_NUMBER = row; cargarEvaluacion()' mat-icon-button data-toggle="modal"  
+            <button [disabled]="this.AuthService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 1 && element.Evaluacion == 1" (click)='ROW_NUMBER = row; cargarEvaluacion()' mat-icon-button data-toggle="modal"  
             data-target="#EvaluarModalDialog">
                 <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
             </button>
 
-            <button *ngIf="element.Estado == 0" (click)="ROW_NUMBER = row; cargarEvaluacion()" mat-icon-button data-toggle="modal"
+            <button [disabled]="this.AuthService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 0" (click)="ROW_NUMBER = row; cargarEvaluacion()" mat-icon-button data-toggle="modal"
                 data-target="#EvaluarModalDialog">
                 <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
             </button>
  
-            <button *ngIf="element.Estado == 1 && element.Evaluacion == 0" (click)="ROW_NUMBER = row; cargarEvaluacion()" mat-icon-button data-toggle="modal"
+            <button [disabled]="this.AuthService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 1 && element.Evaluacion == 0" (click)="ROW_NUMBER = row; cargarEvaluacion()" mat-icon-button data-toggle="modal"
             data-target="#EvaluarModalDialog">
             <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
         </button>       
