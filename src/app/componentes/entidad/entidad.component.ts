@@ -39,7 +39,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['select','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad',  'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad',  'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -124,6 +124,7 @@ export class EntidadComponent implements OnInit {
 
       });
     } else {
+
       this.Service.update().subscribe(result => {
 
         if (result.status === 1) {
@@ -155,15 +156,20 @@ export class EntidadComponent implements OnInit {
     this.Limpiar();
   }
 
-
   setOperationsData() {
     this.transaccionIsNew = false;
     const entidad = this.dataSource.data[this.ROW_NUMBER];
+   
     this.Service.form.patchValue(
       {
         IdEntidad: entidad.IdEntidad,
         IdTipoEntidad: entidad.IdTipoEntidad,
-        TipoEntidad: entidad.TipoEntidad 
+        TipoEntidad: entidad.TipoEntidad ,
+        IdEstudiante : entidad.IdEstudiante,
+        IdProfesor: entidad.IdProfesor,
+        Evaluacion:entidad.Evaluacion,
+        Comentario:entidad.Comentario,
+        Estado:0
       });
     this.dialogTittle = 'Modificar';
   }

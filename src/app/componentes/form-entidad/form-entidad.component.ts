@@ -96,6 +96,20 @@ export class FormEntidadComponent implements OnInit {
 
   }
 
+  ActualizarEsradoEntidad(){
+ 
+    this.Service.update().subscribe(result => {
+
+      if (result.status === 1) {
+        this.CargarDgvElements();
+      } else {
+        this.errorService.handleError(result.error);
+      }
+
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
 
   guardarClick() {
     
@@ -114,10 +128,14 @@ export class FormEntidadComponent implements OnInit {
 
       });
     } else {     
+
+     
+
       this.detalleEntidadService.update().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
+          this.ActualizarEsradoEntidad();
         } else {       
           this.errorService.handleError(result.error);
         }

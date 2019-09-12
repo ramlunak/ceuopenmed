@@ -2,7 +2,7 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-        <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal"
+        <button *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal"
         data-target="#OperationModalDialog"> 
             <mat-icon>add</mat-icon>
             Nuevo

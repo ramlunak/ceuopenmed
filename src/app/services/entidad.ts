@@ -101,6 +101,7 @@ export class EntidadService {
   }
 
   update() {
+    
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
