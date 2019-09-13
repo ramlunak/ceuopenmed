@@ -30,24 +30,24 @@ export class DetalleEntidadService {
   form: FormGroup = new FormGroup({
     IdRecurso: new FormControl(null),
     IdIdioma: new FormControl('', Validators.required),
-    IdEntidad: new FormControl('', Validators.required),    
-    TipoEntidad: new FormControl(null),    
+    IdEntidad: new FormControl('', Validators.required),
+    TipoEntidad: new FormControl(null),
     Entidad: new FormControl('', Validators.required),
     Referencia: new FormControl(null),
-    Nivel:   new FormControl('', Validators.required),
-    IsImage:  new FormControl(null)    
+    Nivel: new FormControl('', Validators.required),
+    IsImage: new FormControl(null)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
       IdRecurso: null,
       IdIdioma: null,
-      IdEntidad: this.entidadService.form.value.IdEntidad,     
-      TipoEntidad: this.entidadService.form.value.TipoEntidad,     
+      IdEntidad: this.entidadService.form.value.IdEntidad,
+      TipoEntidad: '',
       Entidad: '',
       Referencia: '',
       Nivel: null,
-      IsImage: 0     
+      IsImage: 0
     });
   }
 

@@ -53,11 +53,11 @@
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
                     <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)"
-                        *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew"
+                        (click)="guardarClick()">Guardar</button>
                     <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)"
-                        *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew"
+                        data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
                 </div>
             </div>

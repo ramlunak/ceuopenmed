@@ -21,7 +21,7 @@ export class IdiomaComponent implements OnInit {
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
-  
+
   // DataTable --
   dataSource: MatTableDataSource<Idioma>;
   displayedColumns = ['IdIdioma', 'Idioma', 'commands'];
@@ -35,17 +35,17 @@ export class IdiomaComponent implements OnInit {
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
-    this.CargarDgvElements();   
+    this.CargarDgvElements();
   }
 
   CargarDgvElements() {
-     this.Service.get().subscribe(result => {
-       this.dataSource = new MatTableDataSource<Idioma>(result.data);     
+    this.Service.get().subscribe(result => {
+      this.dataSource = new MatTableDataSource<Idioma>(result.data);
       this.dataSource.paginator = this.paginator;
-     }, (error) => {
-       this.errorService.handleError(error);
-     });
-      
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+
   }
 
 
@@ -116,5 +116,5 @@ export class IdiomaComponent implements OnInit {
   }
 
 
-  
+
 }

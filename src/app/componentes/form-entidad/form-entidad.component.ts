@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/seguridad/auth.service';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../../services/seguridad/auth.service';
 
 import { EntidadService } from '../../services/entidad';
-import { Entidad } from 'src/app/models/entidad';
 
 import { DetalleEntidadService } from '../../services/detalle-entidad';
 import { DetalleEntidad } from 'src/app/models/detalle-entidad';
@@ -28,7 +27,7 @@ export class FormEntidadComponent implements OnInit {
 
   // para cargar evaluacion
   EstadoEntidad = 0;
-  isImage:boolean;
+  isImage: boolean;
   EvaluacionEntidad = 0;
   ComentarioEntidad = null;
   ENTIDAD: DetalleEntidad;
@@ -39,7 +38,7 @@ export class FormEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DetalleEntidad>;
-  displayedColumns = ['Idioma', 'Entidad','Nivel','isImage', 'commands'];
+  displayedColumns = ['Idioma', 'Entidad', 'Nivel', 'isImage', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -55,7 +54,7 @@ export class FormEntidadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   // alert(this.Service.form.value.IdTipoEntidad);
+    // alert(this.Service.form.value.IdTipoEntidad);
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
@@ -64,7 +63,7 @@ export class FormEntidadComponent implements OnInit {
     this.CargarTipoEntidad();
     this.CargarDgvElements();
     this.CargarSelects();
-    this.detalleEntidadService.InicializarValoresFormGroup();  
+    this.detalleEntidadService.InicializarValoresFormGroup();
   }
 
   CargarSelects() {
@@ -72,17 +71,17 @@ export class FormEntidadComponent implements OnInit {
     this.idiomaService.get().subscribe(result => {
       this.listIdiomas = result.data;
     });
-       
+
   }
 
   CargarTipoEntidad() {
 
     this.tipoEntidadService.view(this.Service.form.value.IdTipoEntidad).subscribe(result => {
       this.detalleEntidadService.form.patchValue({
-        TipoEntidad :  result.data.TipoEntidad
-      }) ;
+        TipoEntidad: result.data.TipoEntidad
+      });
     });
-       
+
   }
 
 
@@ -96,8 +95,8 @@ export class FormEntidadComponent implements OnInit {
 
   }
 
-  ActualizarEsradoEntidad(){
- 
+  ActualizarEsradoEntidad() {
+
     this.Service.update().subscribe(result => {
 
       if (result.status === 1) {
@@ -112,7 +111,7 @@ export class FormEntidadComponent implements OnInit {
   }
 
   guardarClick() {
-    
+
     if (this.transaccionIsNew) {
       this.detalleEntidadService.set().subscribe(result => {
 
@@ -120,23 +119,23 @@ export class FormEntidadComponent implements OnInit {
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);
-         
+
         }
 
       }, (error) => {
         this.errorService.handleError(error);
 
       });
-    } else {     
+    } else {
 
-     
+
 
       this.detalleEntidadService.update().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
           this.ActualizarEsradoEntidad();
-        } else {       
+        } else {
           this.errorService.handleError(result.error);
         }
 
@@ -168,31 +167,31 @@ export class FormEntidadComponent implements OnInit {
     this.transaccionIsNew = false;
     const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
     this.detalleEntidadService.form.patchValue(
-      {        	
-        IdRecurso:DetalleEntidad.IdRecurso,
-        IdIdioma:DetalleEntidad.IdIdioma,
-        Entidad:DetalleEntidad.Entidad,
-        Referencia:DetalleEntidad.Referencia,
-        Nivel:DetalleEntidad.Nivel,
-        IdEntidad:this.Service.form.value.IdEntidad,
-        IdTipoEntidad:this.Service.form.value.IdTipoEntidad,
+      {
+        IdRecurso: DetalleEntidad.IdRecurso,
+        IdIdioma: DetalleEntidad.IdIdioma,
+        Entidad: DetalleEntidad.Entidad,
+        Referencia: DetalleEntidad.Referencia,
+        Nivel: DetalleEntidad.Nivel,
+        IdEntidad: this.Service.form.value.IdEntidad,
+        IdTipoEntidad: this.Service.form.value.IdTipoEntidad,
       });
-      if(DetalleEntidad.IsImage == 0)
+    if (DetalleEntidad.IsImage === 0) {
       this.isImage = false;
-      else{
-        this.isImage = true;
-      } 
+    } else {
+      this.isImage = true;
+    }
     this.dialogTittle = 'Modificar';
   }
 
-  
+
   setOperationsDataEliminar() {
-   
+
     const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
     this.detalleEntidadService.form.patchValue(
-      {        	
-        IdRecurso:DetalleEntidad.IdRecurso      
-      });     
+      {
+        IdRecurso: DetalleEntidad.IdRecurso
+      });
   }
 
   setEvalucacion(estado, evaluacion) {
@@ -201,24 +200,22 @@ export class FormEntidadComponent implements OnInit {
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;   
-    this.detalleEntidadService.InicializarValoresFormGroup();    
+    this.transaccionIsNew = true;
+    this.detalleEntidadService.InicializarValoresFormGroup();
   }
 
   isImageChage() {
-    this.isImage = !this.isImage;    
-    if(this.isImage)
-    {
-    this.detalleEntidadService.form.patchValue({
-      IsImage:1
-    });
-  
-  }
-    else
-    {
-    this.detalleEntidadService.form.patchValue({
-      IsImage:0
-    });}
+    this.isImage = !this.isImage;
+    if (this.isImage) {
+      this.detalleEntidadService.form.patchValue({
+        IsImage: 1
+      });
+
+    } else {
+      this.detalleEntidadService.form.patchValue({
+        IsImage: 0
+      });
+    }
   }
 
   applyFilter(filterValue: string) {

@@ -42,8 +42,8 @@
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field class="ceu-full-width">                                                 
-                            <input type="hidden" formControlName="IdEstudiante">                            
+                        <mat-form-field class="ceu-full-width">
+                            <input type="hidden" formControlName="IdEstudiante">
                             <mat-label>Idioma</mat-label>
                             <mat-select formControlName="IdIdioma" name="idioma">
                                 <mat-option *ngFor="let idioma of listIdiomas" [value]="idioma.IdIdioma">
@@ -64,11 +64,11 @@
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
                     <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)"
-                        *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew"
+                        (click)="guardarClick()">Guardar</button>
                     <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)"
-                        *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew"
+                        data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
                 </div>
             </div>

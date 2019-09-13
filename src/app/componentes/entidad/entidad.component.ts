@@ -39,7 +39,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad',  'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -77,28 +77,26 @@ export class EntidadComponent implements OnInit {
 
   CargarDgvElements() {
 
-    if(this.AuthService.currentUser.Rol == "Estudiante")
-   {
-    this.Service.getByEtudiante().subscribe(result => {
-      this.dataSource = new MatTableDataSource<Entidad>(result.data);
-      this.dataSource.paginator = this.paginator;
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
-  }
- else
-  {
-    this.Service.getByProfesorEstado().subscribe(result => {
-      this.dataSource = new MatTableDataSource<Entidad>(result.data);
-      this.dataSource.paginator = this.paginator;
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
-  }
+    if (this.AuthService.currentUser.Rol == "Estudiante") {
+      this.Service.getByEtudiante().subscribe(result => {
+        this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.dataSource.paginator = this.paginator;
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    }
+    else {
+      this.Service.getByProfesorEstado().subscribe(result => {
+        this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.dataSource.paginator = this.paginator;
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    }
 
   }
 
-  public redirectToDetalleEntidad = () => {   
+  public redirectToDetalleEntidad = () => {
     const url = 'FormEntidad';
     this.router.navigate([url]);
 
@@ -111,9 +109,9 @@ export class EntidadComponent implements OnInit {
 
         if (result.status === 1) {
           this.CargarDgvElements();
-          this.Service.form.patchValue(result.data);                 
+          this.Service.form.patchValue(result.data);
           $('#OperationModalDialog').modal('hide');
-         this.redirectToDetalleEntidad();
+          this.redirectToDetalleEntidad();
 
         } else {
           this.errorService.handleError(result.error);
@@ -159,17 +157,17 @@ export class EntidadComponent implements OnInit {
   setOperationsData() {
     this.transaccionIsNew = false;
     const entidad = this.dataSource.data[this.ROW_NUMBER];
-   
+
     this.Service.form.patchValue(
       {
         IdEntidad: entidad.IdEntidad,
         IdTipoEntidad: entidad.IdTipoEntidad,
-        TipoEntidad: entidad.TipoEntidad ,
-        IdEstudiante : entidad.IdEstudiante,
+        TipoEntidad: entidad.TipoEntidad,
+        IdEstudiante: entidad.IdEstudiante,
         IdProfesor: entidad.IdProfesor,
-        Evaluacion:entidad.Evaluacion,
-        Comentario:entidad.Comentario,
-        Estado:0
+        Evaluacion: entidad.Evaluacion,
+        Comentario: entidad.Comentario,
+        Estado: 0
       });
     this.dialogTittle = 'Modificar';
   }
@@ -191,7 +189,7 @@ export class EntidadComponent implements OnInit {
   }
 
   ActualizarEvaluacion() {
-  
+
     this.transaccionIsNew = false;
     this.ENTIDAD.Estado = this.EstadoEntidad.toString();
     this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
@@ -207,7 +205,7 @@ export class EntidadComponent implements OnInit {
       Estado: this.ENTIDAD.Estado,
       Comentario: this.ENTIDAD.Comentario
     });
-   
+
     this.Service.update().subscribe(result => {
 
       if (result.status === 1) {
@@ -230,14 +228,12 @@ export class EntidadComponent implements OnInit {
   }
 
   checkboxChange(entidad) {
-   
+
   }
 
   applyFilter(filterValue: string) {
     console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-
 
 }

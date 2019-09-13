@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './seguridad/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { AppConstantsService } from '../utils/app-constants.service';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

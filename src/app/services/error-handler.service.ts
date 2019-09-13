@@ -74,6 +74,8 @@ export class ErrorHandlerService {
       str = str.replace('}', '');
       str = str.replace('[', ' ');
       str = str.replace(']', ' ');
+      str = str.replace('\\', '');
+      str = str.replace('\\', '');
       this.errorMessage = str;
     }
   }

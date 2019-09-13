@@ -24,7 +24,7 @@ export class EntidadService {
   form: FormGroup = new FormGroup({
     IdEntidad: new FormControl(null),
     IdTipoEntidad: new FormControl('', Validators.required),
-    TipoEntidad: new FormControl(null),
+    TipoEntidad: new FormControl(''),
     IdEstudiante: new FormControl(null, Validators.required),
     IdProfesor: new FormControl(null),
     Evaluacion: new FormControl(null),
@@ -36,7 +36,7 @@ export class EntidadService {
     this.form.setValue({
       IdEntidad: null,
       IdTipoEntidad: null,
-      TipoEntidad: null,
+      TipoEntidad: '',
       IdEstudiante: this.authService.currentUser.IdEstudiante,
       IdProfesor: null,
       Evaluacion: 0,
@@ -101,7 +101,7 @@ export class EntidadService {
   }
 
   update() {
-    
+
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
@@ -129,54 +129,52 @@ export class EntidadService {
   }
 
   getByProfesorEstado(): Observable<any> {
-    this.loadingSubject.next(true);   
+    this.loadingSubject.next(true);
     let idestudiante: number;
     if (isNullOrUndefined(this.authService.currentUser.IdEstudiante)) {
       idestudiante = 0;
-    }
-    else {
+    } else {
       idestudiante = this.authService.currentUser.IdEstudiante;
     }
     return this.httpClient
-     
-    .get<any>(       
-       
-        this.CONSTANS.getApiUrl(this.BaseURL + 'profesor-evaluations/' + this.authService.currentUser.IdProfesor+"/0"),
+
+      .get<any>(
+
+        this.CONSTANS.getApiUrl(this.BaseURL + 'profesor-evaluations/' + this.authService.currentUser.IdProfesor + '/0'),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
-      
+
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
 
-    
+
   }
 
   getByEtudiante(): Observable<any> {
-    this.loadingSubject.next(true);   
+    this.loadingSubject.next(true);
     let idestudiante: number;
     if (isNullOrUndefined(this.authService.currentUser.IdEstudiante)) {
       idestudiante = 0;
-    }
-    else {
+    } else {
       idestudiante = this.authService.currentUser.IdEstudiante;
     }
     return this.httpClient
       .get<any>(
-       
-         this.CONSTANS.getApiUrl(this.BaseURL),
+
+        this.CONSTANS.getApiUrl(this.BaseURL),
         {
           headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
           params: new HttpParams().set('search[IdEstudiante]', idestudiante.toString())
         }
-     
+
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
-              
+
   }
 
 }

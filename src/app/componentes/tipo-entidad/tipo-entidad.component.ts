@@ -25,7 +25,7 @@ export class TipoEntidadComponent implements OnInit {
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
-  
+
   // DataTable --
   dataSource: MatTableDataSource<TipoEntidad>;
   displayedColumns = ['IdTipoEntidad', 'TipoEntidad', 'commands'];
@@ -45,25 +45,25 @@ export class TipoEntidadComponent implements OnInit {
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
-    this.CargarDgvElements();   
+    this.CargarDgvElements();
     this.CargarSelects();
-    
+
   }
 
   CargarSelects() {
-       this.IdiomaService.get().subscribe(result => {
+    this.IdiomaService.get().subscribe(result => {
       this.listIdiomas = result.data;
     });
   }
 
   CargarDgvElements() {
-     this.Service.get().subscribe(result => {
-       this.dataSource = new MatTableDataSource<TipoEntidad>(result.data);     
+    this.Service.get().subscribe(result => {
+      this.dataSource = new MatTableDataSource<TipoEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
-     }, (error) => {
-       this.errorService.handleError(error);
-     });
-      
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+
   }
 
 
@@ -134,5 +134,5 @@ export class TipoEntidadComponent implements OnInit {
   }
 
 
-  
+
 }

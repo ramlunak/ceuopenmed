@@ -22,13 +22,13 @@ export class IdiomaService {
 
   form: FormGroup = new FormGroup({
     IdIdioma: new FormControl(null),
-    Idioma: new FormControl('', Validators.required),   
+    Idioma: new FormControl('', Validators.required),
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
       IdIdioma: null,
-      Idioma: '',     
+      Idioma: '',
     });
   }
 

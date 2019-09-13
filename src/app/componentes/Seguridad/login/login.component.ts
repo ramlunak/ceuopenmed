@@ -15,6 +15,10 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private errorService: ErrorHandlerService, private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.getCurrentUser()) {
+      // login TRUE
+      this.router.navigateByUrl('');
+    }
   }
 
   loginUser() {
@@ -41,7 +45,7 @@ export class LoginComponent implements OnInit {
       this.authService.setToken(accesToken);
       this.authService.form.reset();
       this.authService.InicializarValoresFormGroup();
-      this.router.navigateByUrl('');
+      location.reload();
     }, (error) => {
       this.errorService.handleError(error);
     });
