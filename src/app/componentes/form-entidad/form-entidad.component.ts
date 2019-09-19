@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +18,7 @@ import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+
 
 @Component({
   selector: 'app-form-entidad',
@@ -46,11 +48,12 @@ export class FormEntidadComponent implements OnInit {
 
   constructor(
     private Service: EntidadService,
-    private AuthService: AuthService,
+    private authService: AuthService,
     private detalleEntidadService: DetalleEntidadService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -86,11 +89,12 @@ export class FormEntidadComponent implements OnInit {
 
 
   CargarDgvElements() {
-    this.Service.viewDetalle(this.Service.form.value.IdEntidad).subscribe(result => {
+    this.Service.viewDetalle().subscribe(result => {
       this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
+      this.router.navigateByUrl('entidad');
     });
 
   }

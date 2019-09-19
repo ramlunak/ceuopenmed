@@ -7,34 +7,37 @@ import { AuthService } from '../../services/seguridad/auth.service';
 
 import { EntidadService } from '../../services/entidad';
 import { Entidad } from 'src/app/models/entidad';
+import { Asociacion } from 'src/app/models/asociacion';
 
 import { IdiomaService } from '../../services/idioma';
 import { Idioma } from 'src/app/models/idioma';
 
+import { TipoAsociacionService } from '../../services/tipo-asociacion';
 import { TipoEntidadService } from '../../services/tipo-entidad';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
-import { AsociacionService } from 'src/app/services/asociacion';
-
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+import { TipoAsociacion } from 'src/app/models/tipo-asociacion';
+import { AsociacionService } from 'src/app/services/asociacion';
 
 
 @Component({
-  selector: 'app-entidad',
-  templateUrl: './entidad.component.html',
-  styleUrls: ['./entidad.component.css']
+  selector: 'app-asociacion',
+  templateUrl: './asociacion.component.html',
+  styleUrls: ['./asociacion.component.css']
 })
 
-export class EntidadComponent implements OnInit {
-
+export class AsociacionComponent implements OnInit {
 
   // para cargar evaluacion
+  IdEntidadSeleccionada = 0;
+  EntidadSeleccionada = '';
   EstadoEntidad = 0;
   EvaluacionEntidad = 0;
   CountEntidad = 0;
   ComentarioEntidad = null;
-  ENTIDAD: Entidad;
+  ASOCIACION: Asociacion;
 
   transaccionIsNew = true;
   asociar = false;
@@ -42,16 +45,17 @@ export class EntidadComponent implements OnInit {
   dialogTittle = 'Nuevo';
 
   // DataTable --
-  dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  dataSource: MatTableDataSource<Asociacion>;
+  displayedColumns = ['IdEntidad','TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  listIdiomas: Idioma[];
+  listTipoAsociacion: TipoAsociacionService[];
   listTiposEntidad: TipoEntidad[];
 
   constructor(
-    private Service: EntidadService,
-    private asociacionService: AsociacionService,
+    private Service: AsociacionService,
+    private EntidadService: EntidadService,
+    private tipoAsociacionService: TipoAsociacionService,   
     private authService: AuthService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
@@ -60,19 +64,23 @@ export class EntidadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.IdEntidadSeleccionada = this.Service.form.value.IdEntidad1;   
+    this.EntidadSeleccionada = this.Service.form.value.entidadSelecionada;   
+
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
-    this.CargarSelects();
+    this.CargarSelects();    
+   
   }
 
   CargarSelects() {
-    // Idioma
-    this.idiomaService.get().subscribe(result => {
-      this.listIdiomas = result.data;
+
+    this.tipoAsociacionService.get().subscribe(result => {
+      this.listTipoAsociacion = result.data;
     });
     // Tipo Entidad
     this.tipoEntidadService.get().subscribe(result => {
@@ -83,15 +91,15 @@ export class EntidadComponent implements OnInit {
   CargarDgvElements() {
 
     if (this.authService.currentUser.Rol === 'Estudiante') {
-      this.Service.getByEtudiante().subscribe(result => {
-        this.dataSource = new MatTableDataSource<Entidad>(result.data);
+      this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
+        this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
       });
     } else {
-      this.Service.getByProfesorEstado().subscribe(result => {
-        this.dataSource = new MatTableDataSource<Entidad>(result.data);
+      this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
+        this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -108,15 +116,14 @@ export class EntidadComponent implements OnInit {
 
   guardarClick() {
 
-    if (this.transaccionIsNew) {
+    if (this.Service.form.value.IdAsociacion == null) {
       this.Service.set().subscribe(result => {
 
         if (result.status === 1) {
           this.CargarDgvElements();
           this.Service.form.patchValue(result.data);
           $('#OperationModalDialog').modal('hide');
-          this.redirectToDetalleEntidad();
-
+         
         } else {
           this.errorService.handleError(result.error);
         }
@@ -159,20 +166,27 @@ export class EntidadComponent implements OnInit {
   }
 
   setOperationsData() {
+    
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const asociacion = this.dataSource.data[this.ROW_NUMBER];
 
     this.Service.form.patchValue(
       {
-        IdEntidad: entidad.IdEntidad,
-        IdTipoEntidad: entidad.IdTipoEntidad,
-        TipoEntidad: entidad.TipoEntidad,
-        IdEstudiante: entidad.IdEstudiante,
-        IdProfesor: entidad.IdProfesor,
-        Evaluacion: entidad.Evaluacion,
-        Comentario: entidad.Comentario,
-        Estado: 0
-      });
+      IdAsociacion: asociacion.IdAsociacion,      
+      IdEntidad1: this.IdEntidadSeleccionada,
+      IdEntidad2: asociacion.IdEntidad,
+      IdTipoAsociacion: asociacion.IdTipoEntidad,
+      IdEstudiante: asociacion.IdEstudiante,
+      IdProfesor: asociacion.IdProfesor,
+      IdEntidad: asociacion.IdEntidad,
+      IdTipoEntidad: asociacion.IdTipoEntidad,
+      TipoEntidad: asociacion.TipoEntidad,     
+      Evaluacion: asociacion.Evaluacion,
+      Estado: asociacion.Estado,
+      Comentario: asociacion.Comentario,
+      EntidadSeleccionada:this.EntidadSeleccionada
+      }); 
+    
     this.dialogTittle = 'Modificar';
   }
 
@@ -181,37 +195,48 @@ export class EntidadComponent implements OnInit {
     this.EvaluacionEntidad = parseInt(evaluacion);
   }
 
-  cargarEvaluacion() {
+  cargarEvaluacion() { 
+
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
-    this.EstadoEntidad = parseInt(entidad.Estado);
-    this.EvaluacionEntidad = parseInt(entidad.Evaluacion);
-    this.ComentarioEntidad = entidad.Comentario;
-    this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
+    const asociacion = this.dataSource.data[this.ROW_NUMBER];
+    this.ASOCIACION = this.dataSource.data[this.ROW_NUMBER];  
+    this.EstadoEntidad = parseInt(asociacion.Estado);
+    this.EvaluacionEntidad = parseInt(asociacion.Evaluacion);
+    this.ComentarioEntidad = asociacion.Comentario;
+    this.Service.form.patchValue({ IdEntidad: asociacion.IdEntidad });
     this.dialogTittle = 'Modificar';
   }
 
   ActualizarEvaluacion() {
 
     this.transaccionIsNew = false;
-    this.ENTIDAD.Estado = this.EstadoEntidad.toString();
-    this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
-    this.ENTIDAD.Comentario = this.Service.form.value.Comentario;
-
-    this.Service.form.patchValue({
-      IdEntidad: this.ENTIDAD.IdEntidad,
-      IdTipoEntidad: this.ENTIDAD.IdTipoEntidad,
-      TipoEntidad: this.ENTIDAD.TipoEntidad,
-      IdEstudiante: this.ENTIDAD.IdEstudiante,
+    this.ASOCIACION.Estado = this.EstadoEntidad.toString();
+    this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
+    this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
+  
+    this.Service.form.patchValue({      
+      IdAsociacion:this.ASOCIACION.IdAsociacion,
+      IdEntidad: this.ASOCIACION.IdEntidad,
+      IdTipoEntidad: this.ASOCIACION.IdTipoEntidad,      
+      TipoEntidad: this.ASOCIACION.TipoEntidad,
+      IdEstudiante: this.ASOCIACION.IdEstudiante,
       IdProfesor: this.authService.currentUser.IdProfesor,
-      Evaluacion: this.ENTIDAD.Evaluacion,
-      Estado: this.ENTIDAD.Estado,
-      Comentario: this.ENTIDAD.Comentario
+      Evaluacion: this.ASOCIACION.Evaluacion,
+      Estado: this.ASOCIACION.Estado,
+      Comentario: this.ASOCIACION.Comentario,    
+      IdEntidad1: this.ASOCIACION.IdEntidad1,
+      IdEntidad2: this.ASOCIACION.IdEntidad2,
+      IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion   
     });
 
-    this.Service.update().subscribe(result => {
+    if(this.ASOCIACION.IdAsociacion == null)
+    {
 
+
+    }
+   else
+   {
+     this.Service.update().subscribe(result => {
       if (result.status === 1) {
         this.CargarDgvElements();
       } else {
@@ -220,7 +245,9 @@ export class EntidadComponent implements OnInit {
 
     }, (error) => {
       this.errorService.handleError(error);
-    });
+    }); 
+  }
+    
 
   }
 
@@ -228,16 +255,11 @@ export class EntidadComponent implements OnInit {
     this.transaccionIsNew = true;
     this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo';
+    this.dialogTittle = 'Nuevo'; 
   }
 
-  goToAsociciones() {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];  
-    this.asociacionService.form.patchValue({
-      IdEntidad1:entidad.IdEntidad,
-      entidadSelecionada:entidad.Entidad
-    });
-    this.redirectToAsociacion();
+  ShowCheck() {
+    this.asociar = true;
   }
 
   public redirectToAsociacion = () => {
@@ -258,12 +280,6 @@ export class EntidadComponent implements OnInit {
   applyFilter(filterValue: string) {
     console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  public redirectToRecursos = () => {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    const url = `EntidadRecurso/${entidad.IdEntidad}`;
-    this.router.navigate([url]);
   }
 
 }

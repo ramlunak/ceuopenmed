@@ -2,12 +2,12 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-       <div>Detalle de la entidad</div> 
+        <div>Detalle de la entidad</div>
 
-       <button mat-button  routerLink="/entidad">
-        <mat-icon>reply</mat-icon>
-        Atras
-       </button>
+        <button mat-button routerLink="/entidad">
+            <mat-icon>reply</mat-icon>
+            Atras
+        </button>
 
         <span class="material-spacer"></span>
 
@@ -20,156 +20,168 @@
 </mat-toolbar>
 <!--END TOOL BAR-->
 
- <!-- ELIMINAR -->
- <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
- aria-hidden="true">
- <div class="modal-dialog modal-dialog-centered" role="document">
-     <div class="modal-content">
-         <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-         <div class="modal-body">
-             <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
-         </div>
-         <div class="modal-footer">
-             <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-             <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button
-                 color='warn'>Eliminar</button>
-         </div>
-     </div>
- </div>
+<!-- ELIMINAR -->
+<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+            </div>
+            <div class="modal-footer">
+                <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+                <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div class="spinner-container" *ngIf="Service.loading$ | async">
+                <mat-spinner diameter="50"></mat-spinner>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
 </div>
 
 <table style="width: 100% !important;margin-top: 15px">
     <tr>
-        <td *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" style="width: 280px">
-         
- <!-- FORMULARIO -->
- <form [formGroup]="detalleEntidadService.form" >
-   
-    <mat-form-field class="ceu-full-width">  
-            <input type="hidden" formControlName="IdRecurso">
-        <input  disabled = "true" matInput name="TipoEntidad" [value]="this.detalleEntidadService.form.value.TipoEntidad" placeholder="TipoEntidad">
-        <mat-error>Este campo es requerido.</mat-error>
-    </mat-form-field>
+        <td *ngIf="this.authService.currentUser.Rol == 'Estudiante'" style="width: 280px">
 
-    <mat-form-field class="ceu-full-width">
-        <mat-label>Idioma</mat-label>
-        <mat-select formControlName="IdIdioma" name="idioma">
-            <mat-option *ngFor="let idioma of listIdiomas" [value]="idioma.IdIdioma">
-                {{idioma.Idioma}}
-            </mat-option>
-        </mat-select>
-        <mat-error>Este campo es requerido.</mat-error>
-    </mat-form-field>
+            <!-- FORMULARIO -->
+            <form [formGroup]="detalleEntidadService.form">
 
-     <mat-form-field class="ceu-full-width">      
-         <input formControlName="Entidad" matInput name="Entidad" placeholder="Descripción">
-         <mat-error>Este campo es requerido.</mat-error>
-     </mat-form-field>
+                <mat-form-field class="ceu-full-width">
+                    <input type="hidden" formControlName="IdRecurso">
+                    <input disabled="true" matInput name="TipoEntidad"
+                        [value]="this.detalleEntidadService.form.value.TipoEntidad" placeholder="TipoEntidad">
+                    <mat-error>Este campo es requerido.</mat-error>
+                </mat-form-field>
 
+                <mat-form-field class="ceu-full-width">
+                    <mat-label>Idioma</mat-label>
+                    <mat-select formControlName="IdIdioma" name="idioma">
+                        <mat-option *ngFor="let idioma of listIdiomas" [value]="idioma.IdIdioma">
+                            {{idioma.Idioma}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Este campo es requerido.</mat-error>
+                </mat-form-field>
 
-     <mat-form-field class="ceu-full-width">  
-        <textarea matInput placeholder="Leave a comment"  formControlName="Referencia" placeholder="Referencia"></textarea>
-        <mat-error>Este campo es requerido.</mat-error>
-    </mat-form-field>
-
-    <section class="example-section" style="margin-top:10px">
-        <mat-slide-toggle
-            class="example-margin"
-            [color]="color"
-            [checked]="isImagen"
-            (change)="isImageChage()">
-            La referencia es una imagen!.
-        </mat-slide-toggle>
-      </section>
+                <mat-form-field class="ceu-full-width">
+                    <input formControlName="Entidad" matInput name="Entidad" placeholder="Descripción">
+                    <mat-error>Este campo es requerido.</mat-error>
+                </mat-form-field>
 
 
-    <mat-form-field class="ceu-full-width" style="margin-top:10px">
-        <mat-label>Nivel</mat-label>
-        <mat-select formControlName="Nivel" name="Nivel">
-            <mat-option value="0">0</mat-option>
-            <mat-option value="1">1</mat-option>
-            <mat-option value="2">2</mat-option>               
-           
-        </mat-select>
-        <mat-error>Este campo es requerido.</mat-error>
-    </mat-form-field>
+                <mat-form-field class="ceu-full-width">
+                    <textarea matInput placeholder="Leave a comment" formControlName="Referencia"
+                        placeholder="Referencia"></textarea>
+                    <mat-error>Este campo es requerido.</mat-error>
+                </mat-form-field>
 
-    <button mat-raised-button color='primary'
-    [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
-    *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
-<button mat-raised-button color='primary'
-    [disabled]="detalleEntidadService.form.invalid || (Service.loading$ | async)"
-    *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+                <section class="example-section" style="margin-top:10px">
+                    <mat-slide-toggle class="example-margin" [color]="color" [checked]="isImagen"
+                        (change)="isImageChage()">
+                        La referencia es una imagen!.
+                    </mat-slide-toggle>
+                </section>
 
 
-</form>
-<!--END FORMULARIO -->
-         
+                <mat-form-field class="ceu-full-width" style="margin-top:10px">
+                    <mat-label>Nivel</mat-label>
+                    <mat-select formControlName="Nivel" name="Nivel">
+                        <mat-option value="0">0</mat-option>
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+
+                    </mat-select>
+                    <mat-error>Este campo es requerido.</mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button color='primary'
+                    [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
+                    *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+                <button mat-raised-button color='primary'
+                    [disabled]="detalleEntidadService.form.invalid || (Service.loading$ | async)"
+                    *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+
+
+            </form>
+            <!--END FORMULARIO -->
+
         </td>
         <td style="width: 10px">
-             <!-- DIVIDER -->
-           
-           <!-- END -->
+            <!-- DIVIDER -->
+
+            <!-- END -->
         </td>
         <td valign="top">
-          <!-- GRID -->
-<table mat-table [dataSource]="dataSource"  class="mat-elevation-z8 ceu-table">
-
-     
-
-    <ng-container matColumnDef="Idioma">
-        <th mat-header-cell *matHeaderCellDef> Idioma </th>
-        <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Entidad">
-        <th mat-header-cell *matHeaderCellDef> Entidad </th>
-        <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Nivel">
-        <th mat-header-cell *matHeaderCellDef> Nivel </th>
-        <td mat-cell *matCellDef="let element"> {{element.Nivel}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="isImage">
-        <th mat-header-cell *matHeaderCellDef> isImage </th>
-        <td mat-cell *matCellDef="let element"> {{element.IsImage}} </td>
-    </ng-container>
+            <!-- GRID -->
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ceu-table">
 
 
-    <ng-container  matColumnDef="commands">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let row = index;">
-         
-            <button *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
-                data-target="#OperationModalDialog">
-                <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
-            </button>
 
-            <button *ngIf="this.AuthService.currentUser.Rol == 'Estudiante'" (click)="ROW_NUMBER = row; setOperationsDataEliminar()" mat-icon-button data-toggle="modal"
-            data-target="#DeleteDialog">
-            <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
-           </button>
-<!-- 
+                <ng-container matColumnDef="Idioma">
+                    <th mat-header-cell *matHeaderCellDef> Idioma </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Entidad">
+                    <th mat-header-cell *matHeaderCellDef> Entidad </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Nivel">
+                    <th mat-header-cell *matHeaderCellDef> Nivel </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Nivel}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isImage">
+                    <th mat-header-cell *matHeaderCellDef> isImage </th>
+                    <td mat-cell *matCellDef="let element"> {{element.IsImage}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="commands">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let row = index;">
+
+                        <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
+                            (click)='ROW_NUMBER = row; setOperationsData()' mat-icon-button data-toggle="modal"
+                            data-target="#OperationModalDialog">
+                            <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
+                        </button>
+
+                        <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
+                            (click)="ROW_NUMBER = row; setOperationsDataEliminar()" mat-icon-button data-toggle="modal"
+                            data-target="#DeleteDialog">
+                            <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+                        </button>
+                        <!-- 
             <button (click)="ROW_NUMBER = row; goTo('/negRelacion')" mat-icon-button 
             data-target="#DeleteDialog">
             <mat-icon class="orange-color" matTooltip="Relaciones">shuffle</mat-icon>
         </button> -->
 
-        </td>
-    </ng-container>   
+                    </td>
+                </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
-<!--END GRID -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+            <!--END GRID -->
         </td>
     </tr>
 </table>

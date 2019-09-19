@@ -157,6 +157,11 @@ body {
   .ceu-full-width {
     width: 100%;
   }
+  
+  .modal-open .modal {
+    overflow: hidden;
+    position: absolute;
+  }
 
   .cdk-overlay-container {  /* estilo para prevenir que el contenido del material-select se muestre por detras del dialog */
     z-index: 1051;

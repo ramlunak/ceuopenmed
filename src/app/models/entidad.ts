@@ -10,4 +10,5 @@ export interface Entidad {
     Evaluacion: string;
     Estado: string;
     Comentario: string;
+    Entidad: string;
 }
