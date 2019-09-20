@@ -126,7 +126,7 @@ export class DocProfesorService {
   }
 
   // Especialidades
-  getEspecialidades(IdProfesor: number) {
+  getEspecialidades(IdProfesor: number): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -139,7 +139,7 @@ export class DocProfesorService {
       );
   }
 
-  getUnsolicitedEspecialidades(IdProfesor: number) {
+  getUnsolicitedEspecialidades(IdProfesor: number): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -181,7 +181,7 @@ export class DocProfesorService {
   }
 
   // Grupos
-  getGrupos(IdProfesor: number) {
+  getGrupos(IdProfesor: number): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -194,7 +194,7 @@ export class DocProfesorService {
       );
   }
 
-  getUnsolicitedGroups(IdProfesor: number) {
+  getUnsolicitedGroups(IdProfesor: number): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(

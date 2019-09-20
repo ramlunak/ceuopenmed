@@ -43,7 +43,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -262,7 +262,7 @@ export class EntidadComponent implements OnInit {
 
   public redirectToRecursos = () => {
     const entidad = this.dataSource.data[this.ROW_NUMBER];
-    const url = `EntidadRecurso/${entidad.IdEntidad}`;
+    const url = `EntidadRecurso/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
     this.router.navigate([url]);
   }
 

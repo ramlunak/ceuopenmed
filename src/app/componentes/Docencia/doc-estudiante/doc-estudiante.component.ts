@@ -71,10 +71,14 @@ export class DocEstudianteComponent implements OnInit {
   CargarSelects() {
     this.personaService.getPersonas().subscribe(result => {
       this.listPersonas = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
 
     this.grupoService.getGrupos().subscribe(result => {
       this.listGrupos = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
     this.listStatus = [{ type: 'Activo', value: 10 }, { type: 'Inactivo', value: 0 }];
   }

@@ -24,6 +24,7 @@ import { AsociacionComponent } from '../componentes/asociacion/asociacion.compon
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
+import { EntidadRecursoComponent } from '../componentes/entidad-recurso/entidad-recurso.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'docProfesorEspecialidades/:id', component: DocProfesorEspecialidadesComponent, canActivate: [AuthVerifyService] },
   { path: 'tipoEntidad', component: TipoEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'EntidadRecurso/:idEntidad/:idTipoEntidad', component: EntidadRecursoComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'TipoSociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },

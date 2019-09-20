@@ -3,6 +3,7 @@ export interface Asociacion {
     IdEntidad1: number,
     IdEntidad2: number,
     IdTipoAsociacion: number,
+    TipoAsociacion: string,
     IdEstudiante: number,
     IdProfesor: number,
     IdEntidad: number,

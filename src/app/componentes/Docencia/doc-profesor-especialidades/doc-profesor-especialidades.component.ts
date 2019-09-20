@@ -29,10 +29,12 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
   // Selects
   listEspecialidades: DocEspecialidad[];
 
-  constructor(private profesorService: DocProfesorService,
-              private errorService: ErrorHandlerService,
-              private router: Router,
-              private activeRoute: ActivatedRoute, ) { }
+  constructor(
+    private profesorService: DocProfesorService,
+    private errorService: ErrorHandlerService,
+    private router: Router,
+    private activeRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -70,6 +72,8 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
   CargarSelects() {
     this.profesorService.getUnsolicitedEspecialidades(this.IdProfesor).subscribe(result => {
       this.listEspecialidades = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
   }
 
@@ -102,11 +106,10 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 

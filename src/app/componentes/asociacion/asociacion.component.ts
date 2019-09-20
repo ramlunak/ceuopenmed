@@ -46,7 +46,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdEntidad','TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['IdEntidad','TipoEntidad', 'Idioma', 'Entidad','TipoAsociacion', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -168,14 +168,13 @@ export class AsociacionComponent implements OnInit {
   setOperationsData() {
     
     this.transaccionIsNew = false;
-    const asociacion = this.dataSource.data[this.ROW_NUMBER];
-
+    const asociacion = this.dataSource.data[this.ROW_NUMBER];   
     this.Service.form.patchValue(
       {
       IdAsociacion: asociacion.IdAsociacion,      
       IdEntidad1: this.IdEntidadSeleccionada,
       IdEntidad2: asociacion.IdEntidad,
-      IdTipoAsociacion: asociacion.IdTipoEntidad,
+      IdTipoAsociacion: asociacion.IdTipoAsociacion,
       IdEstudiante: asociacion.IdEstudiante,
       IdProfesor: asociacion.IdProfesor,
       IdEntidad: asociacion.IdEntidad,
@@ -186,7 +185,7 @@ export class AsociacionComponent implements OnInit {
       Comentario: asociacion.Comentario,
       EntidadSeleccionada:this.EntidadSeleccionada
       }); 
-    
+     
     this.dialogTittle = 'Modificar';
   }
 

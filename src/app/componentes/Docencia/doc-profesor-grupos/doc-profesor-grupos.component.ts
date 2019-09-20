@@ -29,10 +29,12 @@ export class DocProfesorGruposComponent implements OnInit {
   // Selects
   listGrupos: DocGrupo[];
 
-  constructor(private profesorService: DocProfesorService,
-              private errorService: ErrorHandlerService,
-              private router: Router,
-              private activeRoute: ActivatedRoute, ) { }
+  constructor(
+    private profesorService: DocProfesorService,
+    private errorService: ErrorHandlerService,
+    private router: Router,
+    private activeRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -70,6 +72,8 @@ export class DocProfesorGruposComponent implements OnInit {
   CargarSelects() {
     this.profesorService.getUnsolicitedGroups(this.IdProfesor).subscribe(result => {
       this.listGrupos = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
   }
 
@@ -101,11 +105,10 @@ export class DocProfesorGruposComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 

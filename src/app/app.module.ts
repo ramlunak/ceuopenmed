@@ -39,6 +39,8 @@ import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.co
 import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-change-password/dialog-change-password.component';
 import { TipoAsociacionComponent } from './componentes/tipo-asociacion/tipo-asociacion.component';
 import { AsociacionComponent } from './componentes/asociacion/asociacion.component';
+import { EntidadRecursoComponent } from './componentes/entidad-recurso/entidad-recurso.component';
+import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { AsociacionComponent } from './componentes/asociacion/asociacion.compone
     FormEntidadComponent,
     DialogChangePasswordComponent,
     TipoAsociacionComponent,
-    AsociacionComponent
+    AsociacionComponent,
+    EntidadRecursoComponent,
+    ExchangeBooleanPipe
   ],
   imports: [
     BrowserModule,
