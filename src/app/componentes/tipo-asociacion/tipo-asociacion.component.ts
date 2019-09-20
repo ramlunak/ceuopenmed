@@ -131,7 +131,6 @@ export class TipoAsociacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

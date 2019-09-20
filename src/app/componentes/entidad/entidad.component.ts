@@ -1,23 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../services/entidad';
+import { EntidadService } from '../../services/entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../services/tipo-entidad';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 import { AsociacionService } from 'src/app/services/asociacion';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+
+// Selector jQuery
+declare var $: any;
 
 
 @Component({
@@ -27,7 +29,6 @@ import { ErrorHandlerService } from '../../services/error-handler.service';
 })
 
 export class EntidadComponent implements OnInit {
-
 
   // para cargar evaluacion
   EstadoEntidad = 0;
@@ -65,6 +66,7 @@ export class EntidadComponent implements OnInit {
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
+    this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
     this.CargarDgvElements();
     this.CargarSelects();
   }
@@ -100,10 +102,9 @@ export class EntidadComponent implements OnInit {
 
   }
 
-  public redirectToDetalleEntidad = () => {
-    const url = 'FormEntidad';
+  public redirectToDetalleEntidad = (entidad: any) => {
+    const url = `FormEntidad/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
     this.router.navigate([url]);
-
   }
 
   guardarClick() {
@@ -112,15 +113,15 @@ export class EntidadComponent implements OnInit {
       this.Service.set().subscribe(result => {
 
         if (result.status === 1) {
-          this.CargarDgvElements();
-          this.Service.form.patchValue(result.data);
+          // this.CargarDgvElements(); NO NECESARIO SI TE VAS DE LA PÁGINA
+          // this.Service.form.patchValue(result.data);
           $('#OperationModalDialog').modal('hide');
-          this.redirectToDetalleEntidad();
+          this.redirectToDetalleEntidad(result.data);
 
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
 
@@ -134,13 +135,12 @@ export class EntidadComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
-    this.CargarDgvElements();
+
   }
 
   eliminarClick() {
@@ -151,11 +151,10 @@ export class EntidadComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
   setOperationsData() {
@@ -176,17 +175,17 @@ export class EntidadComponent implements OnInit {
     this.dialogTittle = 'Modificar';
   }
 
-  setEvalucacion(estado, evaluacion) {
-    this.EstadoEntidad = parseInt(estado);
-    this.EvaluacionEntidad = parseInt(evaluacion);
+  setEvalucacion(estado: string, evaluacion: string) {
+    this.EstadoEntidad = parseInt(estado, 32);
+    this.EvaluacionEntidad = parseInt(evaluacion, 32);
   }
 
   cargarEvaluacion() {
     this.transaccionIsNew = false;
     const entidad = this.dataSource.data[this.ROW_NUMBER];
     this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
-    this.EstadoEntidad = parseInt(entidad.Estado);
-    this.EvaluacionEntidad = parseInt(entidad.Evaluacion);
+    this.EstadoEntidad = parseInt(entidad.Estado, 32);
+    this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
     this.ComentarioEntidad = entidad.Comentario;
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
@@ -226,16 +225,17 @@ export class EntidadComponent implements OnInit {
 
   Limpiar() {
     this.transaccionIsNew = true;
-    this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
+    this.Service.form.reset();
+    this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
     this.dialogTittle = 'Nuevo';
   }
 
   goToAsociciones() {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];  
+    const entidad = this.dataSource.data[this.ROW_NUMBER];
     this.asociacionService.form.patchValue({
-      IdEntidad1:entidad.IdEntidad,
-      entidadSelecionada:entidad.Entidad
+      IdEntidad1: entidad.IdEntidad,
+      entidadSelecionada: entidad.Entidad
     });
     this.redirectToAsociacion();
   }
@@ -256,13 +256,18 @@ export class EntidadComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   public redirectToRecursos = () => {
     const entidad = this.dataSource.data[this.ROW_NUMBER];
     const url = `EntidadRecurso/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
+    this.router.navigate([url]);
+  }
+
+  public redirectToDetalles = () => {
+    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const url = `FormEntidad/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
     this.router.navigate([url]);
   }
 

@@ -3,18 +3,17 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './seguridad/auth.service';
 import { AppConstantsService } from '../utils/app-constants.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
-import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EntidadRecursoService {
+export class IdiomaService {
 
-  private BaseURL = 'recurso/';
+  private BaseURL = 'idioma/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -22,24 +21,14 @@ export class EntidadRecursoService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdRecurso: new FormControl(null),
-    IdIdioma: new FormControl('', Validators.required),
-    IdEntidad: new FormControl('', Validators.required),
-    Nivel: new FormControl('', Validators.required),
-    URL: new FormControl('', Validators.required),
-    IsImage: new FormControl(false, Validators.required),
-    Descripcion: new FormControl('')
+    IdIdioma: new FormControl(null),
+    Idioma: new FormControl('', Validators.required),
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdRecurso: null,
-      IdIdioma: '',
-      IdEntidad: '',
-      Nivel: '',
-      URL: '',
-      IsImage: false,
-      Descripcion: '',
+      IdIdioma: null,
+      Idioma: '',
     });
   }
 
@@ -50,28 +39,6 @@ export class EntidadRecursoService {
         this.CONSTANS.getApiUrl(this.BaseURL),
         {
           headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-        }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
-  }
-
-  getByEntidad(): Observable<any> {
-    this.loadingSubject.next(true);
-    let idEntidad: number;
-    if (isNullOrUndefined(this.form.value.IdEntidad)) {
-      idEntidad = 0;
-    } else {
-      idEntidad = this.form.value.IdEntidad;
-    }
-    return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL),
-        {
-          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString())
         }
       )
       .pipe(
@@ -111,7 +78,7 @@ export class EntidadRecursoService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdIdioma),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -125,7 +92,7 @@ export class EntidadRecursoService {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecurso),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdIdioma),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

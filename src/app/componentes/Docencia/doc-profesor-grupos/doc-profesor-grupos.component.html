@@ -71,7 +71,7 @@
 
                     <button mat-raised-button color='primary'
                         [disabled]="profesorService.formGrupos.invalid || (profesorService.loading$ | async)"
-                        (click)="guardarClick()">Guardar</button>                    
+                        (click)="guardarClick()">Guardar</button>
 
                 </div>
             </div>
@@ -104,22 +104,22 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col"></div>
-            <div class="col">
+            <div class="col-4"></div>
+            <div class="col-4">
                 <div class="spinner-container" *ngIf="profesorService.loading$ | async">
                     <mat-spinner diameter="50"></mat-spinner>
                 </div>
             </div>
-            <div class="col"></div>
+            <div class="col-4"></div>
         </div>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="ceu-table">
 
         <ng-container matColumnDef="IdGrupo">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <th mat-header-cell *matHeaderCellDef> ID </th>
             <td mat-cell *matCellDef="let element"> {{element.IdGrupo}} </td>
         </ng-container>
 
@@ -131,9 +131,9 @@
         <ng-container matColumnDef="commands">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
-                
-                <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button data-toggle="modal"
-                    data-target="#DeleteDialog">
+
+                <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()"
+                    mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
                     <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
                 </button>
 

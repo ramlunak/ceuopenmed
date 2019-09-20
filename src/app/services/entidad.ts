@@ -75,11 +75,11 @@ export class EntidadService {
       );
   }
 
-  viewDetalle() {
+  viewDetalle(Id: number) {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'view-detalles/' + this.form.value.IdEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'view-detalles/' + Id),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

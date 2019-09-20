@@ -3,15 +3,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { TipoEntidadService } from '../../services/tipo-entidad';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+
+// Selector jQuery
+declare var $: any;
 
 
 @Component({
@@ -24,18 +27,18 @@ export class TipoEntidadComponent implements OnInit {
 
   transaccionIsNew = true;
   ROW_NUMBER: number;
-  dialogTittle = 'Nuevo';
+  dialogTittle = 'Nuevo Tipo de Entidad';
 
   // DataTable --
   dataSource: MatTableDataSource<TipoEntidad>;
-  displayedColumns = ['IdTipoEntidad', 'TipoEntidad', 'commands'];
+  displayedColumns = ['IdTipoEntidad', 'Idioma', 'TipoEntidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
 
   constructor(
     private Service: TipoEntidadService,
-    private IdiomaService: IdiomaService,
+    private idiomaService: IdiomaService,
     private authService: AuthService,
     private errorService: ErrorHandlerService) { }
 
@@ -51,7 +54,7 @@ export class TipoEntidadComponent implements OnInit {
   }
 
   CargarSelects() {
-    this.IdiomaService.get().subscribe(result => {
+    this.idiomaService.get().subscribe(result => {
       this.listIdiomas = result.data;
     });
   }
@@ -78,7 +81,7 @@ export class TipoEntidadComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -90,12 +93,11 @@ export class TipoEntidadComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
   }
 
   eliminarClick() {
@@ -106,30 +108,35 @@ export class TipoEntidadComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 
   setOperationsData() {
     this.transaccionIsNew = false;
     const tipoEntidad = this.dataSource.data[this.ROW_NUMBER];
-    this.Service.form.patchValue({ IdTipoEntidad: tipoEntidad.IdTipoEntidad, TipoEntidad: tipoEntidad.TipoEntidad });
-    this.dialogTittle = 'Modificar';
+    this.Service.form.patchValue({
+      IdTipoEntidad: tipoEntidad.IdTipoEntidad,
+      IdIdioma: tipoEntidad.IdIdioma,
+      TipoEntidad: tipoEntidad.TipoEntidad
+    });
+    this.dialogTittle = 'Modificar Tipo de Entidad';
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
-    this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo';
+    this.Service.form.reset();
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Tipo de Entidad';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

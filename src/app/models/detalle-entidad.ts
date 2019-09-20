@@ -6,4 +6,6 @@ export interface DetalleEntidad {
   Referencia: string;
   Nivel: number;
   IsImage: number;
+  // Extra Field
+  Idioma: string;
 }

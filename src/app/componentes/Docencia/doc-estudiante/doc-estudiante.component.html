@@ -61,11 +61,12 @@
                             <mat-form-field class="ceu-full-width">
                                 <input type="hidden" formControlName="id">
                                 <input formControlName="username" matInput name="username" placeholder="Usuario">
-                                <mat-spinner diameter="25" *ngIf="validationsService.loading$ | async" matSuffix></mat-spinner>
+                                <mat-spinner diameter="25" *ngIf="validationsService.loading$ | async" matSuffix>
+                                </mat-spinner>
                                 <mat-error *ngIf="usuarioService.form.controls['username'].errors?.required">
                                     Este campo es requerido.</mat-error>
                                 <mat-error *ngIf="usuarioService.form.controls['username'].errors?.loginExist">
-                                    Este Nombre de Usuario ya está en uso.</mat-error>                                
+                                    Este Nombre de Usuario ya está en uso.</mat-error>
                             </mat-form-field>
                             <mat-form-field class="ceu-full-width">
                                 <input formControlName="email" matInput name="email" placeholder="Email">
@@ -111,8 +112,7 @@
                     </mat-icon>
                     <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-                    <button mat-raised-button color='primary'
-                        [disabled]="estudianteService.form.invalid || personaService.form.invalid || usuarioService.form.invalid
+                    <button mat-raised-button color='primary' [disabled]="estudianteService.form.invalid || personaService.form.invalid || usuarioService.form.invalid
                                     || (personaService.loading$ | async) || (usuarioService.loading$ | async) 
                                     || (estudianteService.loading$ | async) || (validationsService.loading$ | async)"
                         *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
@@ -173,14 +173,14 @@
                             <mat-error>Este campo es requerido.</mat-error>
                         </mat-form-field>
                         <mat-form-field class="ceu-full-width">
-                                <mat-label>Estado</mat-label>
-                                <mat-select formControlName="status" name="status">
-                                    <mat-option *ngFor="let stat of listStatus" [value]="stat.value">
-                                        {{stat.type}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>Este campo es requerido.</mat-error>
-                        </mat-form-field>                        
+                            <mat-label>Estado</mat-label>
+                            <mat-select formControlName="status" name="status">
+                                <mat-option *ngFor="let stat of listStatus" [value]="stat.value">
+                                    {{stat.type}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Este campo es requerido.</mat-error>
+                        </mat-form-field>
                         <mat-checkbox formControlName="changePass">Cambiar Contraseña</mat-checkbox>
                     </form>
                     <div *ngIf="usuarioService.formUpdate.controls['changePass'].value">
@@ -214,8 +214,8 @@
 
                     <button mat-raised-button color='primary'
                         [disabled]="usuarioService.formUpdate.invalid || (usuarioService.loading$ | async) 
-                        || (usuarioService.formUpdate.controls['changePass'].value && usuarioService.formChangePass.invalid)"
-                        data-dismiss="modal" (click)="upateUsuarioClick()">Modificar</button>
+                        || (usuarioService.formUpdate.controls['changePass'].value && usuarioService.formChangePass.invalid)" data-dismiss="modal"
+                        (click)="upateUsuarioClick()">Modificar</button>
 
                 </div>
             </div>
@@ -223,22 +223,22 @@
     </div>
     <!--END FORMULARIO USUARIO -->
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col"></div>
-            <div class="col">
+            <div class="col-4"></div>
+            <div class="col-4">
                 <div class="spinner-container" *ngIf="estudianteService.loading$ | async">
                     <mat-spinner diameter="50"></mat-spinner>
                 </div>
             </div>
-            <div class="col"></div>
+            <div class="col-4"></div>
         </div>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="ceu-table">
 
         <ng-container matColumnDef="IdEstudiante">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <th mat-header-cell *matHeaderCellDef> ID </th>
             <td mat-cell *matCellDef="let element"> {{element.IdEstudiante}} </td>
         </ng-container>
 
@@ -271,18 +271,18 @@
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
 
-                <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationDataUsuario()' mat-icon-button data-toggle="modal"
-                    data-target="#UsuarioModalDialog">
+                <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationDataUsuario()'
+                    mat-icon-button data-toggle="modal" data-target="#UsuarioModalDialog">
                     <mat-icon color='primary' matTooltip="Usuario">account_circle</mat-icon>
                 </button>
 
-                <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()' mat-icon-button data-toggle="modal"
-                    data-target="#OperationModalDialog">
+                <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()'
+                    mat-icon-button data-toggle="modal" data-target="#OperationModalDialog">
                     <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
                 </button>
 
-                <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button data-toggle="modal"
-                    data-target="#DeleteDialog">
+                <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()"
+                    mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
                     <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
                 </button>
 

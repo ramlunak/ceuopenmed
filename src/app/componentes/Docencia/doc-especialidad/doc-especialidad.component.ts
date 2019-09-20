@@ -49,7 +49,6 @@ export class DocEspecialidadComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -91,11 +90,10 @@ export class DocEspecialidadComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 
@@ -107,8 +105,8 @@ export class DocEspecialidadComponent implements OnInit {
   }
 
   Limpiar() {
-    this.especialidadService.form.reset();
     this.especialidadService.InicializarValoresFormGroup();
+    this.especialidadService.form.reset();
     if (!this.transaccionIsNew) {
       this.transaccionIsNew = true;
       this.dialogTittle = 'Nueva Especialidad';

@@ -78,7 +78,6 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -119,8 +118,8 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
   }
 
   Limpiar() {
-    this.profesorService.formEspecialidad.reset();
     this.profesorService.InicializarValoresFormEspecialidadGroup();
+    this.profesorService.formEspecialidad.reset();
     this.profesorService.formEspecialidad.patchValue({ IdProfesor: this.IdProfesor });
     this.CargarSelects();
   }

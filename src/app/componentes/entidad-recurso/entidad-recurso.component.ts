@@ -5,15 +5,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../services/entidad';
-
 import { EntidadRecursoService } from '../../services/entidad-recurso.service';
 import { EntidadRecurso } from 'src/app/models/entidad-recurso';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../services/tipo-entidad';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
@@ -40,6 +38,8 @@ export class EntidadRecursoComponent implements OnInit {
   // Selects
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
+  // slide-toggle
+  // @ViewChild('slideIsImage', { static: true }) mSTisImage: MatSlideToggle;
 
   constructor(
     private entidadRecursoService: EntidadRecursoService,
@@ -60,20 +60,6 @@ export class EntidadRecursoComponent implements OnInit {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
-    /*this.profesorService.viewProfesor(this.IdProfesor).subscribe(result => {
-
-      if (result.status === 1) {
-        this.NombreProfesor = result.data.NombreCompleto;
-        this.CargarDgvElements();
-        this.CargarSelects();
-        this.profesorService.formEspecialidad.patchValue({ IdProfesor: this.IdProfesor });
-      } else {
-        this.errorService.handleError(result.error);
-      }
-
-    }, (error) => {
-      this.errorService.handleError(error);
-    });*/
     this.CargarTipoEntidad();
     this.CargarSelects();
     this.CargarDgvElements();
@@ -163,44 +149,19 @@ export class EntidadRecursoComponent implements OnInit {
         IdEntidad: this.IdEntidad,
         Nivel: recurso.Nivel,
         URL: recurso.URL,
-        IsImage: recurso.IsImage,
+        IsImage: (recurso.IsImage.toString() === '1') ? true : false,
         Descripcion: recurso.Descripcion
-      });
-  }
-
-
-  setOperationsDataEliminar() {
-
-    const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
-    this.entidadRecursoService.form.patchValue(
-      {
-        IdRecurso: DetalleEntidad.IdRecurso
       });
   }
 
   Limpiar() {
     this.transaccionIsNew = true;
-    this.entidadRecursoService.form.reset();
     this.entidadRecursoService.InicializarValoresFormGroup();
+    this.entidadRecursoService.form.reset();
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
   }
 
-  isImageChage() {
-    /*this.isImage = !this.isImage;
-    if (this.isImage) {
-      this.entidadRecursoService.form.patchValue({
-        IsImage: true
-      });
-
-    } else {
-      this.entidadRecursoService.form.patchValue({
-        IsImage: false
-      });
-    }*/
-  }
-
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

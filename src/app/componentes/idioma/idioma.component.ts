@@ -3,11 +3,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+
+// Selector jQuery
+declare var $: any;
 
 
 @Component({
@@ -60,7 +63,7 @@ export class IdiomaComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -72,12 +75,11 @@ export class IdiomaComponent implements OnInit {
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
   }
 
   eliminarClick() {
@@ -88,30 +90,31 @@ export class IdiomaComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const Idioma = this.dataSource.data[this.ROW_NUMBER];
-    this.Service.form.patchValue({ IdIdioma: Idioma.IdIdioma, Idioma: Idioma.Idioma });
+    const idioma = this.dataSource.data[this.ROW_NUMBER];
+    this.Service.form.patchValue({ IdIdioma: idioma.IdIdioma, Idioma: idioma.Idioma });
     this.dialogTittle = 'Modificar';
   }
 
   Limpiar() {
-    this.transaccionIsNew = true;
-    this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo';
+    this.Service.form.reset();
+    if (!this.transaccionIsNew) {
+      this.transaccionIsNew = true;
+      this.dialogTittle = 'Nuevo Idioma';
+      $('#OperationModalDialog').modal('hide');
+    }
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

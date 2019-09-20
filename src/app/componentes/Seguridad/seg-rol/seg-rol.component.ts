@@ -107,8 +107,8 @@ export class SegRolComponent implements OnInit {
   }
 
   Limpiar() {
-    this.rolService.form.reset();
     this.rolService.InicializarValoresFormGroup();
+    this.rolService.form.reset();
     if (!this.transaccionIsNew) {
       this.transaccionIsNew = true;
       this.dialogTittle = 'Nuevo Rol';

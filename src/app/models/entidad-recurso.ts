@@ -8,5 +8,4 @@ export interface EntidadRecurso {
     Descripcion?: string;
     // Extra Field
     Idioma: string;
-
 }

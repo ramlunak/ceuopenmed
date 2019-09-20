@@ -78,7 +78,6 @@ export class DocProfesorGruposComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -118,8 +117,8 @@ export class DocProfesorGruposComponent implements OnInit {
   }
 
   Limpiar() {
-    this.profesorService.formGrupos.reset();
     this.profesorService.InicializarValoresFormGruposGroup();
+    this.profesorService.formGrupos.reset();
     this.profesorService.formGrupos.patchValue({ IdProfesor: this.IdProfesor });
     this.CargarSelects();
   }

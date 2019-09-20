@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadRecurso/:idEntidad/:idTipoEntidad', component: EntidadRecursoComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
-  { path: 'FormEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'FormEntidad/:idEntidad/:idTipoEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'TipoSociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },

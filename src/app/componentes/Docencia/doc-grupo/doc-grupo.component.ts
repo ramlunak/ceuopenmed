@@ -49,7 +49,6 @@ export class DocGrupoComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -97,7 +96,6 @@ export class DocGrupoComponent implements OnInit {
     });
   }
 
-
   setOperationsData() {
     this.transaccionIsNew = false;
     const grupo = this.dataSource.data[this.ROW_NUMBER];
@@ -106,8 +104,8 @@ export class DocGrupoComponent implements OnInit {
   }
 
   Limpiar() {
-    this.grupoService.form.reset();
     this.grupoService.InicializarValoresFormGroup();
+    this.grupoService.form.reset();
     if (!this.transaccionIsNew) {
       this.transaccionIsNew = true;
       this.dialogTittle = 'Nuevo Grupo';

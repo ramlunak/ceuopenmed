@@ -46,7 +46,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdEntidad','TipoEntidad', 'Idioma', 'Entidad','TipoAsociacion', 'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -55,7 +55,7 @@ export class AsociacionComponent implements OnInit {
   constructor(
     private Service: AsociacionService,
     private EntidadService: EntidadService,
-    private tipoAsociacionService: TipoAsociacionService,   
+    private tipoAsociacionService: TipoAsociacionService,
     private authService: AuthService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
@@ -64,8 +64,8 @@ export class AsociacionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.IdEntidadSeleccionada = this.Service.form.value.IdEntidad1;   
-    this.EntidadSeleccionada = this.Service.form.value.entidadSelecionada;   
+    this.IdEntidadSeleccionada = this.Service.form.value.IdEntidad1;
+    this.EntidadSeleccionada = this.Service.form.value.entidadSelecionada;
 
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
@@ -73,8 +73,8 @@ export class AsociacionComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
-    this.CargarSelects();    
-   
+    this.CargarSelects();
+
   }
 
   CargarSelects() {
@@ -123,7 +123,7 @@ export class AsociacionComponent implements OnInit {
           this.CargarDgvElements();
           this.Service.form.patchValue(result.data);
           $('#OperationModalDialog').modal('hide');
-         
+
         } else {
           this.errorService.handleError(result.error);
         }
@@ -166,26 +166,26 @@ export class AsociacionComponent implements OnInit {
   }
 
   setOperationsData() {
-    
+
     this.transaccionIsNew = false;
-    const asociacion = this.dataSource.data[this.ROW_NUMBER];   
+    const asociacion = this.dataSource.data[this.ROW_NUMBER];
     this.Service.form.patchValue(
       {
-      IdAsociacion: asociacion.IdAsociacion,      
-      IdEntidad1: this.IdEntidadSeleccionada,
-      IdEntidad2: asociacion.IdEntidad,
-      IdTipoAsociacion: asociacion.IdTipoAsociacion,
-      IdEstudiante: asociacion.IdEstudiante,
-      IdProfesor: asociacion.IdProfesor,
-      IdEntidad: asociacion.IdEntidad,
-      IdTipoEntidad: asociacion.IdTipoEntidad,
-      TipoEntidad: asociacion.TipoEntidad,     
-      Evaluacion: asociacion.Evaluacion,
-      Estado: asociacion.Estado,
-      Comentario: asociacion.Comentario,
-      EntidadSeleccionada:this.EntidadSeleccionada
-      }); 
-     
+        IdAsociacion: asociacion.IdAsociacion,
+        IdEntidad1: this.IdEntidadSeleccionada,
+        IdEntidad2: asociacion.IdEntidad,
+        IdTipoAsociacion: asociacion.IdTipoAsociacion,
+        IdEstudiante: asociacion.IdEstudiante,
+        IdProfesor: asociacion.IdProfesor,
+        IdEntidad: asociacion.IdEntidad,
+        IdTipoEntidad: asociacion.IdTipoEntidad,
+        TipoEntidad: asociacion.TipoEntidad,
+        Evaluacion: asociacion.Evaluacion,
+        Estado: asociacion.Estado,
+        Comentario: asociacion.Comentario,
+        EntidadSeleccionada: this.EntidadSeleccionada
+      });
+
     this.dialogTittle = 'Modificar';
   }
 
@@ -194,11 +194,11 @@ export class AsociacionComponent implements OnInit {
     this.EvaluacionEntidad = parseInt(evaluacion);
   }
 
-  cargarEvaluacion() { 
+  cargarEvaluacion() {
 
     this.transaccionIsNew = false;
     const asociacion = this.dataSource.data[this.ROW_NUMBER];
-    this.ASOCIACION = this.dataSource.data[this.ROW_NUMBER];  
+    this.ASOCIACION = this.dataSource.data[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(asociacion.Estado);
     this.EvaluacionEntidad = parseInt(asociacion.Evaluacion);
     this.ComentarioEntidad = asociacion.Comentario;
@@ -212,41 +212,39 @@ export class AsociacionComponent implements OnInit {
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
     this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
-  
-    this.Service.form.patchValue({      
-      IdAsociacion:this.ASOCIACION.IdAsociacion,
+
+    this.Service.form.patchValue({
+      IdAsociacion: this.ASOCIACION.IdAsociacion,
       IdEntidad: this.ASOCIACION.IdEntidad,
-      IdTipoEntidad: this.ASOCIACION.IdTipoEntidad,      
+      IdTipoEntidad: this.ASOCIACION.IdTipoEntidad,
       TipoEntidad: this.ASOCIACION.TipoEntidad,
       IdEstudiante: this.ASOCIACION.IdEstudiante,
       IdProfesor: this.authService.currentUser.IdProfesor,
       Evaluacion: this.ASOCIACION.Evaluacion,
       Estado: this.ASOCIACION.Estado,
-      Comentario: this.ASOCIACION.Comentario,    
+      Comentario: this.ASOCIACION.Comentario,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
-      IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion   
+      IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion
     });
 
-    if(this.ASOCIACION.IdAsociacion == null)
-    {
+    if (this.ASOCIACION.IdAsociacion == null) {
 
 
     }
-   else
-   {
-     this.Service.update().subscribe(result => {
-      if (result.status === 1) {
-        this.CargarDgvElements();
-      } else {
-        this.errorService.handleError(result.error);
-      }
+    else {
+      this.Service.update().subscribe(result => {
+        if (result.status === 1) {
+          this.CargarDgvElements();
+        } else {
+          this.errorService.handleError(result.error);
+        }
 
-    }, (error) => {
-      this.errorService.handleError(error);
-    }); 
-  }
-    
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    }
+
 
   }
 
@@ -254,7 +252,7 @@ export class AsociacionComponent implements OnInit {
     this.transaccionIsNew = true;
     this.Service.form.reset();
     this.Service.InicializarValoresFormGroup();
-    this.dialogTittle = 'Nuevo'; 
+    this.dialogTittle = 'Nuevo';
   }
 
   ShowCheck() {
@@ -277,7 +275,6 @@ export class AsociacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

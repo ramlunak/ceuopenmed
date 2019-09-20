@@ -1,19 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../services/entidad';
+import { EntidadService } from '../../services/entidad.service';
 
-import { DetalleEntidadService } from '../../services/detalle-entidad';
+import { DetalleEntidadService } from '../../services/detalle-entidad.service';
 import { DetalleEntidad } from 'src/app/models/detalle-entidad';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../services/tipo-entidad';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
+import { Entidad } from 'src/app/models/entidad';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
@@ -27,16 +28,13 @@ import { ErrorHandlerService } from '../../services/error-handler.service';
 })
 export class FormEntidadComponent implements OnInit {
 
-  // para cargar evaluacion
-  EstadoEntidad = 0;
-  isImage: boolean;
-  EvaluacionEntidad = 0;
-  ComentarioEntidad = null;
-  ENTIDAD: DetalleEntidad;
-
   transaccionIsNew = true;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
+  IdEntidad: number;
+  IdTipoEntidad: number;
+  TIPO_ENTIDAD: string;
+  ENTIDAD: Entidad;
 
   // DataTable --
   dataSource: MatTableDataSource<DetalleEntidad>;
@@ -47,64 +45,72 @@ export class FormEntidadComponent implements OnInit {
   listTiposEntidad: TipoEntidad[];
 
   constructor(
-    private Service: EntidadService,
+    private entidadService: EntidadService,
     private authService: AuthService,
     private detalleEntidadService: DetalleEntidadService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    // alert(this.Service.form.value.IdTipoEntidad);
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
-    this.CargarTipoEntidad();
+    this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
+    this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarDgvElements();
+    this.CargarExtraInfo();
     this.CargarSelects();
-    this.detalleEntidadService.InicializarValoresFormGroup();
   }
 
   CargarSelects() {
     // Idioma
     this.idiomaService.get().subscribe(result => {
       this.listIdiomas = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
 
   }
 
-  CargarTipoEntidad() {
-
-    this.tipoEntidadService.view(this.Service.form.value.IdTipoEntidad).subscribe(result => {
-      this.detalleEntidadService.form.patchValue({
-        TipoEntidad: result.data.TipoEntidad
-      });
+  CargarExtraInfo() {
+    // Tipo Entidad
+    this.tipoEntidadService.view(this.IdTipoEntidad).subscribe(result => {
+      this.TIPO_ENTIDAD = result.data.TipoEntidad;
+    }, (error) => {
+      this.errorService.handleError(error);
     });
-
+    // Entidad
+    this.entidadService.view(this.IdEntidad).subscribe(result => {
+      this.ENTIDAD = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
   }
 
 
   CargarDgvElements() {
-    this.Service.viewDetalle().subscribe(result => {
+    this.entidadService.viewDetalle(this.IdEntidad).subscribe(result => {
       this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
       this.router.navigateByUrl('entidad');
     });
-
   }
 
-  ActualizarEsradoEntidad() {
-
-    this.Service.update().subscribe(result => {
-
+  ActualizarEstadoEntidad() {
+    this.ENTIDAD.Estado = '0';
+    this.entidadService.form.patchValue(this.ENTIDAD);
+    this.entidadService.update().subscribe(result => {
       if (result.status === 1) {
-        this.CargarDgvElements();
+        // this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
       }
@@ -120,36 +126,30 @@ export class FormEntidadComponent implements OnInit {
       this.detalleEntidadService.set().subscribe(result => {
 
         if (result.status === 1) {
+          this.ActualizarEstadoEntidad();
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);
 
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
-
       });
     } else {
-
-
-
       this.detalleEntidadService.update().subscribe(result => {
 
         if (result.status === 1) {
+          this.ActualizarEstadoEntidad();
           this.CargarDgvElements();
-          this.ActualizarEsradoEntidad();
         } else {
           this.errorService.handleError(result.error);
         }
-
+        this.Limpiar();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
-    this.Limpiar();
-    this.CargarDgvElements();
-    this.CargarTipoEntidad();
   }
 
   eliminarClick() {
@@ -160,73 +160,35 @@ export class FormEntidadComponent implements OnInit {
       } else {
         this.errorService.handleError(result.error);
       }
-
+      this.Limpiar();
     }, (error) => {
       this.errorService.handleError(error);
     });
-    this.Limpiar();
   }
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
+    const detalle = this.dataSource.data[this.ROW_NUMBER];
     this.detalleEntidadService.form.patchValue(
       {
-        IdRecurso: DetalleEntidad.IdRecurso,
-        IdIdioma: DetalleEntidad.IdIdioma,
-        Entidad: DetalleEntidad.Entidad,
-        Referencia: DetalleEntidad.Referencia,
-        Nivel: DetalleEntidad.Nivel,
-        IdEntidad: this.Service.form.value.IdEntidad,
-        IdTipoEntidad: this.Service.form.value.IdTipoEntidad,
+        IdRecurso: detalle.IdRecurso,
+        IdIdioma: detalle.IdIdioma,
+        IdEntidad: this.IdEntidad,
+        Entidad: detalle.Entidad,
+        Referencia: detalle.Referencia,
+        IsImage: (detalle.IsImage.toString() === '1') ? true : false,
+        Nivel: detalle.Nivel
       });
-    if (DetalleEntidad.IsImage === 0) {
-      this.isImage = false;
-    } else {
-      this.isImage = true;
-    }
-    this.dialogTittle = 'Modificar';
-  }
-
-
-  setOperationsDataEliminar() {
-
-    const DetalleEntidad = this.dataSource.data[this.ROW_NUMBER];
-    this.detalleEntidadService.form.patchValue(
-      {
-        IdRecurso: DetalleEntidad.IdRecurso
-      });
-  }
-
-  setEvalucacion(estado, evaluacion) {
-    this.EstadoEntidad = parseInt(estado, 11);
-    this.EvaluacionEntidad = parseInt(evaluacion, 11);
   }
 
   Limpiar() {
     this.transaccionIsNew = true;
-    this.detalleEntidadService.form.reset();
     this.detalleEntidadService.InicializarValoresFormGroup();
-  }
-
-  isImageChage() {
-    this.isImage = !this.isImage;
-    if (this.isImage) {
-      this.detalleEntidadService.form.patchValue({
-        IsImage: 1
-      });
-
-    } else {
-      this.detalleEntidadService.form.patchValue({
-        IsImage: 0
-      });
-    }
+    this.detalleEntidadService.form.reset();
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 
 }

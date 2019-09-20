@@ -84,7 +84,6 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue.trim().toLowerCase());
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -213,13 +212,12 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   Limpiar() {
-
-    this.personaService.form.reset();
     this.personaService.InicializarValoresFormGroup();
-    this.estudianteService.form.reset();
+    this.personaService.form.reset();
     this.estudianteService.InicializarValoresFormGroup();
-    this.usuarioService.form.reset();
+    this.estudianteService.form.reset();
     this.usuarioService.InicializarValoresFormGroup();
+    this.usuarioService.form.reset();
     if (!this.transaccionIsNew) {
       this.transaccionIsNew = true;
       this.dialogTittle = 'Nuevo Estudiante';
