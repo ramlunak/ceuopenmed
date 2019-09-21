@@ -42,6 +42,7 @@ import { AsociacionComponent } from './componentes/asociacion/asociacion.compone
 import { EntidadRecursoComponent } from './componentes/Entity/entidad-recurso/entidad-recurso.component';
 import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
 import { AdditionalInfoComponent } from './componentes/Entity/additional-info/additional-info.component';
+import { EntidadesEvaluadasComponent } from './componentes/entidades-evaluadas/entidades-evaluadas.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { AdditionalInfoComponent } from './componentes/Entity/additional-info/ad
     AsociacionComponent,
     EntidadRecursoComponent,
     ExchangeBooleanPipe,
-    AdditionalInfoComponent
+    AdditionalInfoComponent,
+    EntidadesEvaluadasComponent
   ],
   imports: [
     BrowserModule,

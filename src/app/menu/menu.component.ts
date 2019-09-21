@@ -10,12 +10,14 @@ import { AppConstantsService } from '../utils/app-constants.service';
 export class MenuComponent implements OnInit {
 
   isAdmin: boolean;
+  isProf: boolean;
 
   constructor(private authService: AuthService, private CONSTANS: AppConstantsService) { }
 
   ngOnInit() {
     const roles = this.CONSTANS.getRoles();
     this.isAdmin = (this.authService.currentUser.IdRol === roles.Administrador);
+    this.isProf = this.authService.currentUser.IdRol == roles.Profesor ? true : false
   }
 
 }

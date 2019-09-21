@@ -26,6 +26,7 @@ import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-
 import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
 import { EntidadRecursoComponent } from '../componentes/Entity/entidad-recurso/entidad-recurso.component';
 import { AdditionalInfoComponent } from '../componentes/Entity/additional-info/additional-info.component';
+import { EntidadesEvaluadasComponent } from '../componentes/entidades-evaluadas/entidades-evaluadas.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad/:idEntidad/:idTipoEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'TipoAsociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },

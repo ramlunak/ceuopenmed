@@ -2,33 +2,33 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { AuthService } from '../../../services/seguridad/auth.service';
+import { AuthService } from '../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../../services/entidad.service';
+import { EntidadService } from '../../services/entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 
-import { IdiomaService } from '../../../services/idioma.service';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../../services/tipo-entidad.service';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 import { AsociacionService } from 'src/app/services/asociacion.service';
 
 // Servicio de captura error implementado por mi
-import { ErrorHandlerService } from '../../../services/error-handler.service';
+import { ErrorHandlerService } from '../../services/error-handler.service';
 
 // Selector jQuery
 declare var $: any;
 
 
 @Component({
-  selector: 'app-entidad',
-  templateUrl: './entidad.component.html',
-  styleUrls: ['./entidad.component.css']
+  selector: 'app-entidades-evaluadas',
+  templateUrl: './entidades-evaluadas.component.html',
+  styleUrls: ['./entidades-evaluadas.component.css']
 })
 
-export class EntidadComponent implements OnInit {
+export class EntidadesEvaluadasComponent implements OnInit {
 
   // para cargar evaluacion
   EstadoEntidad = 0;
@@ -98,7 +98,7 @@ export class EntidadComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.Service.getByProfesorEstado().subscribe(result => {
+      this.Service.getByProfesorEstado1().subscribe(result => {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {
@@ -200,8 +200,8 @@ export class EntidadComponent implements OnInit {
 
   ActualizarEvaluacion() {
 
-   // alert(this.countAsociaciones);
-    //return;
+    alert(this.countAsociaciones);
+    return;
     this.transaccionIsNew = false;
     this.ENTIDAD.Estado = this.EstadoEntidad.toString();
     this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
