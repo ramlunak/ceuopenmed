@@ -27,7 +27,7 @@ export class AppConstantsService {
       });
     } else {
       return new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json; charset=UTF-8' ,
         'X-Access-Token': accesstoken
       });
     }

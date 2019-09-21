@@ -1,0 +1,18 @@
+<mat-tab-group dynamicHeight [color]="accent" [backgroundColor]="primary">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="ceu-tab-icon">list</mat-icon> Detalles
+        </ng-template>
+        <ng-template matTabContent>
+            <app-form-entidad></app-form-entidad>
+        </ng-template>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="ceu-tab-icon">link</mat-icon> Recursos
+        </ng-template>
+        <ng-template matTabContent>
+            <app-entidad-recurso></app-entidad-recurso>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

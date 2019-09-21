@@ -12,9 +12,9 @@ import { isNullOrUndefined } from 'util';
 @Injectable({
   providedIn: 'root'
 })
-export class EntidadService {
+export class AsociacionService {
 
-  private BaseURL = 'entidad/';
+  private BaseURL = 'asociacion/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -22,28 +22,37 @@ export class EntidadService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdEntidad: new FormControl(null),
-    IdTipoEntidad: new FormControl('', Validators.required),
-    TipoEntidad: new FormControl(''),
+    IdAsociacion: new FormControl(null),
+    IdEntidad1: new FormControl('', Validators.required),
+    IdEntidad2: new FormControl('', Validators.required),
+    IdTipoAsociacion: new FormControl(null, Validators.required),
     IdEstudiante: new FormControl(null, Validators.required),
     IdProfesor: new FormControl(null),
+    IdEntidad: new FormControl(null),
+    IdTipoEntidad: new FormControl(null),
+    TipoEntidad: new FormControl(''),
     Evaluacion: new FormControl(null),
-    Estado: new FormControl(0),
+    Estado: new FormControl(null),
     Comentario: new FormControl(null),
-    Entidad: new FormControl(null),
+    entidadSelecionada: new FormControl(null),
+
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
+      IdAsociacion: null,
+      IdEntidad1: null,
+      IdEntidad2: null,
+      IdTipoAsociacion: null,
+      IdEstudiante: this.authService.currentUser.IdEstudiante,
+      IdProfesor: null,
       IdEntidad: null,
       IdTipoEntidad: null,
       TipoEntidad: '',
-      IdEstudiante: '',
-      IdProfesor: null,
       Evaluacion: 0,
       Estado: 0,
       Comentario: '',
-      Entidad: '',
+      entidadSelecionada: '',
     });
   }
 
@@ -75,6 +84,20 @@ export class EntidadService {
       );
   }
 
+  getByIdEntidad(Id: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'associate-entitys/' + Id),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
   viewDetalle(Id: number) {
     this.loadingSubject.next(true);
     return this.httpClient
@@ -89,6 +112,7 @@ export class EntidadService {
   }
 
   set() {
+    this.form.value.Estado = 0;
     this.loadingSubject.next(true);
     return this.httpClient
       .post<any>(
@@ -107,7 +131,7 @@ export class EntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdAsociacion),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -121,7 +145,7 @@ export class EntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdAsociacion),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -132,6 +156,12 @@ export class EntidadService {
 
   getByProfesorEstado(): Observable<any> {
     this.loadingSubject.next(true);
+    let idestudiante: number;
+    if (isNullOrUndefined(this.authService.currentUser.IdEstudiante)) {
+      idestudiante = 0;
+    } else {
+      idestudiante = this.authService.currentUser.IdEstudiante;
+    }
     return this.httpClient
 
       .get<any>(
@@ -144,6 +174,8 @@ export class EntidadService {
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
+
+
   }
 
   getByEtudiante(): Observable<any> {

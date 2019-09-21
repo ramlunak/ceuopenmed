@@ -5,21 +5,21 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../services/entidad';
+import { EntidadService } from '../../services/entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 import { Asociacion } from 'src/app/models/asociacion';
 
-import { IdiomaService } from '../../services/idioma';
+import { IdiomaService } from '../../services/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoAsociacionService } from '../../services/tipo-asociacion';
-import { TipoEntidadService } from '../../services/tipo-entidad';
+import { TipoAsociacionService } from '../../services/tipo-asociacion.service';
+import { TipoEntidadService } from '../../services/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { TipoAsociacion } from 'src/app/models/tipo-asociacion';
-import { AsociacionService } from 'src/app/services/asociacion';
+import { AsociacionService } from 'src/app/services/asociacion.service';
 
 
 @Component({
@@ -54,7 +54,7 @@ export class AsociacionComponent implements OnInit {
 
   constructor(
     private Service: AsociacionService,
-    private EntidadService: EntidadService,
+    private entidadService: EntidadService,
     private tipoAsociacionService: TipoAsociacionService,
     private authService: AuthService,
     private idiomaService: IdiomaService,
@@ -190,8 +190,8 @@ export class AsociacionComponent implements OnInit {
   }
 
   setEvalucacion(estado, evaluacion) {
-    this.EstadoEntidad = parseInt(estado);
-    this.EvaluacionEntidad = parseInt(evaluacion);
+    this.EstadoEntidad = parseInt(estado, 32);
+    this.EvaluacionEntidad = parseInt(evaluacion, 32);
   }
 
   cargarEvaluacion() {
@@ -199,8 +199,8 @@ export class AsociacionComponent implements OnInit {
     this.transaccionIsNew = false;
     const asociacion = this.dataSource.data[this.ROW_NUMBER];
     this.ASOCIACION = this.dataSource.data[this.ROW_NUMBER];
-    this.EstadoEntidad = parseInt(asociacion.Estado);
-    this.EvaluacionEntidad = parseInt(asociacion.Evaluacion);
+    this.EstadoEntidad = parseInt(asociacion.Estado, 32);
+    this.EvaluacionEntidad = parseInt(asociacion.Evaluacion, 32);
     this.ComentarioEntidad = asociacion.Comentario;
     this.Service.form.patchValue({ IdEntidad: asociacion.IdEntidad });
     this.dialogTittle = 'Modificar';
@@ -230,9 +230,7 @@ export class AsociacionComponent implements OnInit {
 
     if (this.ASOCIACION.IdAsociacion == null) {
 
-
-    }
-    else {
+    } else {
       this.Service.update().subscribe(result => {
         if (result.status === 1) {
           this.CargarDgvElements();

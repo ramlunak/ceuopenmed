@@ -15,16 +15,17 @@ import { DocGrupoComponent } from '../componentes/Docencia/doc-grupo/doc-grupo.c
 import { DocEstudianteComponent } from '../componentes/Docencia/doc-estudiante/doc-estudiante.component';
 import { DocProfesorComponent } from '../componentes/Docencia/doc-profesor/doc-profesor.component';
 import { DocProfesorGruposComponent } from '../componentes/Docencia/doc-profesor-grupos/doc-profesor-grupos.component';
-import { TipoEntidadComponent } from '../componentes/tipo-entidad/tipo-entidad.component';
-import { IdiomaComponent } from '../componentes/idioma/idioma.component';
-import { EntidadComponent } from '../componentes/entidad/entidad.component';
-import { FormEntidadComponent } from '../componentes/form-entidad/form-entidad.component'
-import { TipoAsociacionComponent } from '../componentes/tipo-asociacion/tipo-asociacion.component'
-import { AsociacionComponent } from '../componentes/asociacion/asociacion.component'
+import { TipoEntidadComponent } from '../componentes/Administracion/tipo-entidad/tipo-entidad.component';
+import { IdiomaComponent } from '../componentes/Administracion/idioma/idioma.component';
+import { EntidadComponent } from '../componentes/Entity/entidad/entidad.component';
+import { FormEntidadComponent } from '../componentes/Entity/form-entidad/form-entidad.component';
+import { TipoAsociacionComponent } from '../componentes/Administracion/tipo-asociacion/tipo-asociacion.component';
+import { AsociacionComponent } from '../componentes/asociacion/asociacion.component';
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
-import { EntidadRecursoComponent } from '../componentes/entidad-recurso/entidad-recurso.component';
+import { EntidadRecursoComponent } from '../componentes/Entity/entidad-recurso/entidad-recurso.component';
+import { AdditionalInfoComponent } from '../componentes/Entity/additional-info/additional-info.component';
 
 
 const routes: Routes = [
@@ -42,14 +43,15 @@ const routes: Routes = [
   { path: 'EntidadRecurso/:idEntidad/:idTipoEntidad', component: EntidadRecursoComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad/:idEntidad/:idTipoEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
-  { path: 'TipoSociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'TipoAsociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'additionalInfo/:idEntidad/:idTipoEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
-  { path: '404', component: NotFoundComponent},
+  { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto
   { path: '', redirectTo: '/', pathMatch: 'full' }, // home page
-  { path: '**', redirectTo: '/404', pathMatch: 'full'}
+  { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 
 @NgModule({

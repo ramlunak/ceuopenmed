@@ -166,3 +166,7 @@ body {
   .cdk-overlay-container {  /* estilo para prevenir que el contenido del material-select se muestre por detras del dialog */
     z-index: 1051;
   }
+
+  .ceu-tab-icon {
+    margin-right: 8px;
+  }

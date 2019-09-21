@@ -29,18 +29,19 @@ import { DocGrupoComponent } from './componentes/Docencia/doc-grupo/doc-grupo.co
 import { DocEstudianteComponent } from './componentes/Docencia/doc-estudiante/doc-estudiante.component';
 import { DocProfesorComponent } from './componentes/Docencia/doc-profesor/doc-profesor.component';
 import { DocProfesorGruposComponent } from './componentes/Docencia/doc-profesor-grupos/doc-profesor-grupos.component';
-import { TipoEntidadComponent } from './componentes/tipo-entidad/tipo-entidad.component';
-import { IdiomaComponent } from './componentes/idioma/idioma.component';
+import { TipoEntidadComponent } from './componentes/Administracion/tipo-entidad/tipo-entidad.component';
+import { IdiomaComponent } from './componentes/Administracion/idioma/idioma.component';
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from './componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { ExchangeStatusPipe } from './utils/pipes/exchange-status.pipe';
-import { EntidadComponent } from './componentes/entidad/entidad.component';
-import { FormEntidadComponent } from './componentes/form-entidad/form-entidad.component';
+import { EntidadComponent } from './componentes/Entity/entidad/entidad.component';
+import { FormEntidadComponent } from './componentes/Entity/form-entidad/form-entidad.component';
 import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-change-password/dialog-change-password.component';
-import { TipoAsociacionComponent } from './componentes/tipo-asociacion/tipo-asociacion.component';
+import { TipoAsociacionComponent } from './componentes/Administracion/tipo-asociacion/tipo-asociacion.component';
 import { AsociacionComponent } from './componentes/asociacion/asociacion.component';
-import { EntidadRecursoComponent } from './componentes/entidad-recurso/entidad-recurso.component';
+import { EntidadRecursoComponent } from './componentes/Entity/entidad-recurso/entidad-recurso.component';
 import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
+import { AdditionalInfoComponent } from './componentes/Entity/additional-info/additional-info.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
     TipoAsociacionComponent,
     AsociacionComponent,
     EntidadRecursoComponent,
-    ExchangeBooleanPipe
+    ExchangeBooleanPipe,
+    AdditionalInfoComponent
   ],
   imports: [
     BrowserModule,
