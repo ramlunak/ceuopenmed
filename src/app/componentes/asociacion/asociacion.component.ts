@@ -90,7 +90,7 @@ export class AsociacionComponent implements OnInit {
 
   CargarDgvElements() {
 
-    if (this.authService.currentUser.Rol === 'Estudiante') {
+    if (this.authService.currentUser.Rol == 'Estudiante') {
       this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
@@ -98,7 +98,7 @@ export class AsociacionComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
+      this.Service.getByIdEntidadEvaluada(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {

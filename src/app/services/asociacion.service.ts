@@ -97,6 +97,20 @@ export class AsociacionService {
         map(res => res)
       );
   }
+  getByIdEntidadEvaluada(Id: number): Observable<any> {
+    this.loadingSubject.next(true);
+  
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'evaluated-associate-entitys/' + Id),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+  
 
   viewDetalle(Id: number) {
     this.loadingSubject.next(true);
