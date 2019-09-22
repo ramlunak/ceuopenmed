@@ -16,7 +16,7 @@ import { DocEspecialidadService } from '../services/docencia/doc-especialidad.se
 import { DocGrupoService } from '../services/docencia/doc-grupo.service';
 import { DocEstudianteService } from '../services/docencia/doc-estudiante.service';
 import { ValidationsService } from '../services/validations.service';
-import { EntidadRecursoService } from '../services/entidad-recurso.service';
+import { EntidadRecursoService } from '../services/entity/entidad-recurso.service';
 
 
 @NgModule({

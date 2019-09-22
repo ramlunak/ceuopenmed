@@ -6,9 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 import { TipoAsociacion } from 'src/app/models/tipo-asociacion';
-import { TipoAsociacionService } from 'src/app/services/tipo-asociacion.service';
+import { TipoAsociacionService } from 'src/app/services/administracion/tipo-asociacion.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
-import { TipoEntidadService } from 'src/app/services/tipo-entidad.service';
+import { TipoEntidadService } from 'src/app/services/administracion/tipo-entidad.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -31,7 +31,7 @@ export class TipoAsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<TipoAsociacion>;
-  displayedColumns = ['IdTipoAsociacion', 'TipoAsociacion', 'commands'];
+  displayedColumns = ['IdTipoAsociacion', 'TipoEntidad1', 'TipoEntidad2', 'TipoAsociacion', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoEntidad: TipoEntidad[];
@@ -68,8 +68,6 @@ export class TipoAsociacionComponent implements OnInit {
     });
 
   }
-
-
 
   guardarClick() {
 

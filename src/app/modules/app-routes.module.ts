@@ -20,7 +20,7 @@ import { IdiomaComponent } from '../componentes/Administracion/idioma/idioma.com
 import { EntidadComponent } from '../componentes/Entity/entidad/entidad.component';
 import { FormEntidadComponent } from '../componentes/Entity/form-entidad/form-entidad.component';
 import { TipoAsociacionComponent } from '../componentes/Administracion/tipo-asociacion/tipo-asociacion.component';
-import { AsociacionComponent } from '../componentes/asociacion/asociacion.component';
+import { AsociacionComponent } from '../componentes/Entity/asociacion/asociacion.component';
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
 import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-change-password/dialog-change-password.component';
@@ -47,7 +47,8 @@ const routes: Routes = [
   { path: 'TipoAsociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
-  { path: 'additionalInfo/:idEntidad/:idTipoEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
+  // tslint:disable-next-line: max-line-length
+  { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },

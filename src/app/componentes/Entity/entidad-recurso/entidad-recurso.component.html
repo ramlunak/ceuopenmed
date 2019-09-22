@@ -50,7 +50,8 @@
 
 <table style="width: 100% !important;margin-top: 15px">
     <tr>
-        <td *ngIf="this.authService.currentUser.Rol == 'Estudiante'" style="width: 280px">
+        <td *ngIf="this.authService.currentUser.Rol == 'Estudiante' && this.EvaluacionEntidad != 1"
+            style="width: 280px">
 
             <!-- FORMULARIO -->
             <form [formGroup]="entidadRecursoService.form">

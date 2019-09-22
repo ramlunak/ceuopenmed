@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { IdiomaService } from '../../../services/idioma.service';
+import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
 // Servicio de captura error implementado por mi

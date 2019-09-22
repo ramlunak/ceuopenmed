@@ -4,16 +4,16 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../../services/entidad.service';
+import { EntidadService } from '../../../services/entity/entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 
-import { IdiomaService } from '../../../services/idioma.service';
+import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../../services/tipo-entidad.service';
+import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
-import { AsociacionService } from 'src/app/services/asociacion.service';
+import { AsociacionService } from 'src/app/services/entity/asociacion.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -36,17 +36,17 @@ export class EntidadComponent implements OnInit {
   CountEntidad = 0;
   ComentarioEntidad = null;
   ENTIDAD: Entidad;
-  enablaEvaluation=0;
+  enablaEvaluation = 0;
 
   transaccionIsNew = true;
   asociar = false;
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
 
-   countError = 0;
-   countEspera = 0;
-   countCorrect = 0;
-   countAsociaciones = 0;
+  countError = 0;
+  countEspera = 0;
+  countCorrect = 0;
+  countAsociaciones = 0;
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
@@ -109,7 +109,7 @@ export class EntidadComponent implements OnInit {
   }
 
   public redirectToDetalleEntidad = (entidad: any) => {
-    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
+    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
     this.router.navigate([url]);
   }
 
@@ -186,7 +186,7 @@ export class EntidadComponent implements OnInit {
   }
 
   cargarEvaluacion() {
-    
+
     this.transaccionIsNew = false;
     const entidad = this.dataSource.data[this.ROW_NUMBER];
     this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
@@ -200,8 +200,6 @@ export class EntidadComponent implements OnInit {
 
   ActualizarEvaluacion() {
 
-   // alert(this.countAsociaciones);
-    //return;
     this.transaccionIsNew = false;
     this.ENTIDAD.Estado = this.EstadoEntidad.toString();
     this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();
@@ -250,59 +248,49 @@ export class EntidadComponent implements OnInit {
   }
 
   public redirectToAsociacion = () => {
-    const url = 'Asociacion';
-    this.router.navigate([url]);
-
+    this.router.navigate(['Asociacion']);
   }
 
   checkboxChange() {
     this.CountEntidad++;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
     if (this.CountEntidad === 2) {
       this.redirectToAsociacion();
     }
-
   }
 
-verificarAsocioacionesEvaluadas(){
+  verificarAsocioacionesEvaluadas() {
 
-  this.asociacionService.getByIdEntidad(this.Service.form.value.IdEntidad).subscribe(result => {
-   
-    result.data.forEach(element => {
-     if(element.Estado !+ null){
-      this.countAsociaciones++;
-      if(element.Estado == 0 && element.Evaluacion == 0)
-      this.countEspera++;
-      if(element.Estado == 1 && element.Evaluacion == 0)
-      this.countError++;
-      if(element.Estado == 1 && element.Evaluacion == 1)
-      this.countCorrect++;
-    }
+    this.asociacionService.getByIdEntidad(this.Service.form.value.IdEntidad).subscribe(result => {
+
+      result.data.forEach(element => {
+        if (element.Estado! + null) {
+          this.countAsociaciones++;
+          if (element.Estado === 0 && element.Evaluacion === 0) {
+            this.countEspera++;
+          }
+
+          if (element.Estado === 1 && element.Evaluacion === 0) {
+            this.countError++;
+          }
+
+          if (element.Estado === 1 && element.Evaluacion === 1) {
+            this.countCorrect++;
+          }
+
+        }
+      });
+    }, (error) => {
+      this.errorService.handleError(error);
     });
-  }, (error) => {
-    this.errorService.handleError(error);
-  });
-}
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  /* PROXIMO A BORRADO
-    public redirectToRecursos = () => {
-      const entidad = this.dataSource.data[this.ROW_NUMBER];
-      const url = `EntidadRecurso/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
-      this.router.navigate([url]);
-    }
 
-    public redirectToDetalles = () => {
-      const entidad = this.dataSource.data[this.ROW_NUMBER];
-      const url = `FormEntidad/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
-      this.router.navigate([url]);
-    }
-  */
   public redirectToAdditionalInfo = () => {
     const entidad = this.dataSource.data[this.ROW_NUMBER];
-    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
+    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
     this.router.navigate([url]);
   }
 

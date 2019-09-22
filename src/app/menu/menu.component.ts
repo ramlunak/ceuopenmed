@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     const roles = this.CONSTANS.getRoles();
     this.isAdmin = (this.authService.currentUser.IdRol === roles.Administrador);
-    this.isProf = this.authService.currentUser.IdRol == roles.Profesor ? true : false
+    this.isProf = (this.authService.currentUser.IdRol === roles.Profesor);
   }
 
 }

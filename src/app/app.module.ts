@@ -38,7 +38,7 @@ import { EntidadComponent } from './componentes/Entity/entidad/entidad.component
 import { FormEntidadComponent } from './componentes/Entity/form-entidad/form-entidad.component';
 import { DialogChangePasswordComponent } from './componentes/Seguridad/dialog-change-password/dialog-change-password.component';
 import { TipoAsociacionComponent } from './componentes/Administracion/tipo-asociacion/tipo-asociacion.component';
-import { AsociacionComponent } from './componentes/asociacion/asociacion.component';
+import { AsociacionComponent } from './componentes/Entity/asociacion/asociacion.component';
 import { EntidadRecursoComponent } from './componentes/Entity/entidad-recurso/entidad-recurso.component';
 import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
 import { AdditionalInfoComponent } from './componentes/Entity/additional-info/additional-info.component';

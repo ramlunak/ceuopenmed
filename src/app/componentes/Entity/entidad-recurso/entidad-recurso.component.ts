@@ -5,13 +5,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../services/seguridad/auth.service';
 
-import { EntidadRecursoService } from '../../../services/entidad-recurso.service';
+import { EntidadRecursoService } from '../../../services/entity/entidad-recurso.service';
 import { EntidadRecurso } from 'src/app/models/entidad-recurso';
 
-import { IdiomaService } from '../../../services/idioma.service';
+import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../../services/tipo-entidad.service';
+import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
 // Servicio de captura error implementado por mi
@@ -29,6 +29,7 @@ export class EntidadRecursoComponent implements OnInit {
   dialogTittle = 'Nuevo';
   IdEntidad: number;
   IdTipoEntidad: number;
+  EvaluacionEntidad: number;
   TIPO_ENTIDAD: string;
 
   // DataTable --
@@ -59,6 +60,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarTipoEntidad();
     this.CargarSelects();

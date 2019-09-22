@@ -5,15 +5,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../services/seguridad/auth.service';
 
-import { EntidadService } from '../../../services/entidad.service';
+import { EntidadService } from '../../../services/entity/entidad.service';
 
-import { DetalleEntidadService } from '../../../services/detalle-entidad.service';
+import { DetalleEntidadService } from '../../../services/entity/detalle-entidad.service';
 import { DetalleEntidad } from 'src/app/models/detalle-entidad';
 
-import { IdiomaService } from '../../../services/idioma.service';
+import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
-import { TipoEntidadService } from '../../../services/tipo-entidad.service';
+import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
@@ -33,6 +33,7 @@ export class FormEntidadComponent implements OnInit {
   dialogTittle = 'Nuevo';
   IdEntidad: number;
   IdTipoEntidad: number;
+  EvaluacionEntidad: number;
   TIPO_ENTIDAD: string;
   ENTIDAD: Entidad;
 
@@ -63,6 +64,7 @@ export class FormEntidadComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarDgvElements();
     this.CargarExtraInfo();
@@ -185,6 +187,7 @@ export class FormEntidadComponent implements OnInit {
     this.transaccionIsNew = true;
     this.detalleEntidadService.InicializarValoresFormGroup();
     this.detalleEntidadService.form.reset();
+    this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
   }
 
   applyFilter(filterValue: string) {
