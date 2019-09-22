@@ -199,9 +199,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
   }
 
   ActualizarEvaluacion() {
-
-    alert(this.countAsociaciones);
-    return;
+  
     this.transaccionIsNew = false;
     this.ENTIDAD.Estado = this.EstadoEntidad.toString();
     this.ENTIDAD.Evaluacion = this.EvaluacionEntidad.toString();

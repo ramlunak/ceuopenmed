@@ -50,6 +50,19 @@ export class TipoAsociacionService {
         map(res => res)
       );
   }
+  
+  grelationshipet(Id1: number,Id2:number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'grelationshipet/' + Id1 +'/'+Id2),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
 
   view(Id: number) {
     this.loadingSubject.next(true);
