@@ -84,18 +84,6 @@
                     <mat-error>Este campo es requerido.</mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="ceu-full-width">
-                    <textarea matInput placeholder="Leave a comment" formControlName="Referencia"
-                        placeholder="Referencia"></textarea>
-                    <mat-error>Este campo es requerido.</mat-error>
-                </mat-form-field>
-
-                <section style="margin-top:10px">
-                    <mat-slide-toggle formControlName="IsImage" name="IsImage">
-                        La referencia es una imagen?
-                    </mat-slide-toggle>
-                </section>
-
                 <mat-form-field class="ceu-full-width" style="margin-top:10px">
                     <mat-label>Nivel</mat-label>
                     <mat-select formControlName="Nivel" name="Nivel">
@@ -149,11 +137,6 @@
                 <ng-container matColumnDef="Nivel">
                     <th mat-header-cell *matHeaderCellDef> Nivel </th>
                     <td mat-cell *matCellDef="let element"> {{element.Nivel}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="isImage">
-                    <th mat-header-cell *matHeaderCellDef> Es una Imagen? </th>
-                    <td mat-cell *matCellDef="let element"> {{element.IsImage | exchangeBoolean}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="commands">

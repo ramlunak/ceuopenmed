@@ -39,7 +39,7 @@ export class FormEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DetalleEntidad>;
-  displayedColumns = ['Idioma', 'Entidad', 'Nivel', 'isImage', 'commands'];
+  displayedColumns = ['Idioma', 'Entidad', 'Nivel', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -177,8 +177,6 @@ export class FormEntidadComponent implements OnInit {
         IdIdioma: detalle.IdIdioma,
         IdEntidad: this.IdEntidad,
         Entidad: detalle.Entidad,
-        Referencia: detalle.Referencia,
-        IsImage: (detalle.IsImage.toString() === '1') ? true : false,
         Nivel: detalle.Nivel
       });
   }

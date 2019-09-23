@@ -29,9 +29,7 @@ export class DetalleEntidadService {
     IdIdioma: new FormControl('', Validators.required),
     IdEntidad: new FormControl('', Validators.required),
     Entidad: new FormControl('', Validators.required),
-    Referencia: new FormControl(null),
-    Nivel: new FormControl('', Validators.required),
-    IsImage: new FormControl(false, Validators.required)
+    Nivel: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
@@ -40,9 +38,7 @@ export class DetalleEntidadService {
       IdIdioma: '',
       IdEntidad: '',
       Entidad: '',
-      Referencia: '',
-      Nivel: '',
-      IsImage: false
+      Nivel: ''
     });
   }
 
