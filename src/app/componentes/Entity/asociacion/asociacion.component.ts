@@ -183,8 +183,8 @@ export class AsociacionComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Evaluacion: asociacion.Evaluacion,
-        Estado: asociacion.Estado,
+        Evaluacion: 0,
+        Estado: 0,
         Comentario: asociacion.Comentario,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
