@@ -7,12 +7,11 @@ import { AuthService } from '../../../services/seguridad/auth.service';
 
 import { EntidadRecursoService } from '../../../services/entity/entidad-recurso.service';
 import { EntidadRecurso } from 'src/app/models/entidad-recurso';
-
-import { IdiomaService } from '../../../services/administracion/idioma.service';
-import { Idioma } from 'src/app/models/idioma';
-
 import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
+import { MatDialog } from '@angular/material/dialog';
+import { EntidadRecursoDescripcionComponent } from '../entidad-recurso-descripcion/entidad-recurso-descripcion.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
@@ -34,22 +33,20 @@ export class EntidadRecursoComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<EntidadRecurso>;
-  displayedColumns = ['Idioma', 'Nivel', 'URL', 'isImage', 'Descripcion', 'commands'];
+  displayedColumns = ['Nivel', 'URL', 'isImage', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   // Selects
-  listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
-  // slide-toggle
-  // @ViewChild('slideIsImage', { static: true }) mSTisImage: MatSlideToggle;
 
   constructor(
     private entidadRecursoService: EntidadRecursoService,
     private authService: AuthService,
-    private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    public dialog: MatDialog,
+    private activeRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -63,18 +60,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarTipoEntidad();
-    this.CargarSelects();
     this.CargarDgvElements();
-  }
-
-  CargarSelects() {
-    // Idioma
-    this.idiomaService.get().subscribe(result => {
-      this.listIdiomas = result.data;
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
-
   }
 
   CargarTipoEntidad() {
@@ -147,12 +133,10 @@ export class EntidadRecursoComponent implements OnInit {
     this.entidadRecursoService.form.patchValue(
       {
         IdRecurso: recurso.IdRecurso,
-        IdIdioma: recurso.IdIdioma,
         IdEntidad: this.IdEntidad,
         Nivel: recurso.Nivel,
         URL: recurso.URL,
-        IsImage: (recurso.IsImage.toString() === '1') ? true : false,
-        Descripcion: recurso.Descripcion
+        IsImage: (recurso.IsImage.toString() === '1') ? true : false
       });
   }
 
@@ -160,11 +144,29 @@ export class EntidadRecursoComponent implements OnInit {
     this.transaccionIsNew = true;
     this.entidadRecursoService.InicializarValoresFormGroup();
     this.entidadRecursoService.form.reset();
-    this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
+    this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad, IsImage: false });
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDialogDescripcion(): void {
+    const recurso = this.dataSource.data[this.ROW_NUMBER];
+
+    const dialogRefDescrip = this.dialog.open(EntidadRecursoDescripcionComponent, {
+      width: '1200px',
+      data: recurso
+    });
+
+    dialogRefDescrip.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open(result.OK, 'OK', {
+          duration: 8000,
+        });
+      }
+
+    });
   }
 
 }

@@ -27,6 +27,9 @@ import { DialogChangePasswordComponent } from '../componentes/Seguridad/dialog-c
 import { EntidadRecursoComponent } from '../componentes/Entity/entidad-recurso/entidad-recurso.component';
 import { AdditionalInfoComponent } from '../componentes/Entity/additional-info/additional-info.component';
 import { EntidadesEvaluadasComponent } from '../componentes/entidades-evaluadas/entidades-evaluadas.component';
+// tslint:disable-next-line: max-line-length
+import { EntidadRecursoDescripcionComponent } from '../componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
+import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 
 
 const routes: Routes = [
@@ -42,11 +45,13 @@ const routes: Routes = [
   { path: 'tipoEntidad', component: TipoEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadRecurso/:idEntidad/:idTipoEntidad', component: EntidadRecursoComponent, canActivate: [AuthVerifyService] },
+  { path: 'EntidadRecursoDescripcion', component: EntidadRecursoDescripcionComponent, canActivate: [AuthVerifyService] },
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad/:idEntidad/:idTipoEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'TipoAsociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'AsociacionesOpcionales', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
   // tslint:disable-next-line: max-line-length
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },

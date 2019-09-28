@@ -43,6 +43,8 @@ import { EntidadRecursoComponent } from './componentes/Entity/entidad-recurso/en
 import { ExchangeBooleanPipe } from './utils/pipes/exchange-boolean.pipe';
 import { AdditionalInfoComponent } from './componentes/Entity/additional-info/additional-info.component';
 import { EntidadesEvaluadasComponent } from './componentes/entidades-evaluadas/entidades-evaluadas.component';
+import { EntidadRecursoDescripcionComponent } from './componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
+import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { EntidadesEvaluadasComponent } from './componentes/entidades-evaluadas/e
     EntidadRecursoComponent,
     ExchangeBooleanPipe,
     AdditionalInfoComponent,
-    EntidadesEvaluadasComponent
+    EntidadesEvaluadasComponent,
+    EntidadRecursoDescripcionComponent,
+    AsociacionesOpcionalesComponent
   ],
   imports: [
     BrowserModule,

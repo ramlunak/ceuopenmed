@@ -12,9 +12,9 @@ import { isNullOrUndefined } from 'util';
 @Injectable({
   providedIn: 'root'
 })
-export class EntidadRecursoService {
+export class EntidadRecursoDescripcionService {
 
-  private BaseURL = 'recurso/';
+  private BaseURL = 'recurso-descripcion/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -22,20 +22,18 @@ export class EntidadRecursoService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdRecurso: new FormControl(null),
-    IdEntidad: new FormControl('', Validators.required),
-    Nivel: new FormControl('', Validators.required),
-    URL: new FormControl('', Validators.required),
-    IsImage: new FormControl(false, Validators.required)
+    IdRecursoDescripcion: new FormControl(null),
+    IdRecurso: new FormControl('', Validators.required),
+    IdIdioma: new FormControl('', Validators.required),
+    Descripcion: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdRecurso: null,
-      IdEntidad: '',
-      Nivel: '',
-      URL: '',
-      IsImage: false
+      IdRecursoDescripcion: null,
+      IdRecurso: '',
+      IdIdioma: '',
+      Descripcion: ''
     });
   }
 
@@ -54,20 +52,20 @@ export class EntidadRecursoService {
       );
   }
 
-  getByEntidad(): Observable<any> {
+  getByRecurso(): Observable<any> {
     this.loadingSubject.next(true);
-    let idEntidad: number;
-    if (isNullOrUndefined(this.form.value.IdEntidad)) {
-      idEntidad = 0;
+    let idRecurso: number;
+    if (isNullOrUndefined(this.form.value.IdRecurso)) {
+      idRecurso = 0;
     } else {
-      idEntidad = this.form.value.IdEntidad;
+      idRecurso = this.form.value.IdRecurso;
     }
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL),
         {
           headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString())
+          params: new HttpParams().set('search[IdRecurso]', idRecurso.toString())
         }
       )
       .pipe(
@@ -107,7 +105,7 @@ export class EntidadRecursoService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecursoDescripcion),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -121,7 +119,7 @@ export class EntidadRecursoService {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecurso),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecursoDescripcion),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

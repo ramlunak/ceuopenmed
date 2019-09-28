@@ -46,7 +46,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info','asociacionOpcional', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -112,6 +112,11 @@ export class AsociacionComponent implements OnInit {
     const url = 'FormEntidad';
     this.router.navigate([url]);
 
+  }
+
+  public redirectAsociacionesOpcionales = () => {
+    const url = 'AsociacionesOpcionales';
+    this.router.navigate([url]);
   }
 
   guardarClick() {
@@ -189,9 +194,13 @@ export class AsociacionComponent implements OnInit {
         EntidadSeleccionada: this.EntidadSeleccionada
       });
 
-
-
     this.dialogTittle = 'Modificar';
+  }
+
+  goToAsociacionesOpcionales(){
+
+    this.redirectAsociacionesOpcionales();
+    
   }
 
   setEvalucacion(estado, evaluacion) {

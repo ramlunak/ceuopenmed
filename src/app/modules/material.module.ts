@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTooltipModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatTableModule,
@@ -77,7 +79,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTooltipModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

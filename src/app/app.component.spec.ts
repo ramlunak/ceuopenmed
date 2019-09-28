@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'CeuOpenMed'`, () => {
+  it(`should have as title 'COpenMed'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('CeuOpenMed');
+    expect(app.title).toEqual('COpenMed');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to CeuOpenMed!');
+    expect(compiled.querySelector('.content span').textContent).toContain('COpenMed app is running!');
   });
 });
