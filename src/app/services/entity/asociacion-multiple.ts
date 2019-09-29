@@ -11,24 +11,34 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TipoEntidadService {
+export class AsociacionMultipleService {
 
-  private BaseURL = 'tipo-entidad/';
+  private BaseURL = 'asociacion-multiple/';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
+  constructor(
+    private authService: AuthService,
+    private httpClient: HttpClient,
+    private CONSTANS: AppConstantsService
+  ) { }
 
   form: FormGroup = new FormGroup({
-    IdTipoEntidad: new FormControl(null),   
-    TipoEntidad: new FormControl('', Validators.required)
+    IdAsociacionMultiple: new FormControl(null),
+    IdAsociacion: new FormControl(null),
+    IdEntidad: new FormControl('', Validators.required),
+    IdTipoEntidad: new FormControl('', Validators.required),
+    IdTipoAsociacionMultiple: new FormControl(null)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdTipoEntidad: null,     
-      TipoEntidad: ''
+      IdAsociacionMultiple: null,
+      IdAsociacion: 15,
+      IdEntidad: 15,
+      IdTipoEntidad: '',
+      IdTipoAsociacionMultiple: 1
     });
   }
 
@@ -78,7 +88,7 @@ export class TipoEntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdTipoEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
@@ -92,7 +102,7 @@ export class TipoEntidadService {
     this.loadingSubject.next(true);
     return this.httpClient
       .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdTipoEntidad),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecurso),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

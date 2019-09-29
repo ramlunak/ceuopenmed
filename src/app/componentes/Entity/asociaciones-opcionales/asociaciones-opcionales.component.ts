@@ -13,6 +13,10 @@ import { DetalleEntidad } from 'src/app/models/detalle-entidad';
 import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
+import { AsociacionMultipleService } from '../../../services/entity/asociacion-multiple';
+import { AsociacionMultiple } from 'src/app/models/asociacion-multiple';
+
+
 import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { Entidad } from 'src/app/models/entidad';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
@@ -25,6 +29,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
 import {FormControl} from '@angular/forms';
+import { Asociacion } from 'src/app/models/asociacion';
 
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -50,7 +55,7 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   ENTIDAD: Entidad;
   
   // DataTable --
-  dataSource: MatTableDataSource<DetalleEntidad>;
+  dataSource: MatTableDataSource<AsociacionMultiple>;
   displayedColumns = ['Idioma', 'Entidad', 'Nivel', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -71,6 +76,7 @@ private _filter(value: string): string[] {
 
   constructor(
     private _formBuilder: FormBuilder,
+    private Service: AsociacionMultipleService,
     private entidadService: EntidadService,
     private authService: AuthService,
     private detalleEntidadService: DetalleEntidadService,
@@ -87,11 +93,12 @@ private _filter(value: string): string[] {
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
+    this.Service.InicializarValoresFormGroup();
    // this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
    // this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
    // this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
    // this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
-   // this.CargarDgvElements();
+    this.CargarDgvElements();
   //  this.CargarExtraInfo();
    this.CargarSelects();
 
@@ -102,7 +109,6 @@ private _filter(value: string): string[] {
   }
  
 
- 
   
   CargarSelects() {
    
@@ -130,12 +136,12 @@ private _filter(value: string): string[] {
 
 
   CargarDgvElements() {
-    this.entidadService.viewDetalle(this.IdEntidad).subscribe(result => {
-      this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
+
+    this.Service.get().subscribe(result => {
+      this.dataSource = new MatTableDataSource<AsociacionMultiple>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
-      this.errorService.handleError(error);
-      this.router.navigateByUrl('entidad');
+      this.errorService.handleError(error);   
     });
   }
 
@@ -157,7 +163,7 @@ private _filter(value: string): string[] {
   guardarClick() {
 
     if (this.transaccionIsNew) {
-      this.detalleEntidadService.set().subscribe(result => {
+      this.Service.set().subscribe(result => {
 
         if (result.status === 1) {
           this.ActualizarEstadoEntidad();
@@ -171,7 +177,7 @@ private _filter(value: string): string[] {
         this.errorService.handleError(error);
       });
     } else {
-      this.detalleEntidadService.update().subscribe(result => {
+      this.Service.update().subscribe(result => {
 
         if (result.status === 1) {
           this.ActualizarEstadoEntidad();
@@ -210,16 +216,16 @@ private _filter(value: string): string[] {
  }
 
   setOperationsData() {
-    this.transaccionIsNew = false;
+   /*  this.transaccionIsNew = false;
     const detalle = this.dataSource.data[this.ROW_NUMBER];
-    this.detalleEntidadService.form.patchValue(
+    this.Service.form.patchValue(
       {
         IdRecurso: detalle.IdRecurso,
         IdIdioma: detalle.IdIdioma,
         IdEntidad: this.IdEntidad,
         Entidad: detalle.Entidad,
         Nivel: detalle.Nivel
-      });
+      }); */
   }
 
   Limpiar() {

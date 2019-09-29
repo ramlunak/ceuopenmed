@@ -1,6 +1,5 @@
 export interface TipoEntidad {
-    IdTipoEntidad: number;
-    IdIdioma: number;
+    IdTipoEntidad: number;   
     IdEstudiante: number;
     TipoEntidad: string;
 }

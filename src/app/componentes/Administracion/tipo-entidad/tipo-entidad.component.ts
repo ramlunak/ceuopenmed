@@ -31,7 +31,7 @@ export class TipoEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<TipoEntidad>;
-  displayedColumns = ['IdTipoEntidad', 'Idioma', 'TipoEntidad', 'commands'];
+  displayedColumns = ['IdTipoEntidad','TipoEntidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -119,8 +119,7 @@ export class TipoEntidadComponent implements OnInit {
     this.transaccionIsNew = false;
     const tipoEntidad = this.dataSource.data[this.ROW_NUMBER];
     this.Service.form.patchValue({
-      IdTipoEntidad: tipoEntidad.IdTipoEntidad,
-      IdIdioma: tipoEntidad.IdIdioma,
+      IdTipoEntidad: tipoEntidad.IdTipoEntidad,     
       TipoEntidad: tipoEntidad.TipoEntidad
     });
     this.dialogTittle = 'Modificar Tipo de Entidad';

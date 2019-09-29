@@ -61,18 +61,18 @@
             style="width: 280px">
 
             <!-- FORMULARIO -->
-            <form [formGroup]="detalleEntidadService.form">
+            <form [formGroup]="Service.form">
 
                 <mat-form-field class="ceu-full-width">
                     <input type="hidden" formControlName="IdRecurso">
-                    <input type="hidden" formControlName="IdEntidad">
+                 
                     <input disabled="true" matInput name="TipoEntidad" [value]="TIPO_ENTIDAD"
                         placeholder="Tipo Entidad">
                 </mat-form-field>
 
                 <mat-form-field class="ceu-full-width">
                         <mat-label>TipoEntidad</mat-label>
-                        <mat-select  name="TipoEntidad" (selectionChange)="change($event)">
+                        <mat-select formControlName="IdTipoEntidad" name="TipoEntidad"  (selectionChange)="change($event)">
                             <mat-option *ngFor="let TipoEntidad of listTiposEntidad"
                                 [value]="TipoEntidad.IdTipoEntidad">
                                 {{TipoEntidad.TipoEntidad}}
@@ -80,18 +80,16 @@
                         </mat-select>
                         <mat-error>Este campo es requerido.</mat-error>
                     </mat-form-field>
-
-                    <form class="example-form">
+                  
                         <mat-form-field class="ceu-full-width">
-                          <input type="text" placeholder="Entidades" aria-label="String" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                          <input type="text" formControlName="IdEntidad" placeholder="Entidades" aria-label="String" matInput  [matAutocomplete]="auto">
                           <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let option of options" [value]="option">
                               {{option}}
                             </mat-option>
                           </mat-autocomplete>
                         </mat-form-field>
-                      </form>
-
+                     
 
                 <mat-form-field class="ceu-full-width">
                     <input formControlName="Entidad" matInput name="Entidad" placeholder="Entidad">
@@ -109,17 +107,17 @@
                 </mat-form-field>
 
                 <button mat-raised-button color='primary'
-                    [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
+                    [disabled]="Service.form.invalid || (Service.loading$ | async)"
                     *ngIf="transaccionIsNew" (click)="guardarClick()">
-                    <mat-icon *ngIf="detalleEntidadService.loading$ | async">
+                    <mat-icon *ngIf="Service.loading$ | async">
                         <mat-spinner diameter="20" color="accent">
                         </mat-spinner>
                     </mat-icon>Guardar
                 </button>
                 <button mat-raised-button color='primary'
-                    [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
+                    [disabled]="Service.form.invalid || (Service.loading$ | async)"
                     *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">
-                    <mat-icon *ngIf="detalleEntidadService.loading$ | async">
+                    <mat-icon *ngIf="Service.loading$ | async">
                         <mat-spinner diameter="20" color="accent">
                         </mat-spinner>
                     </mat-icon>Modificar
