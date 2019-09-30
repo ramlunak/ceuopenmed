@@ -20,6 +20,7 @@ import { IdiomaComponent } from '../componentes/Administracion/idioma/idioma.com
 import { EntidadComponent } from '../componentes/Entity/entidad/entidad.component';
 import { FormEntidadComponent } from '../componentes/Entity/form-entidad/form-entidad.component';
 import { TipoAsociacionComponent } from '../componentes/Administracion/tipo-asociacion/tipo-asociacion.component';
+import { TipoAsociacionMultipleComponent } from '../componentes/Administracion/tipo-asociacion-multiple/tipo-asociacion-multiple.component';
 import { AsociacionComponent } from '../componentes/Entity/asociacion/asociacion.component';
 // tslint:disable-next-line: max-line-length
 import { DocProfesorEspecialidadesComponent } from '../componentes/Docencia/doc-profesor-especialidades/doc-profesor-especialidades.component';
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'idioma', component: IdiomaComponent, canActivate: [AuthVerifyService] },
   { path: 'FormEntidad/:idEntidad/:idTipoEntidad', component: FormEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'TipoAsociacion', component: TipoAsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'TipoAsociacionMultiple', component: TipoAsociacionMultipleComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'AsociacionesOpcionales', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },

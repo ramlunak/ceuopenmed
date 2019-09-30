@@ -30,7 +30,7 @@ export class AuthVerifyService implements CanActivate {
         return true;
       case 'segRol': case 'docEspecialidad': case 'docGrupo': case 'docEstudiante': case 'docProfesor':
       case 'docProfesorGrupos': case 'docProfesorEspecialidades': case 'tipoEntidad':
-      case 'idioma': case 'TipoAsociacion':
+      case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple':
         return (this.authService.currentUser.IdRol === roles.Administrador);
       case 'entidad': case 'EntidadesEvaluadas': case 'FormEntidad' : case 'AsociacionesOpcionales': case 'Asociacion': case 'EntidadRecurso': case 'additionalInfo':
       case 'EntidadRecursoDescripcion':
