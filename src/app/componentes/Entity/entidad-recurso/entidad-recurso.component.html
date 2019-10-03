@@ -111,7 +111,9 @@
 
                 <ng-container matColumnDef="URL">
                     <th mat-header-cell *matHeaderCellDef> URL </th>
-                    <td mat-cell *matCellDef="let element"> {{element.URL}} </td>
+                    <td mat-cell *matCellDef="let element">                          
+                            <a [href]="element.URL" target="_blank">Ver referencia</a> 
+                         </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isImage">

@@ -49,6 +49,7 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   ROW_NUMBER: number;
   dialogTittle = 'Nuevo';
   IdEntidad: number;
+  IdEntidadSelected: string;
   IdTipoEntidad: number;
   EvaluacionEntidad: number;
   TIPO_ENTIDAD: string;
@@ -65,6 +66,7 @@ export class AsociacionesOpcionalesComponent implements OnInit {
 //AUTOCOMPLETE
 myControl = new FormControl();
 options: string[] = [];
+values: string[] = [];
 filteredOptions: Observable<string[]>;
 
 private _filter(value: string): string[] {  
@@ -92,8 +94,7 @@ private _filter(value: string): string[] {
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
-    this.paginator._intl.lastPageLabel = 'Último';
-    this.Service.InicializarValoresFormGroup();
+    this.paginator._intl.lastPageLabel = 'Último';  
    // this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
    // this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
    // this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
@@ -107,16 +108,12 @@ private _filter(value: string): string[] {
       map(value => this._filter(value))
      );
   }
- 
-
   
-  CargarSelects() {
-   
+  CargarSelects() {   
       // Tipo Entidad
       this.tipoEntidadService.get().subscribe(result => {
         this.listTiposEntidad = result.data;
       });
-
   }
 
   CargarExtraInfo() {
@@ -161,6 +158,9 @@ private _filter(value: string): string[] {
   }
 
   guardarClick() {
+
+    this.cargarEntidadByName();
+    return;
 
     if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
@@ -208,11 +208,28 @@ private _filter(value: string): string[] {
 
   change(event){
     this.options = [];
+    this.values = [];
     this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(event.value).subscribe(result => {
            result.data.forEach(element => {     
         this.options.push(element.Entidad);
+        this.values[element.Entidad] = element.IdEntidad;
       });
     });
+ }
+ autocompleteChange(event){
+  alert();return;
+  this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(event.value).subscribe(result => {
+         result.data.forEach(element => {     
+      this.options.push(element.Entidad);
+      this.values[element.Entidad] = element.IdEntidad;
+    });
+  });
+}
+
+ 
+ cargarEntidadByName(){
+  this.IdEntidadSelected = this.values[this.Service.form.value.Entidad];
+ 
  }
 
   setOperationsData() {

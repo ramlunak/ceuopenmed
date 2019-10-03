@@ -27,16 +27,19 @@ export class AsociacionMultipleService {
   form: FormGroup = new FormGroup({
     IdAsociacionMultiple: new FormControl(null),
     IdAsociacion: new FormControl(null),
-    IdEntidad: new FormControl('', Validators.required),
+    Entidad: new FormControl('', Validators.required),
+    IdEntidad: new FormControl(null),
     IdTipoEntidad: new FormControl('', Validators.required),
-    IdTipoAsociacionMultiple: new FormControl(null)
+    IdTipoAsociacionMultiple: new FormControl(null),
+    Nivel: new FormControl(null)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
       IdAsociacionMultiple: null,
-      IdAsociacion: 15,
-      IdEntidad: 15,
+      IdAsociacion:'',
+      IdEntidad: '',
+      Entidad: '',
       IdTipoEntidad: '',
       IdTipoAsociacionMultiple: 1
     });

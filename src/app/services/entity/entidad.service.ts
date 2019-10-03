@@ -104,6 +104,22 @@ export class EntidadService {
       );
   }
 
+  actionEntidadByName(name: string) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL),
+          {
+              headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+              params: new HttpParams().set('search[Entidad]', name)
+          }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
   set() {
     this.loadingSubject.next(true);
     return this.httpClient
