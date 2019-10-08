@@ -2,7 +2,7 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-        <div>Detalle de la entidad</div>
+        <div>Asociacones</div>
 
         <button mat-button routerLink="/Asociacion">
             <mat-icon>reply</mat-icon>
@@ -62,14 +62,7 @@
 
             <!-- FORMULARIO -->
             <form [formGroup]="Service.form">
-
-                <mat-form-field class="ceu-full-width">
-                    <input type="text" formControlName="IdEntidad"  [value]="IdEntidadSelected">
-                 
-                    <input disabled="true" matInput name="TipoEntidad" [value]="TIPO_ENTIDAD"
-                        placeholder="Tipo Entidad">
-                </mat-form-field>
-
+                
                 <mat-form-field class="ceu-full-width">
                         <mat-label>TipoEntidad</mat-label>
                         <mat-select formControlName="IdTipoEntidad" name="TipoEntidad"  (selectionChange)="change($event)">
@@ -81,19 +74,40 @@
                         <mat-error>Este campo es requerido.</mat-error>
                     </mat-form-field>
                   
-                        <mat-form-field class="ceu-full-width">
+                    <mat-form-field class="ceu-full-width">
+                        <mat-label>Tipo asociación</mat-label>
+                        <mat-select formControlName="IdTipoAsociacionMultiple" name="IdTipoAsociacionMultiple">
+                            <mat-option *ngFor="let tipoAsociacion of listTipoAsociacion" [value]="tipoAsociacion.IdTipoAsociacionMultiple">
+                                {{tipoAsociacion.TipoAsociacion}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Este campo es requerido.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="ceu-full-width">
+                        <mat-label>Entidad</mat-label>
+                        <mat-select formControlName="IdEntidad" name="IdEntidad" >
+                            <mat-option *ngFor="let entidad of listEntidad" [value]="entidad.IdEntidad">
+                                {{entidad.Entidad}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Este campo es requerido.</mat-error>
+                    </mat-form-field>              
+
+
+                      <!--   <mat-form-field class="ceu-full-width">
                           <input type="text"  formControlName="Entidad" placeholder="Entidades" aria-label="String" matInput  [matAutocomplete]="auto">
                            <mat-autocomplete #auto="matAutocomplete" (change)="autocompleteChange($event)">
                             <mat-option *ngFor="let option of options" [value]="option">
                               {{option}}
                             </mat-option>
                           </mat-autocomplete>
-                       </mat-form-field>
+                       </mat-form-field> -->
                      
-                <mat-form-field class="ceu-full-width">
+              <!--   <mat-form-field class="ceu-full-width">
                     <input formControlName="Entidad" matInput name="Entidad" placeholder="Entidad">
                     <mat-error>Este campo es requerido.</mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
 
                 <mat-form-field class="ceu-full-width" style="margin-top:10px">
                     <mat-label>Nivel</mat-label>
@@ -135,9 +149,9 @@
             <!-- GRID -->
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ceu-table">
 
-                <ng-container matColumnDef="Idioma">
-                    <th mat-header-cell *matHeaderCellDef> Idioma </th>
-                    <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+                <ng-container matColumnDef="IdAsociacionMultiple">
+                    <th mat-header-cell *matHeaderCellDef> IdAsociacionMultiple </th>
+                    <td mat-cell *matCellDef="let element"> {{element.IdAsociacionMultiple}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Entidad">

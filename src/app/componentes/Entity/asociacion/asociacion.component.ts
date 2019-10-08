@@ -46,7 +46,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info','asociacionOpcional', 'commands'];
+  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info','asociacionOpcional', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -115,7 +115,10 @@ export class AsociacionComponent implements OnInit {
   }
 
   public redirectAsociacionesOpcionales = () => {
-    const url = 'AsociacionesOpcionales';
+    const asociacion = this.dataSource.data[this.ROW_NUMBER];
+    
+    const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}`;
+    //const url = 'AsociacionesOpcionales';
     this.router.navigate([url]);
   }
 
