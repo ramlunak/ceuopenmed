@@ -60,7 +60,7 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   
   // DataTable --
   dataSource: MatTableDataSource<AsociacionMultiple>;
-  displayedColumns = ['IdAsociacionMultiple', 'Entidad', 'Nivel', 'commands'];
+  displayedColumns = ['IdAsociacionMultiple', 'Entidad','TipoAsociacion', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
