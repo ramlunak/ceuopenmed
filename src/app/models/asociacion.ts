@@ -12,4 +12,5 @@ export interface Asociacion {
     Evaluacion: string,
     Estado: string,
     Comentario: string,   
+    Nivel: number,   
 }

@@ -46,7 +46,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'info','asociacionOpcional', 'commands'];
+  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion','Nivel', 'info','asociacionOpcional', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -191,6 +191,7 @@ export class AsociacionComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
+        Nivel:asociacion.Nivel,      
         Evaluacion: 0,
         Estado: 0,
         Comentario: asociacion.Comentario,
