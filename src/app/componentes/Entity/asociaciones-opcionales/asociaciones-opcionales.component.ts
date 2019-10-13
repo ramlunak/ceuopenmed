@@ -139,7 +139,7 @@ private _filter(value: string): string[] {
 
   CargarDgvElements() {
 
-    this.Service.get().subscribe(result => {
+    this.Service.get(this.IdAsociacion).subscribe(result => {
       this.dataSource = new MatTableDataSource<AsociacionMultiple>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
@@ -211,6 +211,7 @@ private _filter(value: string): string[] {
   change(event){
     this.options = [];
     this.values = [];
+    
     this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(event.value).subscribe(result => {
       this.listEntidad = result.data;        
     });
@@ -218,6 +219,7 @@ private _filter(value: string): string[] {
     this.SeTipoAsociacionMultipleServicervice.asociacionByIdTipoEntidad(event.value).subscribe(result => {
       this.listTipoAsociacion = result.data;        
     });
+
  }
 
  autocompleteChange(event){
@@ -229,11 +231,9 @@ private _filter(value: string): string[] {
     });
   });
 }
-
  
  cargarEntidadByName(){
-  this.IdEntidadSelected = this.values[this.Service.form.value.Entidad];
- 
+  this.IdEntidadSelected = this.values[this.Service.form.value.Entidad]; 
  }
 
   setOperationsData() {

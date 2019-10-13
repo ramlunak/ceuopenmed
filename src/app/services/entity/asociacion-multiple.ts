@@ -45,19 +45,22 @@ export class AsociacionMultipleService {
     });
   }
 
-  get(): Observable<any> {
+  get(Id: number): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL),
-        {
-          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-        }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
+    .get<any>(
+
+      this.CONSTANS.getApiUrl(this.BaseURL),
+      {
+        headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+        params: new HttpParams().set('search[IdAsociacion]', Id.toString())
+      }
+
+    )
+    .pipe(
+      finalize(() => this.loadingSubject.next(false)),
+      map(res => res)
+    );
   }
 
   view(Id: number) {
