@@ -7,7 +7,7 @@ import { isNullOrUndefined } from 'util';
 })
 export class AppConstantsService {
 
-  private API_URL = 'http://localhost/api_ceuopenmed/backend/web/';
+  private API_URL = 'http://localhost:8080/api_ceuopenmed/backend/web/';
   private ROLES = {Administrador: 1, Profesor: 2, Estudiante: 3 };
 
   constructor() { }

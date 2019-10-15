@@ -7,6 +7,7 @@ export interface Asociacion {
     IdEstudiante: number,
     IdProfesor: number,
     IdEntidad: number,
+    Entidad: string,
     IdTipoEntidad: number,
     TipoEntidad: string,     
     Evaluacion: string,

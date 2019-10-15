@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'TipoAsociacionMultiple', component: TipoAsociacionMultipleComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
-  { path: 'AsociacionesOpcionales/:idAsociacion', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
+  { path: 'AsociacionesOpcionales/:idAsociacion/:Asociacion', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
   // tslint:disable-next-line: max-line-length
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },

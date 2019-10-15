@@ -5,4 +5,5 @@ export interface AsociacionMultiple {
     IdTipoEntidad: number,
     IdTipoAsociacionMultiple: string,    
     Nivel: number,    
+    Comentario: string,    
 }

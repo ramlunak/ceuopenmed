@@ -116,8 +116,8 @@ export class AsociacionComponent implements OnInit {
 
   public redirectAsociacionesOpcionales = () => {
     const asociacion = this.dataSource.data[this.ROW_NUMBER];
-    
-    const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}`;
+    const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
+    const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}`;
     //const url = 'AsociacionesOpcionales';
     this.router.navigate([url]);
   }

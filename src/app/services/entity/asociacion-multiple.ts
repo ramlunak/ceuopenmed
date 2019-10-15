@@ -31,17 +31,19 @@ export class AsociacionMultipleService {
     IdEntidad: new FormControl('', Validators.required),
     IdTipoEntidad: new FormControl('', Validators.required),
     IdTipoAsociacionMultiple:  new FormControl('', Validators.required),
-    Nivel: new FormControl('', Validators.required)
+    Nivel: new FormControl('', Validators.required),
+    Comentario: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
-    this.form.setValue({
-      IdAsociacionMultiple: null, 
-      IdAsociacion : '', 
-      IdEntidad: '',
-      Entidad: '',
-      IdTipoEntidad: '',
-      IdTipoAsociacionMultiple: ''
+    this.form.setValue({  
+      IdAsociacionMultiple:null,
+      IdAsociacion:null,
+      IdEntidad: null,     
+      IdTipoEntidad: null,
+      IdTipoAsociacionMultiple:null,
+      Nivel: '',
+      Comentario: ''
     });
   }
 
@@ -95,7 +97,7 @@ export class AsociacionMultipleService {
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdAsociacionMultiple),
         this.form.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
