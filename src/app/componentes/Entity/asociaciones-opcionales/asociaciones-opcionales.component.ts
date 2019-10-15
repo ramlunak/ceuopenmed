@@ -37,6 +37,8 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 import {FormControl} from '@angular/forms';
 import { Asociacion } from 'src/app/models/asociacion';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
 
@@ -98,7 +100,8 @@ private _filter(value: string): string[] {
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+   private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -171,6 +174,14 @@ private _filter(value: string): string[] {
   }
 
   guardarClick() {
+
+if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
+{
+  this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
+    duration: 8000,
+  });
+  return;
+}
 
     if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
@@ -245,12 +256,7 @@ private _filter(value: string): string[] {
  }
 
 CargarDatosModificar(asociaconmultiple){
- 
-  var IdTipoEntidad = asociaconmultiple.IdTipoEntidad;
-  var IdEntidad = this.IdEntidad;
-  var IdTipoAsociacionMultiple = asociaconmultiple.IdTipoAsociacionMultiple;
-  var Nivel =asociaconmultiple.Nivel;
-
+  
   this.Service.form.patchValue(
     {
       IdTipoEntidad: asociaconmultiple.IdTipoEntidad,       

@@ -20,6 +20,7 @@ import { TipoEntidad } from 'src/app/models/tipo-entidad';
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 import { TipoAsociacion } from 'src/app/models/tipo-asociacion';
 import { AsociacionService } from 'src/app/services/entity/asociacion.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class AsociacionComponent implements OnInit {
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -123,7 +125,13 @@ export class AsociacionComponent implements OnInit {
   }
 
   guardarClick() {
-
+    if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
+    {
+      this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
+        duration: 8000,
+      });
+      return;
+    }
     if (this.Service.form.value.IdAsociacion == null) {
       this.Service.set().subscribe(result => {
 
