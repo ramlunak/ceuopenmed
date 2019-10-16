@@ -37,7 +37,7 @@ export class AsociacionComponent implements OnInit {
   EstadoEntidad = 0;
   EvaluacionEntidad = 0;
   CountEntidad = 0;
-  ComentarioEntidad = null;
+  ComentarioEntidad = '';
   ASOCIACION: Asociacion;
 
   transaccionIsNew = true;

@@ -192,7 +192,10 @@ export class EntidadComponent implements OnInit {
     this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
+    if(entidad.Comentario != null)
     this.ComentarioEntidad = entidad.Comentario;
+    else
+    this.ComentarioEntidad = '';
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
     this.verificarAsocioacionesEvaluadas();
