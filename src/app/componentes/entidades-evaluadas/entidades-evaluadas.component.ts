@@ -50,7 +50,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['TipoEntidad','IdEntidad','Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];

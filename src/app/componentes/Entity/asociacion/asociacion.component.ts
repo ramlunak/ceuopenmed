@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
+
 declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -62,7 +64,8 @@ export class AsociacionComponent implements OnInit {
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private _location: Location
   ) { }
 
   ngOnInit() {
@@ -300,6 +303,11 @@ export class AsociacionComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  backClicked() {
+
+    this._location.back();
   }
 
 }
