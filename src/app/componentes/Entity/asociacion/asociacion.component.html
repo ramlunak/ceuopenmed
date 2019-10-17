@@ -2,7 +2,12 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-        <button mat-button (click)="backClicked()">
+        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" routerLink="/entidad" >
+            <mat-icon>reply</mat-icon>
+            Atras
+        </button>
+
+        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Profesor'" routerLink="/EntidadesEvaluadas" >
             <mat-icon>reply</mat-icon>
             Atras
         </button>
