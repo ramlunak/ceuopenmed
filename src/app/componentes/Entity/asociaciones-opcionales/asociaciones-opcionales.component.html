@@ -123,10 +123,9 @@
                 </mat-form-field>
 
                 <mat-form-field class="ceu-full-width">
-                    <input formControlName="Comentario" matInput name="Comentario" placeholder="Condicón">
+                    <input formControlName="Comentario" matInput name="Comentario" placeholder="Condición">
                     <mat-error>Este campo es requerido.</mat-error>
                 </mat-form-field>
-
 
                 <button mat-raised-button color='primary'
                     [disabled]="Service.form.invalid || (Service.loading$ | async)"

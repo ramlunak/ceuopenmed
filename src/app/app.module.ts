@@ -47,6 +47,7 @@ import { EntidadesEvaluadasComponent } from './componentes/entidades-evaluadas/e
 import { EntidadRecursoDescripcionComponent } from './componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +78,7 @@ import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociacion
     EntidadesEvaluadasComponent,
     EntidadRecursoDescripcionComponent,
     AsociacionesOpcionalesComponent,
-    TipoAsociacionMultipleComponent
+    TipoAsociacionMultipleComponent    
   ],
   imports: [
     BrowserModule,
