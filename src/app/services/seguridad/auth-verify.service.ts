@@ -23,7 +23,7 @@ export class AuthVerifyService implements CanActivate {
     }
   }
   
-  private verifyPermissions(url: string): boolean {
+  public verifyPermissions(url: string): boolean {
     const roles = this.CONSTANS.getRoles();
     switch (url) {
       case '': case 'DialogChangePassword':

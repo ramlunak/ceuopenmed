@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EntidadRecursoDescripcionComponent } from '../entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { EntidadService } from '../../../services/entity/entidad.service';
+import { Entidad } from 'src/app/models/entidad';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
@@ -30,7 +32,7 @@ export class EntidadRecursoComponent implements OnInit {
   IdTipoEntidad: number;
   EvaluacionEntidad: number;
   TIPO_ENTIDAD: string;
-
+  ENTIDAD: Entidad;
   // DataTable --
   dataSource: MatTableDataSource<EntidadRecurso>;
   displayedColumns = ['Nivel', 'URL', 'isImage', 'commands'];
@@ -39,6 +41,7 @@ export class EntidadRecursoComponent implements OnInit {
   listTiposEntidad: TipoEntidad[];
 
   constructor(
+    private entidadService: EntidadService,
     private entidadRecursoService: EntidadRecursoService,
     private authService: AuthService,
     private tipoEntidadService: TipoEntidadService,
@@ -69,6 +72,13 @@ export class EntidadRecursoComponent implements OnInit {
     }, (error) => {
       this.errorService.handleError(error);
     });
+
+    this.entidadService.view(this.IdEntidad).subscribe(result => {
+      this.ENTIDAD = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+
   }
 
   CargarDgvElements() {
@@ -81,12 +91,28 @@ export class EntidadRecursoComponent implements OnInit {
     });
   }
 
+  ActualizarEstadoEntidad() {
+    this.ENTIDAD.Estado = '0';
+    this.entidadService.form.patchValue(this.ENTIDAD);
+    this.entidadService.update().subscribe(result => {
+      if (result.status === 1) {
+        // this.CargarDgvElements();
+      } else {
+        this.errorService.handleError(result.error);
+      }
+
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
   guardarClick() {
 
     if (this.transaccionIsNew) {
       this.entidadRecursoService.set().subscribe(result => {
 
         if (result.status === 1) {
+          this.ActualizarEstadoEntidad();
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);
@@ -101,6 +127,7 @@ export class EntidadRecursoComponent implements OnInit {
       this.entidadRecursoService.update().subscribe(result => {
 
         if (result.status === 1) {
+          this.ActualizarEstadoEntidad();
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);

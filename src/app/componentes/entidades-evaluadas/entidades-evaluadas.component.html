@@ -127,6 +127,13 @@
         <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="Estudiante">
+            <th mat-header-cell *matHeaderCellDef> <label *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
+            <td  mat-cell *matCellDef="let element">
+                    <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'" matTooltip="{{element.Estudiante}}">face</mat-icon>
+                 </td>
+        </ng-container>
+
     <ng-container matColumnDef="info">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">

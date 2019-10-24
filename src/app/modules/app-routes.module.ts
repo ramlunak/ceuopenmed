@@ -60,15 +60,15 @@ const routes: Routes = [
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto
-  { path: '', redirectTo: '/', pathMatch: 'full' }, // home page
-  { path: '**', redirectTo: '/404', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // home page
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes,{useHash:true})
   ],
   exports: [
     RouterModule
