@@ -178,12 +178,23 @@
 
             <button
                 *ngIf="element.Estado == 1 && element.Evaluacion == 1 && this.authService.currentUser.Rol == 'Profesor'"
-                mat-button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
+                matBadge="{{element.countAsociacionesMal}}" matBadgePosition="before" matBadgeColor="warn"
+                mat-icon-button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
                 <mat-icon matTooltip="Asociaciones">shuffle</mat-icon>
             </button>
-            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" mat-button
+
+            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"  
+            matBadge="{{element.countAsociacionesMal}}" matBadgePosition="before" matBadgeColor="warn"
+            mat-icon-button
                 (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
                 <mat-icon matTooltip="Asociaciones">shuffle</mat-icon>
+            </button>
+
+            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"  
+            matBadge="{{element.countAsociacionesEspera}}" matBadgePosition="before" matBadgeColor="primary"
+            mat-icon-button
+                (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
+                <mat-icon matTooltip="Asociaciones"></mat-icon>
             </button>
 
             <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' || this.authService.currentUser.Rol == 'Profesor'"
