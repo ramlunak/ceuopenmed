@@ -164,7 +164,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.Service.form.patchValue(
       {
@@ -188,8 +188,8 @@ export class EntidadesEvaluadasComponent implements OnInit {
   cargarEvaluacion() {
 
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
+    this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
     if(entidad.Comentario != null)
@@ -243,7 +243,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
   }
 
   goToAsociciones() {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
     this.asociacionService.form.patchValue({
       IdEntidad1: entidad.IdEntidad,
       entidadSelecionada: entidad.Entidad
@@ -259,7 +259,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
 
   checkboxChange() {
     this.CountEntidad++;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
     if (this.CountEntidad === 2) {
       this.redirectToAsociacion();
     }
@@ -290,7 +290,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
   }
 
   public redirectToAdditionalInfo = () => {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
     this.router.navigate([url]);
   }

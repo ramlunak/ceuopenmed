@@ -32,7 +32,7 @@ export class AsociacionMultipleService {
     IdTipoEntidad: new FormControl('', Validators.required),
     IdTipoAsociacionMultiple:  new FormControl('', Validators.required),
     Nivel: new FormControl('', Validators.required),
-    Comentario: new FormControl('', Validators.required)
+    Comentario: new FormControl(null)
   });
 
   InicializarValoresFormGroup() {

@@ -14,27 +14,27 @@
 </mat-toolbar>
 <!--END TOOL BAR-->
 
-<!-- ELIMINAR -->
-<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- ELIMINAR -->
+    <div class="modal fade" style="position: absolute;" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                  </button>
+                </div>
+                <div class="modal-body">
+                        <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+                </div>
+                <div class="modal-footer">
+                        <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+                        <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
+                    
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-                <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
-            </div>
-            <div class="modal-footer">
-                <button mat-stroked-button (click)="Limpiar()" data-dismiss="modal">Cancelar</button>
-                <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
-            </div>
-        </div>
-    </div>
-</div>
+          </div>
 
 <div class="container-fluid">
     <div class="row">
@@ -138,8 +138,8 @@
                         </button>
 
                         <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
-                            (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()"
-                            mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
+                            (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData();eliminarClick()"
+                            mat-icon-button data-toggle="modal" data-target="#DeleteDialog000">
                             <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
                         </button>
 

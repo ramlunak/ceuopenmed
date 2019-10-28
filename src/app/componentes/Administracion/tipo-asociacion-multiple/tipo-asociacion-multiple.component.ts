@@ -116,7 +116,7 @@ export class TipoAsociacionMultipleComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const TipoAsociacionMultiple = this.dataSource.data[this.ROW_NUMBER];
+    const TipoAsociacionMultiple = this.dataSource.filteredData[this.ROW_NUMBER];
     this.Service.form.patchValue({
       IdTipoAsociacionMultiple: TipoAsociacionMultiple.IdTipoAsociacionMultiple,     
       IdTipoEntidad: TipoAsociacionMultiple.IdTipoEntidad,

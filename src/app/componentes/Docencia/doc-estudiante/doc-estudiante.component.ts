@@ -189,7 +189,7 @@ export class DocEstudianteComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+    const estudiante = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.personaService.viewPersona(estudiante.IdPersona).subscribe(result => {
 
@@ -240,7 +240,7 @@ export class DocEstudianteComponent implements OnInit {
   }
 
   setOperationDataUsuario() {
-    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+    const estudiante = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.usuarioService.viewUsuario(estudiante.id).subscribe(result => {
 

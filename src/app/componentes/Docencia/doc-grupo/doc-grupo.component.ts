@@ -98,7 +98,7 @@ export class DocGrupoComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const grupo = this.dataSource.data[this.ROW_NUMBER];
+    const grupo = this.dataSource.filteredData[this.ROW_NUMBER];
     this.grupoService.form.patchValue({ IdGrupo: grupo.IdGrupo, Grupo: grupo.Grupo });
     this.dialogTittle = 'Modificar Grupo';
   }

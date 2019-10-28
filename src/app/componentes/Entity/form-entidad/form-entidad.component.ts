@@ -158,6 +158,7 @@ export class FormEntidadComponent implements OnInit {
     this.detalleEntidadService.delete().subscribe(result => {
 
       if (result.status === 1) {
+        this.ActualizarEstadoEntidad();
         this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
@@ -170,7 +171,7 @@ export class FormEntidadComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const detalle = this.dataSource.data[this.ROW_NUMBER];
+    const detalle = this.dataSource.filteredData[this.ROW_NUMBER];
     this.detalleEntidadService.form.patchValue(
       {
         IdRecurso: detalle.IdRecurso,

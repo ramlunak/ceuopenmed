@@ -179,7 +179,7 @@ export class DocProfesorComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const profesor = this.dataSource.data[this.ROW_NUMBER];
+    const profesor = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.personaService.viewPersona(profesor.IdPersona).subscribe(result => {
 
@@ -215,13 +215,13 @@ export class DocProfesorComponent implements OnInit {
   }
 
   public redirectToEspecialidades = () => {
-    const profesor = this.dataSource.data[this.ROW_NUMBER];
+    const profesor = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `docProfesorEspecialidades/${profesor.IdProfesor}`;
     this.router.navigate([url]);
   }
 
   public redirectToGroups = () => {
-    const profesor = this.dataSource.data[this.ROW_NUMBER];
+    const profesor = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `docProfesorGrupos/${profesor.IdProfesor}`;
     this.router.navigate([url]);
   }
@@ -241,7 +241,7 @@ export class DocProfesorComponent implements OnInit {
   }
 
   setOperationDataUsuario() {
-    const estudiante = this.dataSource.data[this.ROW_NUMBER];
+    const estudiante = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.usuarioService.viewUsuario(estudiante.id).subscribe(result => {
 

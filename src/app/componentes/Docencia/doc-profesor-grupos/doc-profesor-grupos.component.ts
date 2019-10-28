@@ -112,7 +112,7 @@ export class DocProfesorGruposComponent implements OnInit {
 
 
   setOperationsData() {
-    const profGrupo = this.dataSource.data[this.ROW_NUMBER];
+    const profGrupo = this.dataSource.filteredData[this.ROW_NUMBER];
     this.profesorService.formGrupos.patchValue({ IdProfesor: this.IdProfesor, IdGrupo: profGrupo.IdGrupo });
   }
 

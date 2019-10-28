@@ -113,7 +113,7 @@ export class DocProfesorEspecialidadesComponent implements OnInit {
 
 
   setOperationsData() {
-    const profEspecialidad = this.dataSource.data[this.ROW_NUMBER];
+    const profEspecialidad = this.dataSource.filteredData[this.ROW_NUMBER];
     this.profesorService.formEspecialidad.patchValue({ IdProfesor: this.IdProfesor, IdEspecialidad: profEspecialidad.IdEspecialidad });
   }
 

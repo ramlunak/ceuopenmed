@@ -144,6 +144,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.entidadRecursoService.delete().subscribe(result => {
 
       if (result.status === 1) {
+        this.ActualizarEstadoEntidad();
         this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
@@ -156,7 +157,7 @@ export class EntidadRecursoComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const recurso = this.dataSource.data[this.ROW_NUMBER];
+    const recurso = this.dataSource.filteredData[this.ROW_NUMBER];
     this.entidadRecursoService.form.patchValue(
       {
         IdRecurso: recurso.IdRecurso,
@@ -179,7 +180,7 @@ export class EntidadRecursoComponent implements OnInit {
   }
 
   openDialogDescripcion(): void {
-    const recurso = this.dataSource.data[this.ROW_NUMBER];
+    const recurso = this.dataSource.filteredData[this.ROW_NUMBER];
 
     const dialogRefDescrip = this.dialog.open(EntidadRecursoDescripcionComponent, {
       width: '1200px',

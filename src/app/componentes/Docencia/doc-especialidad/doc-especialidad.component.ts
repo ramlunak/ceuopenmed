@@ -99,7 +99,7 @@ export class DocEspecialidadComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const especialidad = this.dataSource.data[this.ROW_NUMBER];
+    const especialidad = this.dataSource.filteredData[this.ROW_NUMBER];
     this.especialidadService.form.patchValue({ IdEspecialidad: especialidad.IdEspecialidad, Especialidad: especialidad.Especialidad });
     this.dialogTittle = 'Modificar Especialidad';
   }

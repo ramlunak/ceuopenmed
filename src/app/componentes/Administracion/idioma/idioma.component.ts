@@ -99,7 +99,7 @@ export class IdiomaComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const idioma = this.dataSource.data[this.ROW_NUMBER];
+    const idioma = this.dataSource.filteredData[this.ROW_NUMBER];
     this.Service.form.patchValue({ IdIdioma: idioma.IdIdioma, Idioma: idioma.Idioma });
     this.dialogTittle = 'Modificar';
   }

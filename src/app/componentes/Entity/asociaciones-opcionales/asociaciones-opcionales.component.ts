@@ -324,7 +324,7 @@ CargarDatosModificar(asociaconmultiple){
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const asociaconmultiple = this.dataSource.data[this.ROW_NUMBER];
+    const asociaconmultiple = this.dataSource.filteredData[this.ROW_NUMBER];
     this.CargarDatosModificar(asociaconmultiple);
     this.Service.form.patchValue(
       {
@@ -334,7 +334,7 @@ CargarDatosModificar(asociaconmultiple){
 
   setEliminarData() {
     this.transaccionIsNew = true;
-    const asociaconmultiple = this.dataSource.data[this.ROW_NUMBER];
+    const asociaconmultiple = this.dataSource.filteredData[this.ROW_NUMBER];
   
     this.Service.form.patchValue(
       {

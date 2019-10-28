@@ -119,7 +119,7 @@ export class AsociacionComponent implements OnInit {
   }
 
   public redirectAsociacionesOpcionales = () => {
-    const asociacion = this.dataSource.data[this.ROW_NUMBER];
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
     const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
     //const url = 'AsociacionesOpcionales';
@@ -184,9 +184,8 @@ export class AsociacionComponent implements OnInit {
   }
 
   setOperationsData() {
-
     this.transaccionIsNew = false;
-    const asociacion = this.dataSource.data[this.ROW_NUMBER];
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     this.tipoAsociacionService.grelationshipet(this.IdEntidadSeleccionada, asociacion.IdEntidad).subscribe(result => {
       this.listTipoAsociacion = result.data;
     });
@@ -225,8 +224,8 @@ export class AsociacionComponent implements OnInit {
   cargarEvaluacion() {
 
     this.transaccionIsNew = false;
-    const asociacion = this.dataSource.data[this.ROW_NUMBER];
-    this.ASOCIACION = this.dataSource.data[this.ROW_NUMBER];
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
+    this.ASOCIACION = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(asociacion.Estado, 32);
     this.EvaluacionEntidad = parseInt(asociacion.Evaluacion, 32);
     this.ComentarioEntidad = asociacion.Comentario;
@@ -293,7 +292,7 @@ export class AsociacionComponent implements OnInit {
 
   checkboxChange() {
     this.CountEntidad++;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
     if (this.CountEntidad === 2) {
       this.redirectToAsociacion();
     }

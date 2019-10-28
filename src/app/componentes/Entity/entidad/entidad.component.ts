@@ -164,7 +164,7 @@ export class EntidadComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
 
     this.Service.form.patchValue(
       {
@@ -188,8 +188,8 @@ export class EntidadComponent implements OnInit {
   cargarEvaluacion() {
 
     this.transaccionIsNew = false;
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
-    this.ENTIDAD = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
+    this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
     if(entidad.Comentario != null)
@@ -242,7 +242,9 @@ export class EntidadComponent implements OnInit {
   }
 
   goToAsociciones() {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+   
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
+   
     this.asociacionService.form.patchValue({
       IdEntidad1: entidad.IdEntidad,
       entidadSelecionada: entidad.Entidad
@@ -292,7 +294,7 @@ export class EntidadComponent implements OnInit {
   }
 
   public redirectToAdditionalInfo = () => {
-    const entidad = this.dataSource.data[this.ROW_NUMBER];
+    const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
     this.router.navigate([url]);
   }

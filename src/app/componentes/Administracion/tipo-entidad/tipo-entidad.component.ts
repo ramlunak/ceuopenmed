@@ -117,7 +117,7 @@ export class TipoEntidadComponent implements OnInit {
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const tipoEntidad = this.dataSource.data[this.ROW_NUMBER];
+    const tipoEntidad = this.dataSource.filteredData[this.ROW_NUMBER];
     this.Service.form.patchValue({
       IdTipoEntidad: tipoEntidad.IdTipoEntidad,     
       TipoEntidad: tipoEntidad.TipoEntidad
