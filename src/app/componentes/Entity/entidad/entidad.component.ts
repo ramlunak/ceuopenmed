@@ -10,6 +10,9 @@ import { Entidad } from 'src/app/models/entidad';
 import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
+import { DetalleEntidadService } from '../../../services/entity/detalle-entidad.service';
+import { DetalleEntidad } from 'src/app/models/detalle-entidad';
+
 import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
@@ -53,12 +56,17 @@ export class EntidadComponent implements OnInit {
   displayedColumns = ['TipoEntidad','IdEntidad','Idioma', 'Entidad','Estudiante', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  listEntidadesAux: Entidad[];
+  listEntidades: Entidad[];
+  listIDS: Array<number> = [];
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
+  dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
 
   constructor(
     private Service: EntidadService,
     private asociacionService: AsociacionService,
+    private detalleEntidadService: DetalleEntidadService,
     private authService: AuthService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
@@ -74,7 +82,16 @@ export class EntidadComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
     this.CargarDgvElements();
+    this.CargarDetalles();
     this.CargarSelects();
+  }
+
+  CargarDetalles() {
+    this.detalleEntidadService.get().subscribe(result => {
+      this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+        }, (error) => {
+  
+    });
   }
 
   CargarSelects() {
@@ -93,6 +110,7 @@ export class EntidadComponent implements OnInit {
     if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getByEtudiante().subscribe(result => {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -100,6 +118,7 @@ export class EntidadComponent implements OnInit {
     } else {
       this.Service.getByProfesorEstado().subscribe(result => {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -145,7 +164,6 @@ export class EntidadComponent implements OnInit {
         this.errorService.handleError(error);
       });
     }
-
   }
 
   eliminarClick() {
@@ -292,6 +310,29 @@ export class EntidadComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  
+  applyFilterDetalle(filterValue: string) {
+    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
+    this.cargarEntidadesPorFiltroDetalles();   
+  }
+
+ public cargarEntidadesPorFiltroDetalles(){
+ 
+   this.listEntidadesAux = [];
+   this.listIDS=[];
+
+   this.dataSourceDetalle.filteredData.forEach(element => {
+    this.listIDS.push(element.IdEntidad);
+   });  
+
+   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+
+   novaArr.forEach(element => {
+    this.listEntidadesAux.push(this.listEntidades.find((x:Entidad)=> x.IdEntidad == element));
+   });     
+      this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
+ }
 
   public redirectToAdditionalInfo = () => {
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];

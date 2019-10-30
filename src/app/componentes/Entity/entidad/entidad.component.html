@@ -11,6 +11,11 @@
         <span class="material-spacer"></span>
         <span class="material-spacer"></span>
 
+        <mat-form-field id="mat-form-field-search" style="margin: 5px;">
+            <input matInput (keyup)="applyFilterDetalle($event.target.value)">
+            <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
+        </mat-form-field>
+
         <mat-form-field id="mat-form-field-search">
             <input matInput (keyup)="applyFilter($event.target.value)">
             <mat-placeholder class="placeholder">Buscar</mat-placeholder>
@@ -203,7 +208,7 @@
                 <mat-icon color='primary' matTooltip="Información Adicional">ballot</mat-icon>
             </button>
 
-            <button *ngIf="element.Evaluacion == 0 && this.authService.currentUser.Rol == 'Estudiante'"
+            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
                 (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
                 data-toggle="modal" data-target="#DeleteDialog">
                 <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
