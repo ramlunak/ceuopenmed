@@ -6,4 +6,6 @@ export interface EntidadRecurso {
     IsImage: boolean;
     // Extra Field
     Idioma: string;
+    IdIdioma: number;
+    Descripcion:string;
 }
