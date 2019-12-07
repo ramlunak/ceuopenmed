@@ -127,6 +127,18 @@ export class EntidadComponent implements OnInit {
 
   }
 
+  CargarDgvElementsAllEstudent() {
+    if (this.authService.currentUser.Rol === 'Estudiante') {
+      this.Service.get().subscribe(result => {
+        this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.listEntidades = result.data;
+        this.dataSource.paginator = this.paginator;
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    } 
+  }
+
   public redirectToDetalleEntidad = (entidad: any) => {
     const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
     this.router.navigate([url]);
@@ -339,5 +351,14 @@ export class EntidadComponent implements OnInit {
     const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
     this.router.navigate([url]);
   }
+
+  onValChange(value){
+    if(value == "todas"){
+      this.CargarDgvElementsAllEstudent();
+    }
+    else{
+      this.CargarDgvElements();
+    }
+}
 
 }

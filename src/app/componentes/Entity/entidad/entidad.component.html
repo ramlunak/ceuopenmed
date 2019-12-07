@@ -11,6 +11,15 @@
         <span class="material-spacer"></span>
         <span class="material-spacer"></span>
 
+        <mat-button-toggle-group #group="matButtonToggleGroup" style="margin-right: 15px;">
+            <mat-button-toggle value="todas" aria-label="Text align left" (change)="onValChange($event.value)">
+              <mat-icon>group</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="mias" aria-label="Text align center" (change)="onValChange($event.value)">
+              <mat-icon color="warn">account_box</mat-icon>
+            </mat-button-toggle>           
+          </mat-button-toggle-group>
+
         <mat-form-field id="mat-form-field-search" style="margin: 5px;">
             <input matInput (keyup)="applyFilterDetalle($event.target.value)">
             <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
