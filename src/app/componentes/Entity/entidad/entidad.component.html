@@ -12,10 +12,10 @@
         <span class="material-spacer"></span>
 
         <mat-button-toggle-group #group="matButtonToggleGroup" style="margin-right: 15px;">
-            <mat-button-toggle value="todas" aria-label="Text align left" (change)="onValChange($event.value)">
+            <mat-button-toggle value="todas"  matTooltip="Todas las entidades" aria-label="Text align left" (change)="onValChange($event.value)">
               <mat-icon>group</mat-icon>
             </mat-button-toggle>
-            <mat-button-toggle value="mias" aria-label="Text align center" (change)="onValChange($event.value)">
+            <mat-button-toggle value="mias" matTooltip="Mis entidades" aria-label="Text align center" (change)="onValChange($event.value)">
               <mat-icon color="warn">account_box</mat-icon>
             </mat-button-toggle>           
           </mat-button-toggle-group>
@@ -211,13 +211,13 @@
                 <mat-icon matTooltip="Asociaciones"></mat-icon>
             </button>
 
-            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' || this.authService.currentUser.Rol == 'Profesor'"
+            <button *ngIf="this.authService.currentUser.IdEstudiante == element.IdEstudiante"
                 (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); redirectToAdditionalInfo()'
                 mat-icon-button>
                 <mat-icon color='primary' matTooltip="Información Adicional">ballot</mat-icon>
             </button>
 
-            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
+            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' && this.authService.currentUser.IdEstudiante == element.IdEstudiante"
                 (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
                 data-toggle="modal" data-target="#DeleteDialog">
                 <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
