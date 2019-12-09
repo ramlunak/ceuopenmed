@@ -348,7 +348,7 @@ export class EntidadComponent implements OnInit {
 
   public redirectToAdditionalInfo = () => {
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
-    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
+    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}//${entidad.IdEstudiante}`;
     this.router.navigate([url]);
   }
 

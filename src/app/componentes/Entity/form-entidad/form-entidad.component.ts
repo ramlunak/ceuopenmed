@@ -44,6 +44,7 @@ export class FormEntidadComponent implements OnInit {
 
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
+  EntidadIdEStudiante: number;
 
   constructor(
     private entidadService: EntidadService,
@@ -65,6 +66,7 @@ export class FormEntidadComponent implements OnInit {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
+    this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarDgvElements();
     this.CargarExtraInfo();

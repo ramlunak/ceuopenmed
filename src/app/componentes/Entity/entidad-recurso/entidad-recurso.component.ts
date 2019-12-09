@@ -39,6 +39,7 @@ export class EntidadRecursoComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   // Selects
   listTiposEntidad: TipoEntidad[];
+  EntidadIdEStudiante: number;
 
   constructor(
     private entidadService: EntidadService,
@@ -60,6 +61,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarTipoEntidad();
