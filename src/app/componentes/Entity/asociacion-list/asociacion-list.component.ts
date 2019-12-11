@@ -26,12 +26,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
-  selector: 'app-asociacion',
-  templateUrl: './asociacion.component.html',
-  styleUrls: ['./asociacion.component.css']
+  selector: 'app-asociacion-list',
+  templateUrl: './asociacion-list.component.html',
+  styleUrls: ['./asociacion-list.component.css']
 })
 
-export class AsociacionComponent implements OnInit {
+export class AsociacionListComponent implements OnInit {
 
   // para cargar evaluacion
   IdEntidadSeleccionada = 0;
@@ -49,7 +49,7 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion','Nivel', 'info','asociacionOpcional', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -186,28 +186,27 @@ export class AsociacionComponent implements OnInit {
   setOperationsData() {
     this.transaccionIsNew = false;
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-    console.log(JSON.stringify(asociacion));
     this.tipoAsociacionService.grelationshipet(this.IdEntidadSeleccionada, asociacion.IdEntidad).subscribe(result => {
       this.listTipoAsociacion = result.data;
     });
     this.Service.form.patchValue(
       {
-        IdAsociacion:null,
+        IdAsociacion: asociacion.IdAsociacion,
         IdEntidad1: this.IdEntidadSeleccionada,
         IdEntidad2: asociacion.IdEntidad,
-        IdTipoAsociacion: null,
+        IdTipoAsociacion: asociacion.IdTipoAsociacion,
         IdEstudiante: asociacion.IdEstudiante,
-        IdProfesor: null,
+        IdProfesor: asociacion.IdProfesor,
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Nivel:null,      
-        Evaluacion: null,
-        Estado: null,
-        Comentario: null,
+        Nivel:asociacion.Nivel,      
+        Evaluacion: 0,
+        Estado: 0,
+        Comentario: asociacion.Comentario,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-    
+
     this.dialogTittle = 'Modificar';
   }
 
@@ -216,22 +215,6 @@ export class AsociacionComponent implements OnInit {
     this.redirectAsociacionesOpcionales();
     
   }
-
-  goToListAsociaciones(){
-
-    this.redirectListAsociaciones();
-    
-  }
-  redirectListAsociaciones() {
-   // const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-   // const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
-  //  const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
-
-  const url = 'AsociacionList';
-    this.router.navigate([url]);
-  }
-
-  
 
   setEvalucacion(estado, evaluacion) {
     this.EstadoEntidad = parseInt(estado, 32);

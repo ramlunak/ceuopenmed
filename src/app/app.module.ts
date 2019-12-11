@@ -46,6 +46,8 @@ import { AdditionalInfoComponent } from './componentes/Entity/additional-info/ad
 import { EntidadesEvaluadasComponent } from './componentes/entidades-evaluadas/entidades-evaluadas.component';
 import { EntidadRecursoDescripcionComponent } from './componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
+import { ListaAsociacionesComponent } from './componentes/Entity/lista-asociaciones/lista-asociaciones.component';
+import { AsociacionListComponent } from './componentes/Entity/asociacion-list/asociacion-list.component';
 
 
 @NgModule({
@@ -78,7 +80,9 @@ import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociacion
     EntidadesEvaluadasComponent,
     EntidadRecursoDescripcionComponent,
     AsociacionesOpcionalesComponent,
-    TipoAsociacionMultipleComponent    
+    TipoAsociacionMultipleComponent,
+    ListaAsociacionesComponent,
+    AsociacionListComponent    
   ],
   imports: [
     BrowserModule,

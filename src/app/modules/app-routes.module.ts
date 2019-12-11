@@ -31,6 +31,8 @@ import { EntidadesEvaluadasComponent } from '../componentes/entidades-evaluadas/
 // tslint:disable-next-line: max-line-length
 import { EntidadRecursoDescripcionComponent } from '../componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
+import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/asociacion-list.component';
+
 
 
 const routes: Routes = [
@@ -53,6 +55,7 @@ const routes: Routes = [
   { path: 'TipoAsociacionMultiple', component: TipoAsociacionMultipleComponent, canActivate: [AuthVerifyService] },
   { path: 'EntidadesEvaluadas', component: EntidadesEvaluadasComponent, canActivate: [AuthVerifyService] },
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
+  { path: 'AsociacionList', component: AsociacionListComponent, canActivate: [AuthVerifyService] },
   { path: 'AsociacionesOpcionales/:idAsociacion/:Asociacion/:idEntidad1/:idEntidad2', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
   // tslint:disable-next-line: max-line-length
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad/:IdEstudiante', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
