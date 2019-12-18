@@ -2,12 +2,12 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" routerLink="/entidad" >
+        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" routerLink="/Asociacion" >
             <mat-icon>reply</mat-icon>
             Atras
         </button>
 
-        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Profesor'" routerLink="/EntidadesEvaluadas" >
+        <button mat-button *ngIf="this.authService.currentUser.Rol == 'Profesor'" routerLink="/Asociacion" >
             <mat-icon>reply</mat-icon>
             Atras
         </button>
@@ -133,8 +133,8 @@
     </ng-container>
 
     <ng-container  matColumnDef="IdEntidad">
-        <th mat-header-cell hidden *matHeaderCellDef> ID </th>
-        <td mat-cell hidden *matCellDef="let element"> {{element.IdEntidad}} </td>
+        <th mat-header-cell  *matHeaderCellDef> ID </th>
+        <td mat-cell  *matCellDef="let element"> {{element.IdEntidad}} </td>
     </ng-container>
 
     <ng-container matColumnDef="TipoEntidad">

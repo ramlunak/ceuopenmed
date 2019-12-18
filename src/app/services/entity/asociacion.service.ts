@@ -99,6 +99,21 @@ export class AsociacionService {
         map(res => res)
       );
   }
+
+  getListaAsociasiones(IdEntidad2: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'lista/' + this.form.value.IdEntidad1 +'/'+IdEntidad2),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
   getByIdEntidadEvaluada(Id: number): Observable<any> {
     this.loadingSubject.next(true);
 

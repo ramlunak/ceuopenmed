@@ -216,23 +216,17 @@ export class AsociacionComponent implements OnInit {
     this.redirectAsociacionesOpcionales();
     
   }
-
+  
   goToListAsociaciones(){
 
-    this.redirectListAsociaciones();
-    
-  }
-  redirectListAsociaciones() {
-   // const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-   // const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
-  //  const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];    
+    const url = `AsociacionList/${asociacion.IdEntidad}`;
 
-  const url = 'AsociacionList';
-    this.router.navigate([url]);
+    //const url = 'AsociacionList';
+    this.router.navigate([url]);    
   }
-
+ 
   
-
   setEvalucacion(estado, evaluacion) {
     this.EstadoEntidad = parseInt(estado, 32);
     this.EvaluacionEntidad = parseInt(evaluacion, 32);

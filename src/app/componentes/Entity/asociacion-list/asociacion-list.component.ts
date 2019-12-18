@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 
 declare var $: any;
@@ -35,6 +35,7 @@ export class AsociacionListComponent implements OnInit {
 
   // para cargar evaluacion
   IdEntidadSeleccionada = 0;
+  idEntidad2 = 0;
   EntidadSeleccionada = '';
   EstadoEntidad = 0;
   EvaluacionEntidad = 0;
@@ -65,7 +66,8 @@ export class AsociacionListComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private _location: Location
+    private _location: Location,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -77,6 +79,7 @@ export class AsociacionListComponent implements OnInit {
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
+    this.idEntidad2 = this.activeRoute.snapshot.params.idEntidad2;
     this.CargarDgvElements();
     this.CargarSelects();
   }
@@ -95,20 +98,13 @@ export class AsociacionListComponent implements OnInit {
   CargarDgvElements() {
 
     if (this.authService.currentUser.Rol === 'Estudiante') {
-      this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
+      this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } else {
-      this.Service.getByIdEntidadEvaluada(this.IdEntidadSeleccionada).subscribe(result => {
-        this.dataSource = new MatTableDataSource<Asociacion>(result.data);
-        this.dataSource.paginator = this.paginator;
-      }, (error) => {
-        this.errorService.handleError(error);
-      });
-    }
+    } 
 
   }
 
