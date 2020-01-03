@@ -14,6 +14,10 @@ import { Asociacion } from 'src/app/models/asociacion';
 import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
 
+import { DetalleEntidadService } from '../../../services/entity/detalle-entidad.service';
+import { DetalleEntidad } from 'src/app/models/detalle-entidad';
+
+
 import { TipoAsociacionService } from '../../../services/administracion/tipo-asociacion.service';
 import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
@@ -52,6 +56,12 @@ export class AsociacionComponent implements OnInit {
   displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  listEntidadesAux: Asociacion[];
+  listEntidades: Asociacion[];
+  listIDS: Array<number> = [];
+  listIdiomas: Idioma[];  
+  dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
+  
   listTipoAsociacion: TipoAsociacionService[];
   listTiposEntidad: TipoEntidad[];
 
@@ -59,6 +69,7 @@ export class AsociacionComponent implements OnInit {
     private Service: AsociacionService,
     private entidadService: EntidadService,
     private tipoAsociacionService: TipoAsociacionService,
+    private detalleEntidadService: DetalleEntidadService,
     private authService: AuthService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
@@ -79,7 +90,17 @@ export class AsociacionComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
     this.CargarSelects();
+    this.CargarDetalles();
   }
+
+  CargarDetalles() {
+    this.detalleEntidadService.get().subscribe(result => {
+      this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+        }, (error) => {
+  
+    });
+  }
+
 
   CargarSelects() {
     /*
@@ -97,6 +118,7 @@ export class AsociacionComponent implements OnInit {
     if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -104,6 +126,7 @@ export class AsociacionComponent implements OnInit {
     } else {
       this.Service.getByIdEntidadEvaluada(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -311,8 +334,38 @@ export class AsociacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();   
   }
+
+  applyFilterDetalle(filterValue: string) {
+    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
+    this.cargarEntidadesPorFiltroDetalles(filterValue);   
+  }
+
+ public cargarEntidadesPorFiltroDetalles(filterValue:string){
+
+    this.listEntidadesAux = [];
+   this.listIDS=[];
+
+   this.dataSourceDetalle.filteredData.forEach(element => {
+    this.listIDS.push(element.IdEntidad);
+   });  
+ 
+   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+       
+   novaArr.forEach(element => {
+     var asociacion = this.listEntidades.find((x:Asociacion)=> x.IdEntidad == element);
+      if(asociacion != null)
+      this.listEntidadesAux.push(asociacion);
+   });     
+
+       this.dataSource = new MatTableDataSource<Asociacion>(null);
+       this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux); 
+       console.log(this.listEntidadesAux);
+      if(filterValue == "")
+      this.CargarDgvElements();
+       
+ }
 
   backClicked() {
 

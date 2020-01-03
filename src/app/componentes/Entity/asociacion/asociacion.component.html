@@ -13,7 +13,12 @@
         </button>
 
         <span class="material-spacer"></span>
-               
+        
+        <mat-form-field id="mat-form-field-search" style="margin: 5px;">
+            <input matInput (keyup)="applyFilterDetalle($event.target.value)">
+            <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
+        </mat-form-field>
+
         <mat-form-field id="mat-form-field-search">
             <input matInput (keyup)="applyFilter($event.target.value)">
             <mat-placeholder class="placeholder">Buscar</mat-placeholder>
