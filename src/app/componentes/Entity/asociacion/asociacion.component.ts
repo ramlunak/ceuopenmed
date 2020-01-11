@@ -53,15 +53,15 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['IdAsociacion', 'IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listEntidadesAux: Asociacion[];
   listEntidades: Asociacion[];
   listIDS: Array<number> = [];
-  listIdiomas: Idioma[];  
+  listIdiomas: Idioma[];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
-  
+
   listTipoAsociacion: TipoAsociacionService[];
   listTiposEntidad: TipoEntidad[];
 
@@ -97,7 +97,7 @@ export class AsociacionComponent implements OnInit {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
         }, (error) => {
-  
+
     });
   }
 
@@ -224,32 +224,32 @@ export class AsociacionComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Nivel:null,      
+        Nivel:null,
         Evaluacion: null,
         Estado: null,
         Comentario: null,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-    
+
     this.dialogTittle = 'Modificar';
   }
 
   goToAsociacionesOpcionales(){
 
     this.redirectAsociacionesOpcionales();
-    
+
   }
-  
+
   goToListAsociaciones(){
 
-    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];    
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `AsociacionList/${asociacion.IdEntidad}`;
 
     //const url = 'AsociacionList';
-    this.router.navigate([url]);    
+    this.router.navigate([url]);
   }
- 
-  
+
+
   setEvalucacion(estado, evaluacion) {
     this.EstadoEntidad = parseInt(estado, 32);
     this.EvaluacionEntidad = parseInt(evaluacion, 32);
@@ -334,12 +334,12 @@ export class AsociacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();   
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
-    this.cargarEntidadesPorFiltroDetalles(filterValue);   
+    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase();
+    this.cargarEntidadesPorFiltroDetalles(filterValue);
   }
 
  public cargarEntidadesPorFiltroDetalles(filterValue:string){
@@ -349,22 +349,22 @@ export class AsociacionComponent implements OnInit {
 
    this.dataSourceDetalle.filteredData.forEach(element => {
     this.listIDS.push(element.IdEntidad);
-   });  
- 
+   });
+
    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
-       
+
    novaArr.forEach(element => {
      var asociacion = this.listEntidades.find((x:Asociacion)=> x.IdEntidad == element);
       if(asociacion != null)
       this.listEntidadesAux.push(asociacion);
-   });     
+   });
 
        this.dataSource = new MatTableDataSource<Asociacion>(null);
-       this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux); 
+       this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux);
        console.log(this.listEntidadesAux);
       if(filterValue == "")
       this.CargarDgvElements();
-       
+
  }
 
   backClicked() {
