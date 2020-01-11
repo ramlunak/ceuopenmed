@@ -10,6 +10,7 @@ export class AdditionalInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

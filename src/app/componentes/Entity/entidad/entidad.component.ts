@@ -90,7 +90,7 @@ export class EntidadComponent implements OnInit {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
         }, (error) => {
-  
+
     });
   }
 
@@ -136,11 +136,11 @@ export class EntidadComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } 
+    }
   }
 
   public redirectToDetalleEntidad = (entidad: any) => {
-    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
+    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}/${this.authService.currentUser.IdEstudiante}`;
     this.router.navigate([url]);
   }
 
@@ -272,9 +272,9 @@ export class EntidadComponent implements OnInit {
   }
 
   goToAsociciones() {
-   
+
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
-   
+
     this.asociacionService.form.patchValue({
       IdEntidad1: entidad.IdEntidad,
       entidadSelecionada: entidad.Entidad
@@ -323,26 +323,26 @@ export class EntidadComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
+
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
-    this.cargarEntidadesPorFiltroDetalles();   
+    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase();
+    this.cargarEntidadesPorFiltroDetalles();
   }
 
  public cargarEntidadesPorFiltroDetalles(){
- 
+
    this.listEntidadesAux = [];
    this.listIDS=[];
 
    this.dataSourceDetalle.filteredData.forEach(element => {
     this.listIDS.push(element.IdEntidad);
-   });  
+   });
 
    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
 
    novaArr.forEach(element => {
     this.listEntidadesAux.push(this.listEntidades.find((x:Entidad)=> x.IdEntidad == element));
-   });     
+   });
       this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
  }
 

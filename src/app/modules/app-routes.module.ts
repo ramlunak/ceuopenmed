@@ -57,7 +57,6 @@ const routes: Routes = [
   { path: 'Asociacion', component: AsociacionComponent, canActivate: [AuthVerifyService] },
   { path: 'AsociacionList/:idEntidad2', component: AsociacionListComponent, canActivate: [AuthVerifyService] },
   { path: 'AsociacionesOpcionales/:idAsociacion/:Asociacion/:idEntidad1/:idEntidad2', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
-  // tslint:disable-next-line: max-line-length
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad/:IdEstudiante', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
   { path: '404', component: NotFoundComponent },

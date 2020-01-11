@@ -22,7 +22,7 @@ export class AuthVerifyService implements CanActivate {
       return false;
     }
   }
-  
+
   public verifyPermissions(url: string): boolean {
     const roles = this.CONSTANS.getRoles();
     switch (url) {
@@ -36,9 +36,9 @@ export class AuthVerifyService implements CanActivate {
        case 'EntidadesEvaluadas':
         case 'FormEntidad' :
          case 'AsociacionesOpcionales':
-          case 'Asociacion': 
-          case 'AsociacionList': 
-          case 'EntidadRecurso': 
+          case 'Asociacion':
+          case 'AsociacionList':
+          case 'EntidadRecurso':
           case 'additionalInfo':
       case 'EntidadRecursoDescripcion':
         return (this.authService.currentUser.IdRol === roles.Profesor || this.authService.currentUser.IdRol === roles.Estudiante);
