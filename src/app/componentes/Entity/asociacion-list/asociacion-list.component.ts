@@ -96,12 +96,13 @@ export class AsociacionListComponent implements OnInit {
   }
 
   CargarDgvElements() {
-
+   this.Service.form.value.IdEntidad1 =  this.IdEntidadSeleccionada;
     if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
       }, (error) => {
+        console.log(error);
         this.errorService.handleError(error);
       });
     } 
@@ -166,14 +167,15 @@ export class AsociacionListComponent implements OnInit {
 
   eliminarClick() {
     this.Service.delete().subscribe(result => {
-
-      if (result.status === 1) {
+    
+    if (result.status == 1) {    
         this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
       }
 
     }, (error) => {
+    console.log('error',error);
       this.errorService.handleError(error);
     });
     this.Limpiar();

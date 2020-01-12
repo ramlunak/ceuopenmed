@@ -235,11 +235,11 @@
                 <mat-icon  class="green-icon" matTooltip="Ver lista de asociaciones">view_module</mat-icon>
                 </button>
 
-            <button *ngIf="element.IdAsociacion > 0 && this.authService.currentUser.Rol == 'Estudiante'"
+          <!--   <button *ngIf="element.IdAsociacion > 0 && this.authService.currentUser.Rol == 'Estudiante'"
                 (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
                 data-toggle="modal" data-target="#DeleteDialog">
                 <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
-            </button>
+            </button> -->
             <!--
                 <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); goTo('/negRelacion')" mat-icon-button
                 data-target="#DeleteDialog">
