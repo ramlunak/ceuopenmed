@@ -97,7 +97,7 @@ export class AsociacionListComponent implements OnInit {
 
   CargarDgvElements() {
    this.Service.form.value.IdEntidad1 =  this.IdEntidadSeleccionada;
-    if (this.authService.currentUser.Rol === 'Estudiante') {
+    //if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.dataSource.paginator = this.paginator;
@@ -105,7 +105,7 @@ export class AsociacionListComponent implements OnInit {
         console.log(error);
         this.errorService.handleError(error);
       });
-    } 
+    //} 
 
   }
 

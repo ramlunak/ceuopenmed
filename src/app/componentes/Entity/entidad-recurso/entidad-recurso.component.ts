@@ -86,6 +86,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.entidadRecursoService.getByEntidad().subscribe(result => {
       this.dataSource = new MatTableDataSource<EntidadRecurso>(result.data);
       this.dataSource.paginator = this.paginator;
+      console.log(result.data);
     }, (error) => {
       this.errorService.handleError(error);
       this.router.navigateByUrl('entidad');
