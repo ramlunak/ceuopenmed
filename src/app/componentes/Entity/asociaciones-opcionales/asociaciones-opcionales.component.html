@@ -66,7 +66,8 @@
 
 <table style="width: 100% !important;margin-top: 15px">
     <tr>
-        <td *ngIf="this.authService.currentUser.Rol == 'Estudiante' && this.EvaluacionEntidad != 1"
+        <!-- <td *ngIf="this.authService.currentUser.Rol == 'Estudiante' && this.EvaluacionEntidad != 1" -->
+        <td *ngIf="this.EvaluacionEntidad != 1"
             style="width: 280px">
 
             <!-- FORMULARIO -->
@@ -188,13 +189,15 @@
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element;">
 
-                        <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
+                        <!-- <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" -->
+                        <button
                             (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()'
                             mat-icon-button data-toggle="modal" data-target="#OperationModalDialog">
                             <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
                         </button>
 
-                        <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'"
+                        <!-- <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" -->
+                        <button 
                             (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setEliminarData()"
                             mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
                             <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
