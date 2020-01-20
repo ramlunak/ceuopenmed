@@ -85,10 +85,10 @@ export class AsociacionListComponent implements OnInit {
   }
 
   CargarSelects() {
-    /*
+
         this.tipoAsociacionService.get().subscribe(result => {
           this.listTipoAsociacion = result.data;
-        }); */
+        });
     // Tipo Entidad
     this.tipoEntidadService.get().subscribe(result => {
       this.listTiposEntidad = result.data;
@@ -105,7 +105,7 @@ export class AsociacionListComponent implements OnInit {
         console.log(error);
         this.errorService.handleError(error);
       });
-    //} 
+    //}
 
   }
 
@@ -167,8 +167,8 @@ export class AsociacionListComponent implements OnInit {
 
   eliminarClick() {
     this.Service.delete().subscribe(result => {
-    
-    if (result.status == 1) {    
+
+    if (result.status == 1) {
         this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
@@ -182,6 +182,7 @@ export class AsociacionListComponent implements OnInit {
   }
 
   setOperationsData() {
+
     this.transaccionIsNew = false;
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     this.tipoAsociacionService.grelationshipet(this.IdEntidadSeleccionada, asociacion.IdEntidad).subscribe(result => {
@@ -198,20 +199,20 @@ export class AsociacionListComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Nivel:asociacion.Nivel,      
+        Nivel: asociacion.Nivel,
         Evaluacion: 0,
         Estado: 0,
         Comentario: asociacion.Comentario,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-
+console.log( this.Service.form.value);
     this.dialogTittle = 'Modificar';
   }
 
   goToAsociacionesOpcionales(){
 
     this.redirectAsociacionesOpcionales();
-    
+
   }
 
   setEvalucacion(estado, evaluacion) {
@@ -250,6 +251,7 @@ export class AsociacionListComponent implements OnInit {
       Comentario: this.ASOCIACION.Comentario,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
+      Nivel: this.ASOCIACION.Nivel,
       IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion
     });
 

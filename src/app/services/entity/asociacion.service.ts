@@ -24,7 +24,7 @@ export class AsociacionService {
   form: FormGroup = new FormGroup({
     IdAsociacion: new FormControl(null),
     IdEntidad1: new FormControl('', Validators.required),
-    IdEntidad2: new FormControl('', Validators.required),
+    IdEntidad2: new FormControl(null),
     IdTipoAsociacion: new FormControl(null, Validators.required),
     IdEstudiante: new FormControl(null, Validators.required),
     IdProfesor: new FormControl(null),
@@ -158,7 +158,7 @@ export class AsociacionService {
   }
 
   update() {
-    
+
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(

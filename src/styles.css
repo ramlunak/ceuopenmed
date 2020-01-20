@@ -126,9 +126,18 @@ body {
   text-align    : right !important
 }
 
-.green-color { 
+.green-color {
   color: green !important;
 }
+
+.green-gray {
+  background-color: gray !important;
+}
+
+/* .mat-badge-content {
+  background: red;
+  color: blue;
+} */
 
 .green-icon {
   color: green !important;
@@ -140,7 +149,7 @@ body {
 }
 
   .ceu-fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
+    /* This fills the remaining space, by using flexbox.
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
   }
@@ -156,12 +165,12 @@ body {
   .controles-container {
     width: 100%;
     padding: 5%;
-  }  
-  
+  }
+
   .ceu-full-width {
     width: 100%;
   }
-  
+
   .modal-open .modal {
     overflow: hidden;
     position: absolute;

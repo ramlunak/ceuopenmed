@@ -286,6 +286,7 @@ export class AsociacionComponent implements OnInit {
       Comentario: this.ASOCIACION.Comentario,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
+      Nivel: this.ASOCIACION.Nivel,
       IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion
     });
 
