@@ -17,7 +17,7 @@ export class AuthVerifyService implements CanActivate {
       const url = state.url.split('/');
       return this.verifyPermissions(url[1]);
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['paginaInicio']);
       this.authService.showMenus = false;
       return false;
     }
@@ -33,13 +33,13 @@ export class AuthVerifyService implements CanActivate {
       case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple':
         return (this.authService.currentUser.IdRol === roles.Administrador);
       case 'entidad':
-       case 'EntidadesEvaluadas':
-        case 'FormEntidad' :
-         case 'AsociacionesOpcionales':
-          case 'Asociacion':
-          case 'AsociacionList':
-          case 'EntidadRecurso':
-          case 'additionalInfo':
+      case 'EntidadesEvaluadas':
+      case 'FormEntidad':
+      case 'AsociacionesOpcionales':
+      case 'Asociacion':
+      case 'AsociacionList':
+      case 'EntidadRecurso':
+      case 'additionalInfo':
       case 'EntidadRecursoDescripcion':
         return (this.authService.currentUser.IdRol === roles.Profesor || this.authService.currentUser.IdRol === roles.Estudiante);
       default:

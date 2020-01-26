@@ -1,3 +1,4 @@
+import { PaginaInicioComponent } from './../componentes/pagina-inicio/pagina-inicio.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -38,6 +39,7 @@ import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/a
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
   { path: 'login', component: LoginComponent },
+  { path: 'paginaInicio', component: PaginaInicioComponent },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },
@@ -62,15 +64,15 @@ const routes: Routes = [
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // home page
-  { path: '**', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/paginaInicio', pathMatch: 'full' }, // home page
+  { path: '**', redirectTo: '/logpaginaInicioin', pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes,{useHash:true})
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   exports: [
     RouterModule
