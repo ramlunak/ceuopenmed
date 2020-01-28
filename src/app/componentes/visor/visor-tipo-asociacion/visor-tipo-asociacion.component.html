@@ -1,11 +1,42 @@
-<div class="tipo-asociacion position-relative" style="background-color: aquamarine;">
+<div class="tipo-asociacion">
 
   <div class="name-img-content">
     <div class="ta-name">Diseases</div>
     <div class="ta-img">
-      zds
+
+      <button *ngIf="!search" (click)="Search()" mat-icon-button class="black">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button *ngIf="search" (click)="CancelSearch()" mat-icon-button class="black">
+        <mat-icon>cancel</mat-icon>
+      </button>
+
+      <mat-form-field *ngIf="search" class="mat-form-field">
+        <input matInput>
+      </mat-form-field>
+
+      <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+
+      <button *ngIf="expand" (click)="Collapse()" mat-icon-button color="primary">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+      </button>
+
     </div>
   </div>
+  <div class="separator"></div>
+  <div *ngIf="expand" class="tipo-asociacion-body">
+    <div> Anafilaxia</div>
+    <div>Alergia farmacológica</div>
+    <div> Alergia alimentaria</div>
+    <div> Reacción alérgica por mordeduras y picaduras de insecto</div>
+    <div> Síndrome de la alergia oral</div>
+    <div> Diverticulitis</div>
 
+
+    <div> Ver todas</div>
+  </div>
 
 </div>

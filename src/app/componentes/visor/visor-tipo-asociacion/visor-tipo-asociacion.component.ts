@@ -7,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisorTipoAsociacionComponent implements OnInit {
 
-  constructor() { }
+  expand: boolean;
+  search: boolean;
+
+  constructor() {
+    this.expand = false;
+    this.expand = false;
+  }
 
   ngOnInit() {
+  }
+
+  Expand() {
+    this.expand = true;
+  }
+
+  Collapse() {
+    this.expand = false;
+  }
+
+  Search() {
+    this.search = true;
+  }
+
+  CancelSearch() {
+    this.search = false;
   }
 
 }

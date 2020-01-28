@@ -1,0 +1,29 @@
+.tipo-asociacion{
+position: relative;
+display: block;
+}
+.name-img-content{
+display: flex;
+justify-content: space-between;
+}
+.ta-name{
+font-size: 24px;
+color:blueviolet;
+}
+.ta-img{
+
+
+}
+.separator{
+border-bottom: 1px solid ;
+border-bottom-color: black;
+margin-top: 5px;
+}
+
+.tipo-asociacion-body{
+display: block;
+}
+
+.mat-form-field{
+margin: 0px;
+}
