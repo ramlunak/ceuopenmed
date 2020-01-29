@@ -16,8 +16,12 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <!--END TOOL BAR-->
+
+
 <div class="d-block container mt-3">
 
-  <app-visor-tipo-asociacion></app-visor-tipo-asociacion>
+  <li *ngFor="let item of ArrarTipoEntidad">
+    <app-visor-tipo-asociacion [TIPO_ENIDAD]="item"></app-visor-tipo-asociacion>
+  </li>
 
 </div>

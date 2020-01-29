@@ -1,20 +1,8 @@
 <div class="tipo-asociacion">
 
   <div class="name-img-content">
-    <div class="ta-name">Diseases</div>
+    <div class="ta-name">{{TIPO_ENIDAD.TipoEntidad}}</div>
     <div class="ta-img">
-
-      <button *ngIf="!search" (click)="Search()" mat-icon-button class="black">
-        <mat-icon>search</mat-icon>
-      </button>
-
-      <button *ngIf="search" (click)="CancelSearch()" mat-icon-button class="black">
-        <mat-icon>cancel</mat-icon>
-      </button>
-
-      <mat-form-field *ngIf="search" class="mat-form-field">
-        <input matInput>
-      </mat-form-field>
 
       <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
         <mat-icon>keyboard_arrow_down</mat-icon>
@@ -28,6 +16,21 @@
   </div>
   <div class="separator"></div>
   <div *ngIf="expand" class="tipo-asociacion-body">
+
+    <div class="task-bar">
+      <button *ngIf="!search" (click)="Search()" mat-icon-button class="black">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button *ngIf="search" (click)="CancelSearch()" mat-icon-button class="black">
+        <mat-icon>cancel</mat-icon>
+      </button>
+
+      <mat-form-field *ngIf="search" class="mat-form-field">
+        <input matInput>
+      </mat-form-field>
+    </div>
+
     <div> Anafilaxia</div>
     <div>Alergia farmacológica</div>
     <div> Alergia alimentaria</div>

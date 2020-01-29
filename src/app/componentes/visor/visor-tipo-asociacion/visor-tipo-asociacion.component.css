@@ -1,6 +1,7 @@
 .tipo-asociacion{
 position: relative;
 display: block;
+margin-bottom: 30px;
 }
 .name-img-content{
 display: flex;
@@ -26,4 +27,8 @@ display: block;
 
 .mat-form-field{
 margin: 0px;
+}
+.task-bar{
+ display: flex;
+ justify-content: flex-end;
 }

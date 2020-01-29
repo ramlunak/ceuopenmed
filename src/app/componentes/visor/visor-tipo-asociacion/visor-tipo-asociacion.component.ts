@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { TipoEntidad } from './../../../models/tipo-entidad';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-visor-tipo-asociacion',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./visor-tipo-asociacion.component.css']
 })
 export class VisorTipoAsociacionComponent implements OnInit {
+
+  @Input() TIPO_ENIDAD: TipoEntidad;
 
   expand: boolean;
   search: boolean;
