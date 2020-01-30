@@ -115,7 +115,7 @@ export class AsociacionComponent implements OnInit {
 
   CargarDgvElements() {
 
-   // if (this.authService.currentUser.Rol === 'Estudiante') {
+    if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getByIdEntidad(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
@@ -123,7 +123,7 @@ export class AsociacionComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-   /*  } else {
+     } else {
       this.Service.getByIdEntidadEvaluada(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
@@ -131,7 +131,7 @@ export class AsociacionComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } */
+    }
 
   }
 
