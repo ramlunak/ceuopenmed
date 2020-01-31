@@ -28,7 +28,18 @@ display: block;
 .mat-form-field{
 margin: 0px;
 }
+
 .task-bar{
  display: flex;
  justify-content: flex-end;
+}
+
+.link{
+cursor: pointer;
+color: dodgerblue;
+display: inline;
+}
+
+.link:hover{
+  text-decoration: underline;
 }

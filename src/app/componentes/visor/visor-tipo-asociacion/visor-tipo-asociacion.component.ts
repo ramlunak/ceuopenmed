@@ -1,3 +1,6 @@
+import { ErrorHandlerService } from './../../../services/error-handler.service';
+import { Entidad } from './../../../models/entidad';
+import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -12,14 +15,25 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   expand: boolean;
   search: boolean;
+  ArrarEntidad: Entidad[];
 
-  constructor() {
+  constructor(private Service: VisorService, private errorService: ErrorHandlerService) {
     this.expand = false;
     this.expand = false;
   }
 
   ngOnInit() {
+    this.EntidadByTipoEntidadLimit();
   }
+
+  EntidadByTipoEntidadLimit() {
+    this.Service.EntidadByTipoEntidadLimit(this.TIPO_ENIDAD.IdTipoEntidad, 10).subscribe(result => {
+      this.ArrarEntidad = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
 
   Expand() {
     this.expand = true;
@@ -35,6 +49,14 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   CancelSearch() {
     this.search = false;
+  }
+
+  MostarTodas() {
+    this.Service.EntidadByTipoEntidad(this.TIPO_ENIDAD.IdTipoEntidad).subscribe(result => {
+      this.ArrarEntidad = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
   }
 
 }

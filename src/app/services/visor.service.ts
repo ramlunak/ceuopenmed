@@ -1,9 +1,10 @@
+import { TipoEntidad } from './../models/tipo-entidad';
 import { Injectable } from '@angular/core';
 
 import { AuthService } from './seguridad/auth.service';
 import { AppConstantsService } from '../utils/app-constants.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
@@ -39,6 +40,38 @@ export class VisorService {
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL)
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  EntidadByTipoEntidadLimit(tipoEntidad: number, limit: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdTipoEntidad]', tipoEntidad.toString()).set('search[limit]', limit.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  EntidadByTipoEntidad(tipoEntidad: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdTipoEntidad]', tipoEntidad.toString())
+        }
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),

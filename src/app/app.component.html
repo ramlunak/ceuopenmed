@@ -1,12 +1,12 @@
-<div ngClass="authService.showMenus ? 'wrapper' : '' ">
+<div [className]="authService.showMenus ? 'wrapper' : '' ">
   <div *ngIf="authService.showMenus">
     <app-header></app-header>
     <app-menu></app-menu>
   </div>
 
-  <div ngClass="authService.showMenus ? 'main-panel' : '' ">
-    <div class="authService.showMenus ? 'content' : '' ">
-      <div class="authService.showMenus ? 'page-inner' : '' ">
+  <div [className]="authService.showMenus ? 'main-panel' : '' ">
+    <div [className]="authService.showMenus ? 'content' : '' ">
+      <div [className]="authService.showMenus ? 'page-inner' : '' ">
         <router-outlet></router-outlet>
       </div>
     </div>

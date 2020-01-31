@@ -31,15 +31,14 @@
       </mat-form-field>
     </div>
 
-    <div> Anafilaxia</div>
-    <div>Alergia farmacológica</div>
-    <div> Alergia alimentaria</div>
-    <div> Reacción alérgica por mordeduras y picaduras de insecto</div>
-    <div> Síndrome de la alergia oral</div>
-    <div> Diverticulitis</div>
+    <li *ngFor="let item of ArrarEntidad">
+      <div> ■ {{item.Entidad}} </div>
+    </li>
 
+    <div class=" mt-3">
+      <div class="link" (click)="MostarTodas()"> Ver todas</div>
+    </div>
 
-    <div> Ver todas</div>
   </div>
 
 </div>
