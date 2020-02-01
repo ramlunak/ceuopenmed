@@ -1,7 +1,7 @@
 <div class="tipo-asociacion">
 
   <div class="name-img-content">
-    <div class="ta-name">{{TIPO_ENIDAD.TipoEntidad}}</div>
+    <div class="ta-name">RECURSOS</div>
     <div class="ta-img">
 
       <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
@@ -31,8 +31,8 @@
       </mat-form-field>
     </div>
 
-    <li *ngFor="let item of ArrarEntidad">
-      <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}"> ■ {{item.Entidad}} </i>
+    <li *ngFor="let item of ArrarEntidadRecursos">
+      <i class="link" routerLink="/VisorEntidad"> ■ {{item.URL}} </i>
     </li>
 
     <div class=" mt-3">

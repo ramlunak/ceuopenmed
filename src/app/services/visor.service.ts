@@ -79,4 +79,72 @@ export class VisorService {
       );
   }
 
+  DetalleEntidadByEntidadLimit(idEntidad: number, limit: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('detalle-entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString()).set('search[limit]', limit.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  DetalleEntidadByEntidad(idEntidad: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('detalle-entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  EntidadRecursoByEntidadLimit(idEntidad: number, limit: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('recurso/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString()).set('search[limit]', limit.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  EntidadRecursoByEntidad(idEntidad: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('recurso/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
 }

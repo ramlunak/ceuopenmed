@@ -1,3 +1,5 @@
+import { DetalleEntidadService } from './../../../services/detalle-entidad.service';
+import { DetalleEntidad } from './../../../models/detalle-entidad';
 import { isNullOrUndefined } from 'util';
 import { ErrorHandlerService } from './../../../services/error-handler.service';
 import { Entidad } from './../../../models/entidad';
@@ -6,33 +8,34 @@ import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-visor-tipo-asociacion',
-  templateUrl: './visor-tipo-asociacion.component.html',
-  styleUrls: ['./visor-tipo-asociacion.component.css']
+  selector: 'app-visor-entidad-detalle',
+  templateUrl: './visor-entidad-detalle.component.html',
+  styleUrls: ['./visor-entidad-detalle.component.css']
 })
-export class VisorTipoAsociacionComponent implements OnInit {
+export class VisorEntidadDetalleComponent implements OnInit {
 
-  @Input() TIPO_ENIDAD: TipoEntidad;
+  @Input() ID_ENTIDAD: number;
   valueSearch: string;
   expand: boolean;
   search: boolean;
-  ArrarEntidad: Entidad[];
-  ArrarEntidadSearch: Entidad[];
+  ArrarDetalleEntidad: DetalleEntidad[];
 
-  constructor(private Service: VisorService, private errorService: ErrorHandlerService) {
+  constructor(
+    private Service: VisorService,
+    private errorService: ErrorHandlerService
+  ) {
     this.expand = false;
     this.expand = false;
   }
 
   ngOnInit() {
     this.valueSearch = '';
-    this.EntidadByTipoEntidadLimit();
+    this.DetalleEntidadByIdEntidadLimit();
   }
 
-  EntidadByTipoEntidadLimit() {
-    this.Service.EntidadByTipoEntidadLimit(this.TIPO_ENIDAD.IdTipoEntidad, 10).subscribe(result => {
-      this.ArrarEntidad = result.data;
-      this.ArrarEntidadSearch = result.data;
+  DetalleEntidadByIdEntidadLimit() {
+    this.Service.DetalleEntidadByEntidadLimit(this.ID_ENTIDAD, 10).subscribe(result => {
+      this.ArrarDetalleEntidad = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -56,8 +59,8 @@ export class VisorTipoAsociacionComponent implements OnInit {
   }
 
   MostarTodas() {
-    this.Service.EntidadByTipoEntidad(this.TIPO_ENIDAD.IdTipoEntidad).subscribe(result => {
-      this.ArrarEntidad = result.data;
+    this.Service.DetalleEntidadByEntidad(this.ID_ENTIDAD).subscribe(result => {
+      this.ArrarDetalleEntidad = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });

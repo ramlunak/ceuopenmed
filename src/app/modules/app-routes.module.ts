@@ -33,6 +33,7 @@ import { EntidadesEvaluadasComponent } from '../componentes/entidades-evaluadas/
 import { EntidadRecursoDescripcionComponent } from '../componentes/Entity/entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/asociacion-list.component';
+import { VisorEntidadComponent } from '../componentes/visor/visor-entidad/visor-entidad.component';
 
 
 
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'AsociacionesOpcionales/:idAsociacion/:Asociacion/:idEntidad1/:idEntidad2', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad/:IdEstudiante', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
+  { path: 'VisorEntidad/:idEntidad', component: VisorEntidadComponent },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto
