@@ -72,7 +72,6 @@ export class VisorEntidadRecursosComponent implements OnInit {
   }
 
   SearchOnChange(event: any) {
-    this.ArrarEntidadRecursos = this.ArrarEntidadRecursosSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
 
   }
 
