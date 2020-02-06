@@ -27,7 +27,7 @@
       </button>
 
       <mat-form-field *ngIf="search" class="mat-form-field">
-        <input matInput [value]="valueSearch" (keyup)="SearchOnChange()">
+        <input matInput [value]="valueSearch" (keyup)="SearchOnChange($event)">
       </mat-form-field>
     </div>
 

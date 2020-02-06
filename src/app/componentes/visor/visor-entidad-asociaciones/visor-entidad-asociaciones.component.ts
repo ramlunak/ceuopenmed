@@ -21,6 +21,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   expand: boolean;
   search: boolean;
   ArrarAsociaicones: Asociacion[];
+  ArrarAsociaiconesSearch: Asociacion[];
 
   constructor(
     private Service: VisorService,
@@ -38,6 +39,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   AsociacionByIdEntidadEvaluadaLimit() {
     this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {
       this.ArrarAsociaicones = result.data;
+      this.ArrarAsociaiconesSearch = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -57,17 +59,21 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
 
   CancelSearch() {
     this.search = false;
+    this.ArrarAsociaicones = this.ArrarAsociaiconesSearch;
   }
 
   MostarTodas() {
     this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {
       this.ArrarAsociaicones = result.data;
+      this.ArrarAsociaiconesSearch = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
   }
 
-  SearchOnChange() {
+
+  SearchOnChange(event: any) {
+    this.ArrarAsociaicones = this.ArrarAsociaiconesSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
 
   }
 

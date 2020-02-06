@@ -53,17 +53,20 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   CancelSearch() {
     this.search = false;
+    this.ArrarEntidad = this.ArrarEntidadSearch;
   }
 
   MostarTodas() {
     this.Service.EntidadByTipoEntidad(this.TIPO_ENIDAD.IdTipoEntidad).subscribe(result => {
       this.ArrarEntidad = result.data;
+      this.ArrarEntidadSearch = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
   }
 
-  SearchOnChange() {
+  SearchOnChange(event: any) {
+    this.ArrarEntidad = this.ArrarEntidadSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
 
   }
 

@@ -1,0 +1,18 @@
+.ta-name{
+  font-size: 34px;
+  color:rgba(34,110,147,1);
+  }
+
+  .te-name{
+    font-size: 24px;
+    color:rgba(34,110,147,1);
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }
+
+  .separator{
+    border-bottom: 1px solid ;
+    border-bottom-color: gray;
+    margin-top: 5px;
+    }

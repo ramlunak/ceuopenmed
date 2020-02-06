@@ -27,13 +27,30 @@
       </button>
 
       <mat-form-field *ngIf="search" class="mat-form-field">
-        <input matInput [value]="valueSearch" (keyup)="SearchOnChange()">
+        <input matInput [value]="valueSearch" (keyup)="SearchOnChange($event)">
       </mat-form-field>
     </div>
 
-    <li *ngFor="let item of ArrarEntidadRecursos">
-      <i class="link" routerLink="/VisorEntidad"> ■ {{item.URL}} </i>
-    </li>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Entidad</th>
+          <th scope="col">Idioma</th>
+          <th scope="col">Nivel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ArrarEntidadRecursos">
+          <td> <i class="link" routerLink="/VisorEntidad"> {{item.Nivel}} </i></td>
+          <td> <a class="link" [href]="item.URL" target="_blank"> ir a la url </a></td>
+          <td>
+            <span *ngIf="item.IsImage">SI</span>
+            <span *ngIf="!item.IsImage">NO</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class=" mt-3">
       <div class="link" (click)="MostarTodas()"> Ver todas</div>

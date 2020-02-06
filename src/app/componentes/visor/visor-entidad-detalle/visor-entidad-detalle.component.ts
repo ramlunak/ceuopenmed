@@ -19,6 +19,7 @@ export class VisorEntidadDetalleComponent implements OnInit {
   expand: boolean;
   search: boolean;
   ArrarDetalleEntidad: DetalleEntidad[];
+  ArrarDetalleEntidadSearch: DetalleEntidad[];
 
   constructor(
     private Service: VisorService,
@@ -36,6 +37,7 @@ export class VisorEntidadDetalleComponent implements OnInit {
   DetalleEntidadByIdEntidadLimit() {
     this.Service.DetalleEntidadByEntidadLimit(this.ID_ENTIDAD, 10).subscribe(result => {
       this.ArrarDetalleEntidad = result.data;
+      this.ArrarDetalleEntidadSearch = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -56,17 +58,20 @@ export class VisorEntidadDetalleComponent implements OnInit {
 
   CancelSearch() {
     this.search = false;
+    this.ArrarDetalleEntidad = this.ArrarDetalleEntidadSearch;
   }
 
   MostarTodas() {
     this.Service.DetalleEntidadByEntidad(this.ID_ENTIDAD).subscribe(result => {
       this.ArrarDetalleEntidad = result.data;
+      this.ArrarDetalleEntidadSearch = result.data;
     }, (error) => {
       this.errorService.handleError(error);
     });
   }
 
-  SearchOnChange() {
+  SearchOnChange(event: any) {
+    this.ArrarDetalleEntidad = this.ArrarDetalleEntidadSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
 
   }
 

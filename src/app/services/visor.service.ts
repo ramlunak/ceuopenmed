@@ -161,5 +161,20 @@ export class VisorService {
       );
   }
 
+  EntidadById(Id: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdEntidad]', Id.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
 
 }

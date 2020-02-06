@@ -1,3 +1,5 @@
+import { ErrorHandlerService } from './../../../services/error-handler.service';
+import { VisorService } from './../../../services/visor.service';
 import { ActivatedRoute } from '@angular/router';
 import { Entidad } from './../../../models/entidad';
 import { Component, OnInit, Input } from '@angular/core';
@@ -8,12 +10,26 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./visor-entidad.component.css']
 })
 export class VisorEntidadComponent implements OnInit {
-  @Input() ENIDAD: Entidad;
+  ENIDAD: Entidad;
   IdEntidad: number;
-  constructor(private activeRoute: ActivatedRoute) { }
+  constructor(
+    private Service: VisorService,
+    private activeRoute: ActivatedRoute,
+    private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
+    this.EntidadByIdEntidad();
   }
+
+
+  EntidadByIdEntidad() {
+    this.Service.EntidadById(this.IdEntidad).subscribe(result => {
+      this.ENIDAD = result.data[0];
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
 
 }
