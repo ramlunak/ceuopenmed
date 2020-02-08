@@ -177,4 +177,20 @@ export class VisorService {
       );
   }
 
+  AsociasionMultipleyIdAsociacion(Id: number) {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('asociacion-multiple/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdAsociacion]', Id.toString())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
 }

@@ -8,6 +8,7 @@ import { Entidad } from './../../../models/entidad';
 import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-visor-entidad-asociaciones',
@@ -25,7 +26,8 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
 
   constructor(
     private Service: VisorService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private router: Router
   ) {
     this.expand = false;
     this.expand = false;
@@ -71,6 +73,13 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
     });
   }
 
+
+  public RedirectAsociacionesOpcionales = (id) => {
+
+    const url = `VisorAsociacionesMultiples/${id}`;
+    this.router.navigate([url]);
+
+  }
 
   SearchOnChange(event: any) {
     this.ArrarAsociaicones = this.ArrarAsociaiconesSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));

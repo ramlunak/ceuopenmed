@@ -32,6 +32,7 @@
     </div>
 
     <table class="table">
+
       <thead>
         <tr>
           <th scope="col">Tipo de Entidad</th>
@@ -39,6 +40,7 @@
           <th scope="col">Tipo de Asociación</th>
           <th scope="col">Fuerza</th>
           <th scope="col">Comentario</th>
+          <th scope="col"></th>
         </tr>
       </thead>
 
@@ -49,9 +51,17 @@
           <td> <i class="link" routerLink="/VisorEntidad"> {{item.TipoAsociacion}} </i></td>
           <td> <i class="link" routerLink="/VisorEntidad"> {{item.Nivel}} </i></td>
           <td> <i class="link" routerLink="/VisorEntidad"> {{item.Comentario}} </i></td>
+          <td>
+            <button (click)="RedirectAsociacionesOpcionales(item.IdAsociacion)" mat-icon-button
+              data-target="#DeleteDialog">
+              <mat-icon class="orange-color" matTooltip="Relaciones">shuffle</mat-icon>
+            </button>
+          </td>
         </tr>
       </tbody>
+
     </table>
+
 
     <div class=" mt-3">
       <div class="link" (click)="MostarTodas()"> Ver todas</div>

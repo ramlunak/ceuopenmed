@@ -1,3 +1,4 @@
+import { VisorAsociacionesMultiplesComponent } from './../componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 import { PaginaInicioComponent } from './../componentes/pagina-inicio/pagina-inicio.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -63,6 +64,7 @@ const routes: Routes = [
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad/:IdEstudiante', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
   { path: 'VisorEntidad/:idEntidad', component: VisorEntidadComponent },
+  { path: 'VisorAsociacionesMultiples/:idAsociacion', component: VisorAsociacionesMultiplesComponent },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto

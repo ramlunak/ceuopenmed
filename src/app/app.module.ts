@@ -54,6 +54,7 @@ import { VisorEntidadComponent } from './componentes/visor/visor-entidad/visor-e
 import { VisorEntidadDetalleComponent } from './componentes/visor/visor-entidad-detalle/visor-entidad-detalle.component';
 import { VisorEntidadRecursosComponent } from './componentes/visor/visor-entidad-recursos/visor-entidad-recursos.component';
 import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-entidad-asociaciones/visor-entidad-asociaciones.component';
+import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-ent
     VisorEntidadComponent,
     VisorEntidadDetalleComponent,
     VisorEntidadRecursosComponent,
-    VisorEntidadAsociacionesComponent    
+    VisorEntidadAsociacionesComponent,
+    VisorAsociacionesMultiplesComponent    
   ],
   imports: [
     BrowserModule,
