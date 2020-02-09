@@ -21,7 +21,6 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   constructor(private Service: VisorService, private errorService: ErrorHandlerService) {
     this.expand = false;
-    this.expand = false;
   }
 
   ngOnInit() {

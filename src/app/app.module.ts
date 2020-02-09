@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
 // Módulo de importación de Bibliotecas de Angular Material
 import { MaterialModule } from './modules/material.module';
@@ -96,7 +97,7 @@ import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-a
     VisorEntidadDetalleComponent,
     VisorEntidadRecursosComponent,
     VisorEntidadAsociacionesComponent,
-    VisorAsociacionesMultiplesComponent    
+    VisorAsociacionesMultiplesComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +107,8 @@ import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-a
     HttpClientModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule // <- import OrderModule
   ],
   providers: [
     AppServicesModule

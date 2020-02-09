@@ -35,7 +35,6 @@
 
       <thead>
         <tr>
-          <th scope="col">Tipo de Entidad</th>
           <th scope="col">Entidad</th>
           <th scope="col">Tipo de Asociación</th>
           <th scope="col">Fuerza</th>
@@ -43,24 +42,13 @@
           <th scope="col"></th>
         </tr>
       </thead>
-
-      <tbody>
-        <tr *ngFor="let item of ArrarAsociaicones">
-          <td> <i class="link" routerLink="/VisorEntidad"> {{item.TipoEntidad}} </i></td>
-          <td> <i class="link" routerLink="/VisorEntidad"> {{item.Entidad}} </i></td>
-          <td> <i class="link" routerLink="/VisorEntidad"> {{item.TipoAsociacion}} </i></td>
-          <td> <i class="link" routerLink="/VisorEntidad"> {{item.Nivel}} </i></td>
-          <td> <i class="link" routerLink="/VisorEntidad"> {{item.Comentario}} </i></td>
-          <td>
-            <button (click)="RedirectAsociacionesOpcionales(item.IdAsociacion)" mat-icon-button
-              data-target="#DeleteDialog">
-              <mat-icon class="orange-color" matTooltip="Relaciones">shuffle</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-
     </table>
+
+
+    <li class="li" *ngFor="let item of ArrarAsociaicones ">
+      <app-visor-asociaciones-multiples [ASOCIACION]="item"></app-visor-asociaciones-multiples>
+    </li>
+
 
 
   </div>

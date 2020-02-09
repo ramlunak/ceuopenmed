@@ -9,12 +9,14 @@ import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
   selector: 'app-visor-entidad-asociaciones',
   templateUrl: './visor-entidad-asociaciones.component.html',
   styleUrls: ['./visor-entidad-asociaciones.component.css']
 })
+
 export class VisorEntidadAsociacionesComponent implements OnInit {
 
   @Input() ID_ENTIDAD: number;
@@ -23,14 +25,16 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   search: boolean;
   ArrarAsociaicones: Asociacion[];
   ArrarAsociaiconesSearch: Asociacion[];
+  order: string = 'info.name';
+  reverse: boolean = false;
 
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
-    private router: Router
+    private router: Router,
+    private orderPipe: OrderPipe
   ) {
-    this.expand = false;
-    this.expand = false;
+    this.expand = true;
   }
 
   ngOnInit() {

@@ -26,8 +26,7 @@ export class VisorEntidadRecursosComponent implements OnInit {
     private Service: VisorService,
     private errorService: ErrorHandlerService
   ) {
-    this.expand = false;
-    this.expand = false;
+    this.expand = true;
   }
 
   ngOnInit() {
