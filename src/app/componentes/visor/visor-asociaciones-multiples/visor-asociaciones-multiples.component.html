@@ -1,1 +1,42 @@
-<div>{{ASOCIACION.Entidad}}</div>
+<table class="table">
+  <tbody>
+
+    <tr>
+      <td style="width: 20%;">{{ASOCIACION.Entidad}}</td>
+      <td style="width: 40%;">{{ASOCIACION.TipoAsociacion}}</td>
+      <td style="width: 10%;">{{ASOCIACION.Nivel}}</td>
+      <td style="width: 20%;">{{ASOCIACION.Comentario}}</td>
+      <td>
+        <div class="ta-img">
+
+          <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+
+          <button *ngIf="expand" (click)="Collapse()" mat-icon-button color="primary">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </button>
+
+        </div>
+      </td>
+    </tr>
+
+    <tr *ngFor="let item of ArrarAsociaiconesMultiple" [style.display]="expand ? 'table-row' : 'none' "
+      style="color: orangered;">
+
+      <td>
+        <div>{{item.Entidad}}</div>
+      </td>
+      <td>
+        <div>{{item.TipoAsociacion}}</div>
+      </td>
+      <td>
+        <div>{{item.Nivel}}</div>
+      </td>
+      <td>
+        <div>{{item.Comentario}}</div>
+      </td>
+
+    </tr>
+  </tbody>
+</table>

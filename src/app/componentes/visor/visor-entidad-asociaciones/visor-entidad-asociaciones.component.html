@@ -35,17 +35,17 @@
 
       <thead>
         <tr>
-          <th scope="col">Entidad</th>
-          <th scope="col">Tipo de Asociación</th>
-          <th scope="col">Fuerza</th>
-          <th scope="col">Comentario</th>
+          <th style="width: 20%;">Entidad</th>
+          <th style="width: 40%;">Tipo de Asociación</th>
+          <th style="width: 10%;">Fuerza</th>
+          <th style="width: 20%;">Comentario</th>
           <th scope="col"></th>
         </tr>
       </thead>
     </table>
 
 
-    <li class="li" *ngFor="let item of ArrarAsociaicones ">
+    <li class="list-style-none" *ngFor="let item of ArrarAsociaicones ">
       <app-visor-asociaciones-multiples [ASOCIACION]="item"></app-visor-asociaciones-multiples>
     </li>
 

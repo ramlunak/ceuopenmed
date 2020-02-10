@@ -7,12 +7,17 @@ import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 
+import { OrderPipe } from 'ngx-order-pipe';
+
+
 @Component({
   selector: 'app-visor-entidad-detalle',
   templateUrl: './visor-entidad-detalle.component.html',
   styleUrls: ['./visor-entidad-detalle.component.css']
 })
 export class VisorEntidadDetalleComponent implements OnInit {
+  order: string = 'Entidad';
+  reverse: boolean = false;
 
   @Input() ID_ENTIDAD: number;
   valueSearch: string;
@@ -23,7 +28,8 @@ export class VisorEntidadDetalleComponent implements OnInit {
 
   constructor(
     private Service: VisorService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private orderPipe: OrderPipe
   ) {
     this.expand = true;
   }
@@ -31,6 +37,13 @@ export class VisorEntidadDetalleComponent implements OnInit {
   ngOnInit() {
     this.valueSearch = '';
     this.DetalleEntidadByIdEntidadLimit();
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
   }
 
   DetalleEntidadByIdEntidadLimit() {
