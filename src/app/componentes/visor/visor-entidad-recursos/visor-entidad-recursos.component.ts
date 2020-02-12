@@ -7,6 +7,7 @@ import { Entidad } from './../../../models/entidad';
 import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
   selector: 'app-visor-entidad-recursos',
@@ -14,6 +15,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./visor-entidad-recursos.component.css']
 })
 export class VisorEntidadRecursosComponent implements OnInit {
+  order: string = 'IsImage';
+  reverse: boolean = false;
 
   @Input() ID_ENTIDAD: number;
   valueSearch: string;
@@ -24,7 +27,8 @@ export class VisorEntidadRecursosComponent implements OnInit {
 
   constructor(
     private Service: VisorService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private orderPipe: OrderPipe
   ) {
     this.expand = true;
   }
@@ -33,6 +37,14 @@ export class VisorEntidadRecursosComponent implements OnInit {
     this.valueSearch = '';
     this.EntidadRecursoByIdEntidadLimit();
   }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+  }
+
 
   EntidadRecursoByIdEntidadLimit() {
     this.Service.EntidadRecursoByEntidadLimit(this.ID_ENTIDAD, 10).subscribe(result => {

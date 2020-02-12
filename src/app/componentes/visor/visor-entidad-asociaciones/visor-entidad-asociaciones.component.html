@@ -35,17 +35,25 @@
 
       <thead>
         <tr>
-          <th style="width: 20%;">Entidad</th>
-          <th style="width: 40%;">Tipo de Asociación</th>
-          <th style="width: 10%;">Fuerza</th>
-          <th style="width: 20%;">Comentario</th>
+          <th [class.active]="order == 'Entidad'" (click)="setOrder('Entidad')">
+            Entidad <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
+          <th [class.active]="order == 'TipoAsociacion'" (click)="setOrder('TipoAsociacion')">
+            Tipo de Asociación <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
+          <th [class.active]="order == 'Fuerza'" (click)="setOrder('Fuerza')">
+            Fuerza <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
+          <th [class.active]="order == 'Comentario'" (click)="setOrder('Comentario')">
+            Comentario <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
     </table>
 
 
-    <li class="list-style-none" *ngFor="let item of ArrarAsociaicones ">
+    <li class="list-style-none" *ngFor="let item of ArrarAsociaicones | orderBy: order:reverse:'case-insensitive' ">
       <app-visor-asociaciones-multiples [ASOCIACION]="item"></app-visor-asociaciones-multiples>
     </li>
 

@@ -34,14 +34,13 @@
     <table class="table">
       <thead>
         <tr>
-          <th [class.active]="order == 'Entidad'" (click)="setOrder('Entidad')"
-            class="mdl-data-table__cell--non-numeric">
+          <th [class.active]="order == 'Entidad'" (click)="setOrder('Entidad')">
             Entidad <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th [class.active]="order == 'Idioma'" (click)="setOrder('Idioma')" class="mdl-data-table__cell--non-numeric">
+          <th [class.active]="order == 'Idioma'" (click)="setOrder('Idioma')">
             Idioma <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th [class.active]="order == 'Nivel'" (click)="setOrder('Nivel')" class="mdl-data-table__cell--non-numeric">
+          <th [class.active]="order == 'Nivel'" (click)="setOrder('Nivel')">
             Nivel <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
         </tr>

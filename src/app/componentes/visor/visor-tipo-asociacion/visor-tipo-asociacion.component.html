@@ -31,7 +31,7 @@
       </mat-form-field>
     </div>
 
-    <li *ngFor="let item of ArrarEntidad">
+    <li *ngFor="let item of ArrarEntidad | orderBy: order:reverse:'case-insensitive' ">
       <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}"> ■ {{item.Entidad}} </i>
     </li>
 

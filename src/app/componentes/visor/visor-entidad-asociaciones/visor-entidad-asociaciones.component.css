@@ -43,3 +43,20 @@
   .link:hover{
     text-decoration: underline;
   }
+
+  thead th {
+    user-select: none;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-left: 15px;
+ }
+  thead th span {
+    user-select: none;
+    visibility: hidden;
+ }
+  thead th.active {
+    color: #000;
+ }
+  thead th.active span {
+    visibility: visible;
+ }

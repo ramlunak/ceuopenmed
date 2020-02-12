@@ -25,7 +25,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   search: boolean;
   ArrarAsociaicones: Asociacion[];
   ArrarAsociaiconesSearch: Asociacion[];
-  order: string = 'info.name';
+  order: string = 'Entidad';
   reverse: boolean = false;
 
   constructor(
@@ -41,6 +41,14 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
     this.valueSearch = '';
     this.AsociacionByIdEntidadEvaluadaLimit();
   }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+  }
+
 
   AsociacionByIdEntidadEvaluadaLimit() {
     this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {

@@ -4,6 +4,7 @@ import { Entidad } from './../../../models/entidad';
 import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
   selector: 'app-visor-tipo-asociacion',
@@ -11,6 +12,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./visor-tipo-asociacion.component.css']
 })
 export class VisorTipoAsociacionComponent implements OnInit {
+  order: string = 'Entidad';
+  reverse: boolean = false;
 
   @Input() TIPO_ENIDAD: TipoEntidad;
   valueSearch: string;
@@ -19,7 +22,11 @@ export class VisorTipoAsociacionComponent implements OnInit {
   ArrarEntidad: Entidad[];
   ArrarEntidadSearch: Entidad[];
 
-  constructor(private Service: VisorService, private errorService: ErrorHandlerService) {
+  constructor(
+    private Service: VisorService,
+    private errorService: ErrorHandlerService,
+    private orderPipe: OrderPipe
+  ) {
     this.expand = false;
   }
 
