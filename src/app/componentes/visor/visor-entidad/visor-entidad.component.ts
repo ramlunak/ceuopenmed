@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Entidad } from './../../../models/entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
+import { delay } from 'rxjs/operators';
 
 
 @Component({
@@ -41,6 +42,8 @@ export class VisorEntidadComponent implements OnInit {
     this.router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
       this.router.navigate([decodeURI(this.location.path())]);
     });
+    console.log(this.location.path());
+
   }
 
 
