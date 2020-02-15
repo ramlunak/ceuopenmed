@@ -17,6 +17,7 @@ import { DocGrupoService } from '../services/docencia/doc-grupo.service';
 import { DocEstudianteService } from '../services/docencia/doc-estudiante.service';
 import { ValidationsService } from '../services/validations.service';
 import { EntidadRecursoService } from '../services/entity/entidad-recurso.service';
+import { PreviousRouteService } from '../services/previous-route-service.service';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { EntidadRecursoService } from '../services/entity/entidad-recurso.servic
     DocGrupoService,
     DocEstudianteService,
     ValidationsService,
-    EntidadRecursoService
+    EntidadRecursoService,
+    PreviousRouteService
   ]
 })
 export class AppServicesModule { }

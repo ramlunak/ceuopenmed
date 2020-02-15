@@ -1,8 +1,10 @@
 <table class="table">
   <tbody>
-
     <tr>
-      <td style="width: 20%;">{{ASOCIACION.Entidad}}</td>
+      <td style="width: 20%;">
+        <i class="link" (click)="refresh(ASOCIACION.IdEntidad)">
+          {{ASOCIACION.Entidad}} </i>
+      </td>
       <td style="width: 40%;">{{ASOCIACION.TipoAsociacion}}</td>
       <td style="width: 10%;">{{ASOCIACION.Nivel}}</td>
       <td style="width: 20%;">{{ASOCIACION.Comentario}}</td>

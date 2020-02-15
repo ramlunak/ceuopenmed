@@ -1,3 +1,4 @@
+import { RefreshComponent } from './../componentes/visor/refresh/refresh.component';
 import { VisorAsociacionesMultiplesComponent } from './../componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 import { PaginaInicioComponent } from './../componentes/pagina-inicio/pagina-inicio.component';
 import { NgModule } from '@angular/core';
@@ -40,6 +41,7 @@ import { VisorEntidadComponent } from '../componentes/visor/visor-entidad/visor-
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
+  { path: 'refresh', component: RefreshComponent },
   { path: 'login', component: LoginComponent },
   { path: 'paginaInicio', component: PaginaInicioComponent },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },

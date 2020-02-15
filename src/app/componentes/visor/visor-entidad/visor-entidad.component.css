@@ -2,6 +2,10 @@
   font-size: 34px;
   color:rgba(34,110,147,1);
   }
+  .name-img-content{
+    display: flex;
+    justify-content: space-between;
+    }
 
   .te-name{
     font-size: 24px;
