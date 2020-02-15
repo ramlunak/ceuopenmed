@@ -36,7 +36,8 @@
     </li>
 
     <div class=" mt-3">
-      <div class="link" (click)="MostarTodas()"> Ver todas</div>
+      <div class="link" *ngIf="MostrarTodas" (click)="MostarTodas()"> Ver todas</div>
+      <div class="link" *ngIf="!MostrarTodas" (click)="MostarMenos()"> Ver Menos</div>
     </div>
 
   </div>

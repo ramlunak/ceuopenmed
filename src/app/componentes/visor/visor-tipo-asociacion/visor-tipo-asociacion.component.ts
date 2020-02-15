@@ -19,6 +19,7 @@ export class VisorTipoAsociacionComponent implements OnInit {
   valueSearch: string;
   expand: boolean;
   search: boolean;
+  MostrarTodas: boolean;
   ArrarEntidad: Entidad[];
   ArrarEntidadSearch: Entidad[];
 
@@ -36,9 +37,11 @@ export class VisorTipoAsociacionComponent implements OnInit {
   }
 
   EntidadByTipoEntidadLimit() {
+
     this.Service.EntidadByTipoEntidadLimit(this.TIPO_ENIDAD.IdTipoEntidad, 10).subscribe(result => {
       this.ArrarEntidad = result.data;
       this.ArrarEntidadSearch = result.data;
+      this.MostrarTodas = true;
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -63,12 +66,18 @@ export class VisorTipoAsociacionComponent implements OnInit {
   }
 
   MostarTodas() {
+
     this.Service.EntidadByTipoEntidad(this.TIPO_ENIDAD.IdTipoEntidad).subscribe(result => {
       this.ArrarEntidad = result.data;
       this.ArrarEntidadSearch = result.data;
+      this.MostrarTodas = false;
     }, (error) => {
       this.errorService.handleError(error);
     });
+  }
+
+  MostarMenos() {
+    this.EntidadByTipoEntidadLimit();
   }
 
   SearchOnChange(event: any) {
