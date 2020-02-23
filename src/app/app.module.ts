@@ -57,6 +57,7 @@ import { VisorEntidadRecursosComponent } from './componentes/visor/visor-entidad
 import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-entidad-asociaciones/visor-entidad-asociaciones.component';
 import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 import { RefreshComponent } from './componentes/visor/refresh/refresh.component';
+import { AdmTraduccionComponent } from './componentes/Administracion/adm-traduccion/adm-traduccion.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { RefreshComponent } from './componentes/visor/refresh/refresh.component'
     VisorEntidadRecursosComponent,
     VisorEntidadAsociacionesComponent,
     VisorAsociacionesMultiplesComponent,
-    RefreshComponent
+    RefreshComponent,
+    AdmTraduccionComponent
   ],
   imports: [
     BrowserModule,

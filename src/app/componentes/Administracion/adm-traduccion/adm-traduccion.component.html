@@ -6,7 +6,7 @@
       <mat-icon>add</mat-icon>
       Nuevo
     </button>
-    <button mat-button (click)="redirectToProfesor()">
+    <button mat-button (click)="redirectToTipoAsocicion()">
       <mat-icon>reply</mat-icon>
       Atras
     </button>
@@ -25,7 +25,7 @@
 <table class="table table-dark">
   <thead>
     <tr>
-      <th scope="col" class="text-center">Grupos del Profesor: {{NombreProfesor}}</th>
+      <th scope="col" class="text-center">{{NombreTabla}} : {{NombreRegistro}}</th>
     </tr>
   </thead>
 </table>
@@ -45,31 +45,37 @@
         </div>
         <div class="modal-body">
 
-          <form [formGroup]="profesorService.formGrupos" class="ceu-form">
+          <form [formGroup]="service.form" class="ceu-form">
+
+            <input type="hidden" formControlName="IdTraduccion">
 
             <mat-form-field class="ceu-full-width">
-              <input type="hidden" formControlName="IdProfesor">
-              <mat-label>Grupo</mat-label>
-              <mat-select formControlName="IdGrupo" name="grupo">
-                <mat-option *ngFor="let grupo of listGrupos" [value]="grupo.IdGrupo">
-                  {{grupo.Grupo}}
+              <mat-label>Idioma</mat-label>
+              <mat-select formControlName="IdIdioma" name="idioma">
+                <mat-option *ngFor="let idioma of listaIdiomas" [value]="idioma.IdIdioma">
+                  {{idioma.Idioma}}
                 </mat-option>
               </mat-select>
               <mat-error>Este campo es requerido.</mat-error>
             </mat-form-field>
 
+            <mat-form-field class="ceu-full-width">
+              <input formControlName="Traduccion" matInput name="Traduccion" placeholder="Traduccion">
+              <mat-error>Este campo es requerido.</mat-error>
+            </mat-form-field>
+
+
           </form>
 
         </div>
         <div class="modal-footer">
-          <mat-icon *ngIf="profesorService.loading$ | async">
+          <mat-icon *ngIf="service.loading$ | async">
             <mat-spinner diameter="20" color="accent">
             </mat-spinner>
           </mat-icon>
           <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-          <button mat-raised-button color='primary'
-            [disabled]="profesorService.formGrupos.invalid || (profesorService.loading$ | async)"
+          <button mat-raised-button color='primary' [disabled]="service.form.invalid || (service.loading$ | async)"
             (click)="guardarClick()">Guardar</button>
 
         </div>
@@ -85,7 +91,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Grupo</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -106,7 +112,7 @@
     <div class="row">
       <div class="col-4"></div>
       <div class="col-4">
-        <div class="spinner-container" *ngIf="profesorService.loading$ | async">
+        <div class="spinner-container" *ngIf="service.loading$ | async">
           <mat-spinner diameter="50"></mat-spinner>
         </div>
       </div>
@@ -116,14 +122,14 @@
 
   <table mat-table [dataSource]="dataSource" class="ceu-table">
 
-    <ng-container matColumnDef="IdGrupo">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.IdGrupo}} </td>
+    <ng-container matColumnDef="Idioma">
+      <th mat-header-cell *matHeaderCellDef> Idioma </th>
+      <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="Grupo">
-      <th mat-header-cell *matHeaderCellDef> Grupo </th>
-      <td mat-cell *matCellDef="let element"> {{element.Grupo}} </td>
+    <ng-container matColumnDef="Traduccion">
+      <th mat-header-cell *matHeaderCellDef> Traduccion </th>
+      <td mat-cell *matCellDef="let element"> {{element.Traduccion}} </td>
     </ng-container>
 
     <ng-container matColumnDef="commands">

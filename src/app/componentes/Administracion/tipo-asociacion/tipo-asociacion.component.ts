@@ -12,6 +12,7 @@ import { TipoEntidadService } from 'src/app/services/administracion/tipo-entidad
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
+import { Router } from '@angular/router';
 
 // Selector jQuery
 declare var $: any;
@@ -40,6 +41,7 @@ export class TipoAsociacionComponent implements OnInit {
     private Service: TipoAsociacionService,
     private tipoEntidadService: TipoEntidadService,
     private authService: AuthService,
+    private router: Router,
     private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
@@ -113,6 +115,11 @@ export class TipoAsociacionComponent implements OnInit {
     });
   }
 
+  public goToTraducciones = () => {
+    const tipoAsociacion = this.dataSource.filteredData[this.ROW_NUMBER];
+    const url = `traduccion/TipoAsociacion/${tipoAsociacion.IdTipoAsociacion}/${tipoAsociacion.TipoAsociacion}`;
+    this.router.navigate([url]);
+  }
 
   setOperationsData() {
     this.transaccionIsNew = false;

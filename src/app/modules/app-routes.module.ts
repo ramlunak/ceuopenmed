@@ -1,3 +1,4 @@
+import { AdmTraduccionComponent } from './../componentes/Administracion/adm-traduccion/adm-traduccion.component';
 import { RefreshComponent } from './../componentes/visor/refresh/refresh.component';
 import { VisorAsociacionesMultiplesComponent } from './../componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 import { PaginaInicioComponent } from './../componentes/pagina-inicio/pagina-inicio.component';
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'docEstudiante', component: DocEstudianteComponent, canActivate: [AuthVerifyService] },
   { path: 'docProfesor', component: DocProfesorComponent, canActivate: [AuthVerifyService] },
   { path: 'docProfesorGrupos/:id', component: DocProfesorGruposComponent, canActivate: [AuthVerifyService] },
+  { path: 'traduccion/:tabla/:idTabla/:nombreRegistro', component: AdmTraduccionComponent, canActivate: [AuthVerifyService] },
   { path: 'docProfesorEspecialidades/:id', component: DocProfesorEspecialidadesComponent, canActivate: [AuthVerifyService] },
   { path: 'tipoEntidad', component: TipoEntidadComponent, canActivate: [AuthVerifyService] },
   { path: 'entidad', component: EntidadComponent, canActivate: [AuthVerifyService] },
