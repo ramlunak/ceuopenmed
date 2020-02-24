@@ -1,3 +1,5 @@
+import { Entidad } from './../../models/entidad';
+import { isNullOrUndefined } from 'util';
 import { VisorService } from './../../services/visor.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
@@ -11,6 +13,8 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 export class PaginaInicioComponent implements OnInit {
 
   ArrarTipoEntidad: TipoEntidad[];
+  ArrayEntidad: Entidad[];
+  ArrayEntidadSearch: Entidad[];
 
   constructor(
     private Service: VisorService,
@@ -20,7 +24,9 @@ export class PaginaInicioComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.CargarEntidades();
     this.CargarTiposEntidades();
+    this.ArrayEntidadSearch = [];
   }
 
   CargarTiposEntidades() {
@@ -31,8 +37,20 @@ export class PaginaInicioComponent implements OnInit {
     });
   }
 
-  applyFilterDetalle(filterValue: string) {
-    console.log();
+  CargarEntidades() {
+    this.Service.Entidad().subscribe(result => {
+      this.ArrayEntidad = result.data;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+  }
+
+  SearchOnChange(event: any) {
+    this.ArrayEntidadSearch = this.ArrayEntidad.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
+    if (this.ArrayEntidadSearch.length === this.ArrayEntidad.length) {
+      this.ArrayEntidadSearch = [];
+    }
+
   }
 
 }

@@ -79,6 +79,21 @@ export class VisorService {
       );
   }
 
+  Entidad() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('entidad/'),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken())
+        }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
   DetalleEntidadByEntidadLimit(idEntidad: number, limit: number): Observable<any> {
     this.loadingSubject.next(true);
 

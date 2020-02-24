@@ -2,7 +2,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
 
-    <button mat-button data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
+    <button routerLink="/" mat-button>
       Copenmed
     </button>
 
@@ -17,25 +17,20 @@
 </mat-toolbar>
 <!--END TOOL BAR-->
 
-
 <div class="d-block container mt-3">
 
-  <div class="d-block position-relative">
+  <div class="d-block position-relative mb-3">
     <div class="div-search d-flex">
       <mat-icon>search</mat-icon>
-      <input class="input-search" placeholder="Buscar" type="text" (keyup)="applyFilter($event.target.value)">
+      <input class="input-search" placeholder="Buscar" type="text" (keyup)="SearchOnChange($event)">
     </div>
-    <div class="serach-autocomplete">
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
-      <div class="autocomplete-item"> asdasd asd asd </div>
+    <div class="serach-autocomplete" *ngIf="ArrayEntidadSearch.length > 0">
+
+      <li *ngFor=" let item of ArrayEntidadSearch">
+        <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}"> {{item.Entidad}}</div>
+      </li>
     </div>
   </div>
-
 
   <li *ngFor=" let item of ArrarTipoEntidad">
     <app-visor-tipo-asociacion [TIPO_ENIDAD]="item"></app-visor-tipo-asociacion>

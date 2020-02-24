@@ -73,7 +73,7 @@ const routes: Routes = [
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto
   { path: '', redirectTo: '/paginaInicio', pathMatch: 'full' }, // home page
-  { path: '**', redirectTo: '/logpaginaInicioin', pathMatch: 'full' }
+  { path: '**', redirectTo: '/paginaInicio', pathMatch: 'full' }
 ];
 
 @NgModule({

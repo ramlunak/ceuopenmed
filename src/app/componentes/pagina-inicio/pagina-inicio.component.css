@@ -21,6 +21,9 @@ border: none;
   top: 37px;
   background-color: white;
   width: 100%;
+  height: auto;
+  max-height: 250px;
+  overflow: hidden;
   padding-left: 40px;
   border-top: none;
   border-left:1px solid;
@@ -31,4 +34,15 @@ border: none;
   z-index: 9999;
 }
 
+.autocomplete-item{
+cursor: pointer;
+color: gray;
+font-weight: 500;
+}
 
+.autocomplete-item:hover{
+color: gray;
+font-weight: 700;
+margin-left: 5px;
+transition: all 0.5s;
+}
