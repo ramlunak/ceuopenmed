@@ -20,7 +20,24 @@
 
 <div class="d-block container mt-3">
 
-  <li *ngFor="let item of ArrarTipoEntidad">
+  <div class="d-block position-relative">
+    <div class="div-search d-flex">
+      <mat-icon>search</mat-icon>
+      <input class="input-search" placeholder="Buscar" type="text" (keyup)="applyFilter($event.target.value)">
+    </div>
+    <div class="serach-autocomplete">
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+      <div class="autocomplete-item"> asdasd asd asd </div>
+    </div>
+  </div>
+
+
+  <li *ngFor=" let item of ArrarTipoEntidad">
     <app-visor-tipo-asociacion [TIPO_ENIDAD]="item"></app-visor-tipo-asociacion>
   </li>
 

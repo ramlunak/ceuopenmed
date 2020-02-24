@@ -31,6 +31,8 @@ export class PaginaInicioComponent implements OnInit {
     });
   }
 
-
+  applyFilterDetalle(filterValue: string) {
+    console.log();
+  }
 
 }
