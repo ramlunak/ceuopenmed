@@ -4,6 +4,7 @@ import { VisorService } from './../../services/visor.service';
 import { Component, OnInit } from '@angular/core';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -18,6 +19,7 @@ export class PaginaInicioComponent implements OnInit {
 
   constructor(
     private Service: VisorService,
+    private router: Router,
     private errorService: ErrorHandlerService
   ) {
 

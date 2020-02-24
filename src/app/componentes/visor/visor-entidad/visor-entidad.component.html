@@ -2,7 +2,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
 
-    <button mat-button data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
+    <button mat-button routerLink="/">
       Copenmed
     </button>
 
@@ -19,14 +19,14 @@
 
 <div class="content p-5">
 
-  <div class="name-img-content">
+  <!--   <div class="name-img-content">
     <div class="ta-name">{{ENIDAD.Entidad}}</div>
     <div class="ta-img">
       <button mat-icon-button color="primary" (click)="backClicked()">
         <mat-icon>keyboard_backspace</mat-icon>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <div class="separator"></div>
   <div class="te-name">Tipo Entidad: {{ENIDAD.TipoEntidad}}</div>
