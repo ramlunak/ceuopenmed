@@ -167,7 +167,7 @@ export class VisorService {
 
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl('asociacion/' + 'evaluated-associate-entitys/' + Id),
+        this.CONSTANS.getApiUrl('asociacion/' + 'evaluated-associate-entitys-simetricas/' + Id),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

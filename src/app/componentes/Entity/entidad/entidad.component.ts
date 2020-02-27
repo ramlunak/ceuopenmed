@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
@@ -53,7 +54,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad','IdEntidad','Idioma', 'Entidad','Estudiante', 'info', 'commands'];
+  displayedColumns = ['TipoEntidad', 'IdEntidad', 'Idioma', 'Entidad', 'Estudiante', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listEntidadesAux: Entidad[];
@@ -89,7 +90,7 @@ export class EntidadComponent implements OnInit {
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
-        }, (error) => {
+    }, (error) => {
 
     });
   }
@@ -222,10 +223,10 @@ export class EntidadComponent implements OnInit {
     this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
-    if(entidad.Comentario != null)
-    this.ComentarioEntidad = entidad.Comentario;
+    if (entidad.Comentario != null)
+      this.ComentarioEntidad = entidad.Comentario;
     else
-    this.ComentarioEntidad = '';
+      this.ComentarioEntidad = '';
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
     this.verificarAsocioacionesEvaluadas();
@@ -329,22 +330,23 @@ export class EntidadComponent implements OnInit {
     this.cargarEntidadesPorFiltroDetalles();
   }
 
- public cargarEntidadesPorFiltroDetalles(){
+  public cargarEntidadesPorFiltroDetalles() {
 
-   this.listEntidadesAux = [];
-   this.listIDS=[];
+    this.listEntidadesAux = [];
+    this.listIDS = [];
 
-   this.dataSourceDetalle.filteredData.forEach(element => {
-    this.listIDS.push(element.IdEntidad);
-   });
+    this.dataSourceDetalle.filteredData.forEach(element => {
+      this.listIDS.push(element.IdEntidad);
+    });
 
-   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
 
-   novaArr.forEach(element => {
-    this.listEntidadesAux.push(this.listEntidades.find((x:Entidad)=> x.IdEntidad == element));
-   });
-      this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
- }
+    novaArr.forEach(element => {
+      if (!isNullOrUndefined(this.listEntidades.find((x: Entidad) => x.IdEntidad == element)))
+        this.listEntidadesAux.push(this.listEntidades.find((x: Entidad) => x.IdEntidad == element));
+    });
+    this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
+  }
 
   public redirectToAdditionalInfo = () => {
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
@@ -352,13 +354,13 @@ export class EntidadComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  onValChange(value){
-    if(value == "todas"){
+  onValChange(value) {
+    if (value == "todas") {
       this.CargarDgvElementsAllEstudent();
     }
-    else{
+    else {
       this.CargarDgvElements();
     }
-}
+  }
 
 }

@@ -11,10 +11,16 @@ justify-content: space-between;
 font-size: 24px;
 color:blueviolet;
 }
-.ta-img{
-
-
+.entidad-count{
+  width: auto;
+  height: 20px;
+  color: black;
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
 }
+
 .separator{
 border-bottom: 1px solid ;
 border-bottom-color: black;

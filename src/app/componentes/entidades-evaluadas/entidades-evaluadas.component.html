@@ -1,272 +1,276 @@
 <!-- TOOL BAR-->
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+  <mat-toolbar-row>
 
-        <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" mat-button (click)="Limpiar()"
-            data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
-            <mat-icon>add</mat-icon>
-            Nuevo
-        </button>
+    <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" mat-button (click)="Limpiar()" data-dismiss="modal"
+      data-toggle="modal" data-target="#OperationModalDialog">
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
 
-        <span class="material-spacer"></span>
-        <span class="material-spacer"></span>
+    <span class="material-spacer"></span>
+    <span class="material-spacer"></span>
 
-        <mat-form-field id="mat-form-field-search">
-            <input matInput (keyup)="applyFilter($event.target.value)">
-            <mat-placeholder class="placeholder">Buscar</mat-placeholder>
-        </mat-form-field>
+    <mat-form-field id="mat-form-field-search" style="margin: 5px;">
+      <input matInput (keyup)="applyFilterDetalle($event.target.value)">
+      <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
+    </mat-form-field>
 
-    </mat-toolbar-row>
+    <mat-form-field id="mat-form-field-search">
+      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-placeholder class="placeholder">Buscar</mat-placeholder>
+    </mat-form-field>
+
+  </mat-toolbar-row>
 </mat-toolbar>
 <!--END TOOL BAR-->
 
 <!-- FORMULARIO -->
 <div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
-    aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">{{dialogTittle}}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+  aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">{{dialogTittle}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
 
-                <form [formGroup]="Service.form" class="ceu-form">
+        <form [formGroup]="Service.form" class="ceu-form">
 
-                    <mat-form-field class="ceu-full-width">
-                        <mat-label>TipoEntidad</mat-label>
-                        <mat-select formControlName="IdTipoEntidad" name="TipoEntidad">
-                            <mat-option *ngFor="let TipoEntidad of listTiposEntidad"
-                                [value]="TipoEntidad.IdTipoEntidad">
-                                {{TipoEntidad.TipoEntidad}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Este campo es requerido.</mat-error>
-                    </mat-form-field>
+          <mat-form-field class="ceu-full-width">
+            <mat-label>TipoEntidad</mat-label>
+            <mat-select formControlName="IdTipoEntidad" name="TipoEntidad">
+              <mat-option *ngFor="let TipoEntidad of listTiposEntidad" [value]="TipoEntidad.IdTipoEntidad">
+                {{TipoEntidad.TipoEntidad}}
+              </mat-option>
+            </mat-select>
+            <mat-error>Este campo es requerido.</mat-error>
+          </mat-form-field>
 
-                </form>
+        </form>
 
-            </div>
-            <div class="modal-footer">
-                <mat-icon *ngIf="Service.loading$ | async">
-                    <mat-spinner diameter="20" color="accent">
-                    </mat-spinner>
-                </mat-icon>
-                <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
+      </div>
+      <div class="modal-footer">
+        <mat-icon *ngIf="Service.loading$ | async">
+          <mat-spinner diameter="20" color="accent">
+          </mat-spinner>
+        </mat-icon>
+        <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-                <button mat-raised-button color='primary'
-                    [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew"
-                    (click)="guardarClick()">Guardar</button>
-                <button mat-raised-button color='primary'
-                    [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew"
-                    data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+          *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+          *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!--END FORMULARIO -->
 
 <!-- ELIMINAR -->
 <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
-            </div>
-            <div class="modal-footer">
-                <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-                <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
-            </div>
-        </div>
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Eliminar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+      </div>
+      <div class="modal-footer">
+        <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+        <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <div class="spinner-container" *ngIf="Service.loading$ | async">
-                <mat-spinner diameter="50"></mat-spinner>
-            </div>
-        </div>
-        <div class="col-4"></div>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+      <div class="spinner-container" *ngIf="Service.loading$ | async">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
     </div>
+    <div class="col-4"></div>
+  </div>
 </div>
 
 <!-- GRID -->
 <table mat-table [dataSource]="dataSource" class="ceu-table">
 
-    <ng-container matColumnDef="IdEntidad">
-        <th hidden mat-header-cell *matHeaderCellDef> ID </th>
-        <td hidden mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
-    </ng-container>
+  <ng-container matColumnDef="IdEntidad">
+    <th hidden mat-header-cell *matHeaderCellDef> ID </th>
+    <td hidden mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="TipoEntidad">
-        <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
-        <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
-    </ng-container>
+  <ng-container matColumnDef="TipoEntidad">
+    <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="Idioma">
-        <th mat-header-cell *matHeaderCellDef> Idioma </th>
-        <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
-    </ng-container>
+  <ng-container matColumnDef="Idioma">
+    <th mat-header-cell *matHeaderCellDef> Idioma </th>
+    <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+  </ng-container>
 
 
-    <ng-container matColumnDef="Entidad">
-        <th mat-header-cell *matHeaderCellDef> Entidad </th>
-        <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
-    </ng-container>
+  <ng-container matColumnDef="Entidad">
+    <th mat-header-cell *matHeaderCellDef> Entidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="Estudiante">
-            <th mat-header-cell *matHeaderCellDef> <label *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
-            <td  mat-cell *matCellDef="let element">
-                    <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'" matTooltip="{{element.Estudiante}}">face</mat-icon>
-                 </td>
-        </ng-container>
+  <ng-container matColumnDef="Estudiante">
+    <th mat-header-cell *matHeaderCellDef> <label
+        *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'"
+        matTooltip="{{element.Estudiante}}">face</mat-icon>
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="info">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element">
+  <ng-container matColumnDef="info">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
 
-            <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
-                *ngIf="element.Estado == 1 && element.Evaluacion == 1"
-                (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()' mat-icon-button
-                data-toggle="modal" data-target="#EvaluarModalDialog">
-                <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
-            </button>
+      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
+        *ngIf="element.Estado == 1 && element.Evaluacion == 1"
+        (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()' mat-icon-button
+        data-toggle="modal" data-target="#EvaluarModalDialog">
+        <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
+      </button>
 
-            <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 0"
-                (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
-                data-toggle="modal" data-target="#EvaluarModalDialog">
-                <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
-            </button>
+      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 0"
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
+        data-toggle="modal" data-target="#EvaluarModalDialog">
+        <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
+      </button>
 
-            <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
-                *ngIf="element.Estado == 1 && element.Evaluacion == 0"
-                (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
-                data-toggle="modal" data-target="#EvaluarModalDialog">
-                <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
-            </button>
+      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
+        *ngIf="element.Estado == 1 && element.Evaluacion == 0"
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
+        data-toggle="modal" data-target="#EvaluarModalDialog">
+        <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
+      </button>
 
-            <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' && element.Estado == 1"
-                (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);" mat-icon-button>
-                <mat-icon class="profesor-color" matTooltip="{{element.Profesor}}">school</mat-icon>
-            </button>
+      <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' && element.Estado == 1"
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);" mat-icon-button>
+        <mat-icon class="profesor-color" matTooltip="{{element.Profesor}}">school</mat-icon>
+      </button>
 
-            <button *ngIf="element.Estado == 1 && element.Comentario != null"
-                (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
-                data-toggle="modal">
-                <mat-icon class="aqua-color" matTooltip="{{element.Comentario}}">comment</mat-icon>
-            </button>
+      <button *ngIf="element.Estado == 1 && element.Comentario != null"
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
+        data-toggle="modal">
+        <mat-icon class="aqua-color" matTooltip="{{element.Comentario}}">comment</mat-icon>
+      </button>
 
-        </td>
-    </ng-container>
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="commands">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element">
+  <ng-container matColumnDef="commands">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
 
-                <button *ngIf="this.authService.currentUser.Rol == 'Profesor'" [disabled]="element.Evaluacion == 0"
-                matBadge="{{element.countAsociaciones}}" matBadgePosition="before" matBadgeColor="primary"
-                mat-icon-button  (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
-                <mat-icon matTooltip="Asociaciones">shuffle</mat-icon>
-            </button>
+      <button *ngIf="this.authService.currentUser.Rol == 'Profesor'" [disabled]="element.Evaluacion == 0"
+        matBadge="{{element.countAsociaciones}}" matBadgePosition="before" matBadgeColor="primary" mat-icon-button
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
+        <mat-icon matTooltip="Asociaciones">shuffle</mat-icon>
+      </button>
 
-            <button *ngIf="this.authService.currentUser.Rol == 'Profesor' || (this.authService.currentUser.Rol == 'Estudiante' && this.authService.currentUser.IdEstudiante == element.IdEstudiante) " 
-            (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
-            data-toggle="modal" data-target="#DeleteDialog">
-            <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
-        </button>
+      <button
+        *ngIf="this.authService.currentUser.Rol == 'Profesor' || (this.authService.currentUser.Rol == 'Estudiante' && this.authService.currentUser.IdEstudiante == element.IdEstudiante) "
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
+        data-toggle="modal" data-target="#DeleteDialog">
+        <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+      </button>
 
-        </td>
-    </ng-container>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
 <!--END GRID -->
 
 <!-- EVALUAR -->
 <div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog" aria-labelledby="EvaluarModalDialogTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">Evaluar</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Evaluar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="Service.form" class="ceu-form">
+
+          <table class="p100">
+
+            <tr>
+              <td class="p30">
+                <button (click)="setEvalucacion('1','1')" mat-icon-button>
+                  <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
                 </button>
-            </div>
-            <div class="modal-body">
-
-                <form [formGroup]="Service.form" class="ceu-form">
-
-                    <table class="p100">
-
-                        <tr>
-                            <td class="p30">
-                                <button (click)="setEvalucacion('1','1')" mat-icon-button>
-                                    <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
-                                </button>
-                                <mat-icon class="green-color" *ngIf="EstadoEntidad == 1 && EvaluacionEntidad == 1">done
-                                </mat-icon>
-                            </td>
-
-                            <td class="p30">
-                                <button (click)="setEvalucacion('1','0')" mat-icon-button>
-                                    <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
-                                </button>
-                                <mat-icon class="green-color" *ngIf="EstadoEntidad == 1 && EvaluacionEntidad == 0">done
-                                </mat-icon>
-                            </td>
-                            <td class="p20">
-                                <button (click)="setEvalucacion('0','0')" mat-icon-button>
-                                    <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
-                                </button>
-                                <mat-icon class="green-color" *ngIf="EstadoEntidad == 0 && EvaluacionEntidad == 0">done
-                                </mat-icon>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="dropdown-divider"></div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <mat-form-field class="ceu-full-width">
-
-                        <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput
-                            name="Comentario" placeholder="Comentario"></textarea>
-                        <mat-error>Este campo es requerido.</mat-error>
-                    </mat-form-field>
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <mat-icon *ngIf="Service.loading$ | async">
-                    <mat-spinner diameter="20" color="accent">
-                    </mat-spinner>
+                <mat-icon class="green-color" *ngIf="EstadoEntidad == 1 && EvaluacionEntidad == 1">done
                 </mat-icon>
-                <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-                <button mat-raised-button color='primary' data-dismiss="modal"
-                    (click)="ActualizarEvaluacion()">Guardar</button>
+              </td>
 
-            </div>
-        </div>
+              <td class="p30">
+                <button (click)="setEvalucacion('1','0')" mat-icon-button>
+                  <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
+                </button>
+                <mat-icon class="green-color" *ngIf="EstadoEntidad == 1 && EvaluacionEntidad == 0">done
+                </mat-icon>
+              </td>
+              <td class="p20">
+                <button (click)="setEvalucacion('0','0')" mat-icon-button>
+                  <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
+                </button>
+                <mat-icon class="green-color" *ngIf="EstadoEntidad == 0 && EvaluacionEntidad == 0">done
+                </mat-icon>
+
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div class="dropdown-divider"></div>
+              </td>
+            </tr>
+          </table>
+
+          <mat-form-field class="ceu-full-width">
+
+            <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario"
+              placeholder="Comentario"></textarea>
+            <mat-error>Este campo es requerido.</mat-error>
+          </mat-form-field>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <mat-icon *ngIf="Service.loading$ | async">
+          <mat-spinner diameter="20" color="accent">
+          </mat-spinner>
+        </mat-icon>
+        <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+        <button mat-raised-button color='primary' data-dismiss="modal" (click)="ActualizarEvaluacion()">Guardar</button>
+
+      </div>
     </div>
+  </div>
 </div>
 <!--END EVALUAR -->
