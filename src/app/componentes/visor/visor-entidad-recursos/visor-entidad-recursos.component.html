@@ -50,8 +50,13 @@
           </td>
           <td>
             <a *ngIf="item.IsImage == 0" class="link" [href]="item.URL" target="_blank"> {{item.URL}} </a>
-            <a *ngIf="item.IsImage == 1" [href]="item.URL" target="_blank"><img [src]="item.URL" width="60"
-                height="60"></a>
+            <a *ngIf="item.IsImage == 1" [href]="item.URL" target="_blank">
+
+              <div class="box" style="width: 300px;height:300px">
+                <img [src]="item.URL">
+              </div>
+
+            </a>
           </td>
 
         </tr>

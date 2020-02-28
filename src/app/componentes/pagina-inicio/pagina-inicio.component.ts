@@ -22,6 +22,7 @@ export class PaginaInicioComponent implements OnInit {
 
   //BUSCAR POR DETALLE
   listEntidadesAux: Entidad[];
+  listEntidadesDetalle: DetalleEntidad[];
   listIDS: Array<number> = [];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
 
@@ -43,11 +44,20 @@ export class PaginaInicioComponent implements OnInit {
 
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
-      this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+
+      this.listEntidadesDetalle = result.data;
+
+      this.listEntidadesDetalle.forEach(element => {
+        element.Entidad = this.eliminarDiacriticosEs(element.Entidad);
+      });
+
+      this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(this.listEntidadesDetalle);
+
     }, (error) => {
 
     });
   }
+
 
 
   CargarTiposEntidades() {
@@ -81,7 +91,7 @@ export class PaginaInicioComponent implements OnInit {
     if (filterValue === '') {
       this.ArrayEntidadSearch = [];
     } else {
-      this.dataSourceDetalle.filter = filterValue.trim().toLowerCase();
+      this.dataSourceDetalle.filter = this.eliminarDiacriticosEs(filterValue.trim().toLowerCase());
       this.cargarEntidadesPorFiltroDetalles();
     }
 
@@ -104,6 +114,13 @@ export class PaginaInicioComponent implements OnInit {
     });
 
     this.ArrayEntidadSearch = this.listEntidadesAux;
+  }
+
+  public eliminarDiacriticosEs(texto) {
+    return texto
+      .normalize('NFD')
+      .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+      .normalize();
   }
 
 }

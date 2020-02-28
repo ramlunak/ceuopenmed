@@ -83,8 +83,15 @@ export class VisorEntidadDetalleComponent implements OnInit {
   }
 
   SearchOnChange(event: any) {
-    this.ArrarDetalleEntidad = this.ArrarDetalleEntidadSearch.filter(x => x.Entidad.toLowerCase().includes(event.target.value.toLowerCase()));
+    this.ArrarDetalleEntidad = this.ArrarDetalleEntidadSearch.filter(x => this.eliminarDiacriticosEs(x.Entidad).toLowerCase().includes(this.eliminarDiacriticosEs(event.target.value).toLowerCase()));
 
+  }
+
+  public eliminarDiacriticosEs(texto) {
+    return texto
+      .normalize('NFD')
+      .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+      .normalize();
   }
 
 }
