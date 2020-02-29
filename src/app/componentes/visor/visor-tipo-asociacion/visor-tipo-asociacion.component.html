@@ -3,7 +3,7 @@
   <div class="name-img-content">
     <div class="ta-name d-flex">
       {{TIPO_ENIDAD.TipoEntidad}}
-      <div class="entidad-count">({{ArrarEntidad.length}})</div>
+      <div class="entidad-count">({{totalSinFiltroCount}})</div>
     </div>
     <div class="ta-img">
 
@@ -20,7 +20,7 @@
   <div class="separator"></div>
   <div *ngIf="expand" class="tipo-asociacion-body">
 
-    <div class="task-bar">
+    <!--   <div class="task-bar">
       <button *ngIf="!search" (click)="Search()" mat-icon-button class="black">
         <mat-icon>search</mat-icon>
       </button>
@@ -33,8 +33,8 @@
         <input matInput [value]="valueSearch" (keyup)="SearchOnChange($event)">
       </mat-form-field>
     </div>
-
-    <li *ngFor="let item of ArrarEntidad | orderBy: order:reverse:'case-insensitive' ">
+ -->
+    <li class="pt-2" *ngFor="let item of ArrarEntidad | orderBy: order:reverse:'case-insensitive' ">
       <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}"> ■ {{item.Entidad}} </i>
     </li>
 

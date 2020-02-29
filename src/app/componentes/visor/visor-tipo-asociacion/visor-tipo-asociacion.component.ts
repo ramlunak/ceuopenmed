@@ -17,11 +17,13 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   @Input() TIPO_ENIDAD: TipoEntidad;
   valueSearch: string;
+  totalSinFiltroCount: number;
   expand: boolean;
   search: boolean;
   MostrarTodas: boolean;
   MostrarMasMenos: boolean;
   ArrarEntidad: Entidad[];
+  ArrarEntidadCount: Entidad[];
   ArrarEntidadSearch: Entidad[];
 
   constructor(
@@ -35,16 +37,26 @@ export class VisorTipoAsociacionComponent implements OnInit {
 
   ngOnInit() {
     this.valueSearch = '';
+    this.MostrarCount();
     this.EntidadByTipoEntidadLimit();
+  }
+
+  MostrarCount() {
+    this.Service.EntidadByTipoEntidad(this.TIPO_ENIDAD.IdTipoEntidad).subscribe(result => {
+      this.ArrarEntidadCount = result.data;
+      this.totalSinFiltroCount = this.ArrarEntidadCount.length;
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
   }
 
   EntidadByTipoEntidadLimit() {
 
-    this.Service.EntidadByTipoEntidadLimit(this.TIPO_ENIDAD.IdTipoEntidad, 11).subscribe(result => {
+    this.Service.EntidadByTipoEntidadLimit(this.TIPO_ENIDAD.IdTipoEntidad, 10).subscribe(result => {
       this.ArrarEntidad = result.data;
       this.ArrarEntidadSearch = result.data;
       this.MostrarTodas = true;
-      if (result.totalCount < 11) {
+      if (result.totalCount < 9) {
         this.MostrarMasMenos = false;
       } else {
         this.MostrarMasMenos = true;
