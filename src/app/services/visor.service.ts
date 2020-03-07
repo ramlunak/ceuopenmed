@@ -167,7 +167,21 @@ export class VisorService {
 
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl('asociacion/' + 'evaluated-associate-entitys-simetricas/' + Id),
+        this.CONSTANS.getApiUrl('asociacion/' + 'evaluated-associate-entitys-a/' + Id),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+  AsociacionByIdEntidadEvaluadaB(Id: number): Observable<any> {
+    this.loadingSubject.next(true);
+
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl('asociacion/' + 'evaluated-associate-entitys-b/' + Id),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

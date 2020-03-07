@@ -20,6 +20,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 export class VisorEntidadAsociacionesComponent implements OnInit {
 
   @Input() ID_ENTIDAD: number;
+  @Input() DIRECCION: boolean;
   valueSearch: string;
   expand: boolean;
   search: boolean;
@@ -51,12 +52,23 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
 
 
   AsociacionByIdEntidadEvaluadaLimit() {
-    this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {
-      this.ArrarAsociaicones = result.data;
-      this.ArrarAsociaiconesSearch = result.data;
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
+    if (this.DIRECCION) {
+      this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {
+        this.ArrarAsociaicones = result.data;
+        this.ArrarAsociaiconesSearch = result.data;
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    } else {
+      this.Service.AsociacionByIdEntidadEvaluadaB(this.ID_ENTIDAD).subscribe(result => {
+        this.ArrarAsociaicones = result.data;
+        this.ArrarAsociaiconesSearch = result.data;
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    }
+
+
   }
 
   Expand() {
@@ -75,16 +87,6 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
     this.search = false;
     this.ArrarAsociaicones = this.ArrarAsociaiconesSearch;
   }
-
-  MostarTodas() {
-    this.Service.AsociacionByIdEntidadEvaluada(this.ID_ENTIDAD).subscribe(result => {
-      this.ArrarAsociaicones = result.data;
-      this.ArrarAsociaiconesSearch = result.data;
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
-  }
-
 
   public RedirectAsociacionesOpcionales = (id) => {
 
