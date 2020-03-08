@@ -19,6 +19,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 
 export class VisorEntidadAsociacionesComponent implements OnInit {
 
+  @Input() ENTIDAD: string;
   @Input() ID_ENTIDAD: number;
   @Input() DIRECCION: boolean;
   valueSearch: string;
@@ -28,6 +29,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   ArrarAsociaiconesSearch: Asociacion[];
   order: string = 'TipoAsociacion';
   reverse: boolean = false;
+  Titulo: string;
 
   constructor(
     private Service: VisorService,
@@ -41,6 +43,11 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   ngOnInit() {
     this.valueSearch = '';
     this.AsociacionByIdEntidadEvaluadaLimit();
+    if (this.DIRECCION) {
+      this.Titulo = "ASOCIACIONES: " + this.ENTIDAD + " →...";
+    } else {
+      this.Titulo = "ASOCIACIONES: ...→" + this.ENTIDAD;
+    }
   }
 
   setOrder(value: string) {
