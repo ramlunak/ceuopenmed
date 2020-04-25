@@ -58,6 +58,7 @@ import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-ent
 import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
 import { RefreshComponent } from './componentes/visor/refresh/refresh.component';
 import { AdmTraduccionComponent } from './componentes/Administracion/adm-traduccion/adm-traduccion.component';
+import { SobreCOpendMedComponent } from './componentes/sobre-copend-med/sobre-copend-med.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { AdmTraduccionComponent } from './componentes/Administracion/adm-traducc
     VisorEntidadAsociacionesComponent,
     VisorAsociacionesMultiplesComponent,
     RefreshComponent,
-    AdmTraduccionComponent
+    AdmTraduccionComponent,
+    SobreCOpendMedComponent
   ],
   imports: [
     BrowserModule,

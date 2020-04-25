@@ -36,7 +36,6 @@
       </div>
       <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 
-
         <li class="nav-item dropdown hidden-caret">
           <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
 
@@ -73,11 +72,13 @@
               </li>
               <li>
                 <div class="dropdown-divider"></div>
-                <a style="cursor: pointer" class="dropdown-item" routerLink="">Inicio</a>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" routerLink="">Inicio</a>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" (click)="openDialog()">Cambiar
+                  Contraseña</a>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" (click)="Logout()">Cerrar
+                  sesión</a>
                 <div class="dropdown-divider"></div>
-                <a style="cursor: pointer" class="dropdown-item" (click)="openDialog()">Cambiar Contraseña</a>
-                <div class="dropdown-divider"></div>
-                <a style="cursor: pointer" class="dropdown-item" (click)="Logout()">Cerrar sesión</a>
+                <a style="cursor: pointer" class="dropdown-item" routerLink="sobreCOpendMed">Sobre COpendMed</a>
               </li>
             </div>
           </ul>

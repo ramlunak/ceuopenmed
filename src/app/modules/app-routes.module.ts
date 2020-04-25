@@ -1,3 +1,4 @@
+import { SobreCOpendMedComponent } from './../componentes/sobre-copend-med/sobre-copend-med.component';
 import { AdmTraduccionComponent } from './../componentes/Administracion/adm-traduccion/adm-traduccion.component';
 import { RefreshComponent } from './../componentes/visor/refresh/refresh.component';
 import { VisorAsociacionesMultiplesComponent } from './../componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
@@ -38,12 +39,11 @@ import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociacio
 import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/asociacion-list.component';
 import { VisorEntidadComponent } from '../componentes/visor/visor-entidad/visor-entidad.component';
 
-
-
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
   { path: 'refresh', component: RefreshComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'sobreCOpendMed', component: SobreCOpendMedComponent },
   { path: 'paginaInicio', component: PaginaInicioComponent },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
