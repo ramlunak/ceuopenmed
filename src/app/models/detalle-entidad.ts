@@ -8,5 +8,5 @@ export interface DetalleEntidad {
   Idioma: string;
   Referencia: string;
   IsImage: number;
- 
+  EntidadFilter: string;
 }

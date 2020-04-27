@@ -42,6 +42,7 @@ mat-form-field.mat-form-field {
 html,
 body {
   height: 100%;
+  background-color: white;
 }
 
 body {

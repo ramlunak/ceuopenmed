@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -89,6 +90,9 @@ export class EntidadComponent implements OnInit {
 
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
+      result.data.forEach(element => {
+        element.EntidadFilter = this.normalize(element.Entidad);
+      });
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
     }, (error) => {
 
@@ -322,6 +326,7 @@ export class EntidadComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator;
   }
 
 
@@ -345,7 +350,9 @@ export class EntidadComponent implements OnInit {
       if (!isNullOrUndefined(this.listEntidades.find((x: Entidad) => x.IdEntidad == element)))
         this.listEntidadesAux.push(this.listEntidades.find((x: Entidad) => x.IdEntidad == element));
     });
+
     this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
+    this.dataSource.paginator = this.paginator;
   }
 
   public redirectToAdditionalInfo = () => {
@@ -363,4 +370,28 @@ export class EntidadComponent implements OnInit {
     }
   }
 
+
+  normalize = (function () {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+      mapping = {};
+
+    for (var i = 0, j = from.length; i < j; i++)
+      mapping[from.charAt(i)] = to.charAt(i);
+
+    return function (str) {
+      var ret = [];
+      for (var i = 0, j = str.length; i < j; i++) {
+        var c = str.charAt(i);
+        if (mapping.hasOwnProperty(str.charAt(i)))
+          ret.push(mapping[c]);
+        else
+          ret.push(c);
+      }
+      return ret.join('');
+    }
+
+  })();
+
 }
+
