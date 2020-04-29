@@ -1,3 +1,4 @@
+import { IdiomaService } from './../../../services/idioma.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,6 +14,7 @@ import { TipoEntidadService } from 'src/app/services/administracion/tipo-entidad
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 import { Router } from '@angular/router';
+import { Idioma } from 'src/app/models/idioma';
 
 // Selector jQuery
 declare var $: any;
@@ -32,15 +34,17 @@ export class TipoAsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<TipoAsociacion>;
-  displayedColumns = ['IdTipoAsociacion', 'TipoEntidad1', 'TipoEntidad2', 'TipoAsociacion', 'commands'];
+  displayedColumns = ['IdTipoAsociacion', 'TipoEntidad1', 'TipoEntidad2', 'Idioma', 'TipoAsociacion', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoEntidad: TipoEntidad[];
+  listIdiomas: Idioma[];
 
   constructor(
     private Service: TipoAsociacionService,
     private tipoEntidadService: TipoEntidadService,
     private authService: AuthService,
+    private idiomaService: IdiomaService,
     private router: Router,
     private errorService: ErrorHandlerService) { }
 
@@ -56,8 +60,13 @@ export class TipoAsociacionComponent implements OnInit {
   }
 
   CargarSelects() {
+
     this.tipoEntidadService.get().subscribe(result => {
       this.listTipoEntidad = result.data;
+    });
+
+    this.idiomaService.get().subscribe(result => {
+      this.listIdiomas = result.data;
     });
   }
 

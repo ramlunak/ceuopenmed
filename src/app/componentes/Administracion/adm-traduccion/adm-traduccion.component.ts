@@ -102,7 +102,7 @@ export class AdmTraduccionComponent implements OnInit {
 
   guardarClick() {
     this.service.form.patchValue({
-      Tabla: 'TipoAsociacion',
+      Tabla: this.Tabla,
       IdTabla: this.IdTabla
     });
 
@@ -144,12 +144,15 @@ export class AdmTraduccionComponent implements OnInit {
   }
 
   public redirectToTipoAsocicion = () => {
-    this.router.navigateByUrl('TipoAsociacion');
+    this.router.navigateByUrl(this.Tabla);
   }
 
   GetTableInfo(table: string, idTable: number) {
     if (table === 'TipoAsociacion') {
       this.NombreTabla = 'Tipo de Asociacion';
+    }
+    if (table === 'TipoEntidad') {
+      this.NombreTabla = 'Tipo de Entidad';
     }
   }
 

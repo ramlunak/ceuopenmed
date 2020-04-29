@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
+import { Router } from '@angular/router';
 
 // Selector jQuery
 declare var $: any;
@@ -31,7 +32,7 @@ export class TipoEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<TipoEntidad>;
-  displayedColumns = ['IdTipoEntidad','TipoEntidad', 'commands'];
+  displayedColumns = ['IdTipoEntidad', 'Idioma', 'TipoEntidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -40,6 +41,7 @@ export class TipoEntidadComponent implements OnInit {
     private Service: TipoEntidadService,
     private idiomaService: IdiomaService,
     private authService: AuthService,
+    private router: Router,
     private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
@@ -114,12 +116,18 @@ export class TipoEntidadComponent implements OnInit {
     });
   }
 
+  public goToTraducciones = () => {
+    const entity = this.dataSource.filteredData[this.ROW_NUMBER];
+    const url = `traduccion/TipoEntidad/${entity.IdTipoEntidad}/${entity.TipoEntidad}`;
+    this.router.navigate([url]);
+  }
 
   setOperationsData() {
     this.transaccionIsNew = false;
-    const tipoEntidad = this.dataSource.filteredData[this.ROW_NUMBER];
+    const tipoEntidad = this.dataSource.data[this.ROW_NUMBER];
     this.Service.form.patchValue({
-      IdTipoEntidad: tipoEntidad.IdTipoEntidad,     
+      IdTipoEntidad: tipoEntidad.IdTipoEntidad,
+      IdIdioma: tipoEntidad.IdIdioma,
       TipoEntidad: tipoEntidad.TipoEntidad
     });
     this.dialogTittle = 'Modificar Tipo de Entidad';

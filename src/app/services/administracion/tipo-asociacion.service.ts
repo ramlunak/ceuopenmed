@@ -22,6 +22,7 @@ export class TipoAsociacionService {
 
   form: FormGroup = new FormGroup({
     IdTipoAsociacion: new FormControl(null),
+    IdIdioma: new FormControl(null),
     IdTipoEntidad1: new FormControl('', Validators.required),
     IdTipoEntidad2: new FormControl('', Validators.required),
     TipoAsociacion: new FormControl('', Validators.required)
@@ -30,6 +31,7 @@ export class TipoAsociacionService {
   InicializarValoresFormGroup() {
     this.form.setValue({
       IdTipoAsociacion: null,
+      IdIdioma: null,
       IdTipoEntidad1: '',
       IdTipoEntidad2: '',
       TipoAsociacion: ''

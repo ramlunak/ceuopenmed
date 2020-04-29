@@ -1,139 +1,156 @@
 <!-- TOOL BAR-->
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+  <mat-toolbar-row>
 
-        <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal"
-            data-target="#OperationModalDialog">
-            <mat-icon>add</mat-icon>
-            Nuevo
-        </button>
+    <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
 
-        <span class="material-spacer"></span>
+    <span class="material-spacer"></span>
 
-        <mat-form-field id="mat-form-field-search">
-            <input matInput (keyup)="applyFilter($event.target.value)">
-            <mat-placeholder class="placeholder">Buscar</mat-placeholder>
-        </mat-form-field>
+    <mat-form-field id="mat-form-field-search">
+      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-placeholder class="placeholder">Buscar</mat-placeholder>
+    </mat-form-field>
 
-    </mat-toolbar-row>
+  </mat-toolbar-row>
 </mat-toolbar>
 <!--END TOOL BAR-->
 
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
 
-    <!-- FORMULARIO -->
-    <div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
-        aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLongTitle">{{dialogTittle}}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form [formGroup]="Service.form" class="ceu-form">
-
-                        <mat-form-field class="ceu-full-width">
-                            <input type="hidden" formControlName="IdTipoEntidad">
-                            <input formControlName="TipoEntidad" matInput name="TipoEntidad" placeholder="TipoEntidad">
-                            <mat-error>Este campo es requerido.</mat-error>
-                        </mat-form-field>                      
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <mat-icon *ngIf="Service.loading$ | async">
-                        <mat-spinner diameter="20" color="accent">
-                        </mat-spinner>
-                    </mat-icon>
-                    <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
-
-                    <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew"
-                        (click)="guardarClick()">Guardar</button>
-                    <button mat-raised-button color='primary'
-                        [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew"
-                        data-dismiss="modal" (click)="guardarClick()">Modificar</button>
-
-                </div>
-            </div>
+  <!-- FORMULARIO -->
+  <div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
+    aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLongTitle">{{dialogTittle}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-    <!--END FORMULARIO -->
+        <div class="modal-body">
 
+          <form [formGroup]="Service.form" class="ceu-form">
 
-    <!-- ELIMINAR -->
-    <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Grupo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
-                </div>
-                <div class="modal-footer">
-                    <button mat-stroked-button data-dismiss="modal">Cancelar</button>
-                    <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button
-                        color='warn'>Eliminar</button>
+            <mat-form-field class="ceu-full-width">
+              <input type="hidden" formControlName="IdTipoEntidad">
+              <input formControlName="TipoEntidad" matInput name="TipoEntidad" placeholder="TipoEntidad">
+              <mat-error>Este campo es requerido.</mat-error>
+            </mat-form-field>
 
-                </div>
-            </div>
+            <mat-form-field class="ceu-full-width">
+              <mat-label>Idioma</mat-label>
+              <mat-select formControlName="IdIdioma" name="idioma">
+                <mat-option *ngFor="let idioma of listIdiomas" [value]="idioma.IdIdioma">
+                  {{idioma.Idioma}}
+                </mat-option>
+              </mat-select>
+              <mat-error>Este campo es requerido.</mat-error>
+            </mat-form-field>
+
+          </form>
+
         </div>
-    </div>
+        <div class="modal-footer">
+          <mat-icon *ngIf="Service.loading$ | async">
+            <mat-spinner diameter="20" color="accent">
+            </mat-spinner>
+          </mat-icon>
+          <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <div class="spinner-container" *ngIf="Service.loading$ | async">
-                    <mat-spinner diameter="50"></mat-spinner>
-                </div>
-            </div>
-            <div class="col-4"></div>
+          <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+            *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+          <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
+            *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+
         </div>
+      </div>
     </div>
+  </div>
+  <!--END FORMULARIO -->
 
-    <table mat-table [dataSource]="dataSource" class="ceu-table">
 
-        <ng-container matColumnDef="IdTipoEntidad">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.IdTipoEntidad}} </td>
-        </ng-container>
+  <!-- ELIMINAR -->
+  <div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Grupo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label style="font-weight: 500">Está seguro que desea eliminar el registro?</label>
+        </div>
+        <div class="modal-footer">
+          <button mat-stroked-button data-dismiss="modal">Cancelar</button>
+          <button (click)="eliminarClick()" data-dismiss="modal" mat-raised-button color='warn'>Eliminar</button>
 
-        <ng-container matColumnDef="TipoEntidad">
-            <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
-        </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <ng-container matColumnDef="commands">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <div class="spinner-container" *ngIf="Service.loading$ | async">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>
 
-                <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()'
-                    mat-icon-button data-toggle="modal" data-target="#OperationModalDialog">
-                    <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
-                </button>
+  <table mat-table [dataSource]="dataSource" class="ceu-table">
 
-                <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()"
-                    mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
-                    <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
-                </button>
+    <ng-container matColumnDef="IdTipoEntidad">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.IdTipoEntidad}} </td>
+    </ng-container>
 
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="Idioma">
+      <th mat-header-cell *matHeaderCellDef> Idioma </th>
+      <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
-    <!--END GRID -->
+    <ng-container matColumnDef="TipoEntidad">
+      <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
+      <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="commands">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element;">
+
+
+        <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); goToTraducciones()' mat-icon-button>
+          <mat-icon style="color: black;" matTooltip="Traducciones">g_translate</mat-icon>
+        </button>
+
+        <button (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()' mat-icon-button
+          data-toggle="modal" data-target="#OperationModalDialog">
+          <mat-icon color='primary' matTooltip="Modificar">edit</mat-icon>
+        </button>
+
+        <button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
+          data-toggle="modal" data-target="#DeleteDialog">
+          <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+  <!--END GRID -->
 
 </div>
