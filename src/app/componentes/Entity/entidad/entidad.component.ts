@@ -64,6 +64,7 @@ export class EntidadComponent implements OnInit {
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
+  dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
 
   constructor(
     private Service: EntidadService,
@@ -94,6 +95,7 @@ export class EntidadComponent implements OnInit {
         element.EntidadFilter = this.normalize(element.Entidad);
       });
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
     }, (error) => {
 
     });
@@ -331,8 +333,26 @@ export class EntidadComponent implements OnInit {
 
 
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase();
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
+    this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSourceDetalle.filteredData.length > 0)
+          this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+        this.dataSourceDetallePalabras.filter = this.normalize(element.trim().toLowerCase());
+        this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+      }
+
+    });
+
     this.cargarEntidadesPorFiltroDetalles();
+
   }
 
   public cargarEntidadesPorFiltroDetalles() {

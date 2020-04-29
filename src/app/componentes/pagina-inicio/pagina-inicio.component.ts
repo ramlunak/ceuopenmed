@@ -94,8 +94,6 @@ export class PaginaInicioComponent implements OnInit {
   //BUSCAR POR DETALLES
   applyFilterDetalle(filterValue: string) {
 
-
-
     if (filterValue === '') {
       this.ArrayEntidadSearch = [];
     } else {
@@ -104,32 +102,23 @@ export class PaginaInicioComponent implements OnInit {
       //dividir el filtro por spacio
       var palabras = filterValue.split(' ');
 
-      this.listEntidadesDetallePalabras = [];
+
       this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
       this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
       palabras.forEach(element => {
 
         if (element != "" && element != " ") {
-
           if (this.dataSourceDetalle.filteredData.length > 0)
             this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
 
           this.dataSourceDetallePalabras.filter = this.eliminarDiacriticosEs(element.trim().toLowerCase());
-
-          /* this.dataSourceDetallePalabras.filteredData.forEach(detalle => {
-             this.listEntidadesDetallePalabras.push(detalle);
-           });*/
-
           this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
         }
 
       });
 
-      //console.log(this.listEntidadesDetallePalabras);
-
-      //this.dataSourceDetalle.filter = this.eliminarDiacriticosEs(filterValue.trim().toLowerCase());
-
       this.cargarEntidadesPorFiltroDetalles();
+
     }
 
   }
