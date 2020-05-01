@@ -32,6 +32,8 @@ export class DocProfesorComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DocProfesor>;
+  dataSourceAux: MatTableDataSource<DocProfesor>;
+  dataSourcePalabras: MatTableDataSource<DocProfesor>;
   displayedColumns = ['IdProfesor', 'NombreCompleto', 'username', 'status', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   // Selects
@@ -60,6 +62,8 @@ export class DocProfesorComponent implements OnInit {
   CargarDgvElements() {
     this.profesorService.getProfesores().subscribe(result => {
       this.dataSource = new MatTableDataSource<DocProfesor>(result.data);
+      this.dataSourceAux = new MatTableDataSource<DocProfesor>(result.data);
+      this.dataSourcePalabras = new MatTableDataSource<DocProfesor>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       this.errorService.handleError(error);
@@ -68,10 +72,6 @@ export class DocProfesorComponent implements OnInit {
 
   CargarSelects() {
     this.listStatus = [{ type: 'Activo', value: 10 }, { type: 'Inactivo', value: 0 }];
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   guardarClick() {
@@ -264,5 +264,52 @@ export class DocProfesorComponent implements OnInit {
     this.usuarioService.InicializarValoresFormChangePassGroup();
     $('#UsuarioModalDialog').modal('hide');
   }
+
+  applyFilter(filterValue: string) {
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSource.data = this.dataSourceAux.data;
+
+    this.dataSourcePalabras.data = this.dataSource.data;
+    this.dataSource.filteredData = this.dataSource.data;
+
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSource.filteredData.length > 0)
+          this.dataSourcePalabras.data = this.dataSource.filteredData;
+
+        this.dataSourcePalabras.filter = this.normalize(element.trim().toLowerCase());
+        this.dataSource.data = this.dataSourcePalabras.filteredData;
+      }
+
+    });
+
+  }
+
+
+  normalize = (function () {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
+      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+      mapping = {};
+
+    for (var i = 0, j = from.length; i < j; i++)
+      mapping[from.charAt(i)] = to.charAt(i);
+
+    return function (str) {
+      var ret = [];
+      for (var i = 0, j = str.length; i < j; i++) {
+        var c = str.charAt(i);
+        if (mapping.hasOwnProperty(str.charAt(i)))
+          ret.push(mapping[c]);
+        else
+          ret.push(c);
+      }
+      return ret.join('');
+    }
+
+  })();
 
 }

@@ -102,7 +102,6 @@ export class PaginaInicioComponent implements OnInit {
       //dividir el filtro por spacio
       var palabras = filterValue.split(' ');
 
-
       this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
       this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
       palabras.forEach(element => {

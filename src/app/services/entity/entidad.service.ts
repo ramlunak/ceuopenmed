@@ -47,7 +47,7 @@ export class EntidadService {
     });
   }
 
-   get(): Observable<any> {
+  get(): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -60,7 +60,7 @@ export class EntidadService {
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
-  } 
+  }
 
   view(Id: number) {
     this.loadingSubject.next(true);
@@ -93,10 +93,10 @@ export class EntidadService {
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL),
-          {
-              headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-              params: new HttpParams().set('search[IdTipoEntidad]', Id.toString())
-          }
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[IdTipoEntidad]', Id.toString())
+        }
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),
@@ -109,10 +109,10 @@ export class EntidadService {
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL),
-          {
-              headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-              params: new HttpParams().set('search[Entidad]', name)
-          }
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[Entidad]', name)
+        }
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),
@@ -193,6 +193,23 @@ export class EntidadService {
         map(res => res)
       );
   }
+
+  getEstadisticasUsuarios(): Observable<any> {
+    this.loadingSubject.next(true);
+    return this.httpClient
+
+      .get<any>(
+
+        this.CONSTANS.getApiUrl(this.BaseURL + 'estadisticas-usuarios'),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
 
   getByEtudiante(): Observable<any> {
     this.loadingSubject.next(true);

@@ -38,13 +38,16 @@ import { EntidadRecursoDescripcionComponent } from '../componentes/Entity/entida
 import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/asociacion-list.component';
 import { VisorEntidadComponent } from '../componentes/visor/visor-entidad/visor-entidad.component';
+import { EstadisticasUsuariosComponent } from '../componentes/Estadisticas/usuarios/usuarios.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
   { path: 'refresh', component: RefreshComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sobreCOpendMed', component: SobreCOpendMedComponent },
+  { path: 'sobreCOpendMed', component: SobreCOpendMedComponent },
   { path: 'paginaInicio', component: PaginaInicioComponent },
+  { path: 'estadisticasUarios', component: EstadisticasUsuariosComponent, canActivate: [AuthVerifyService] },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },
