@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
@@ -96,7 +96,7 @@ export class AsociacionComponent implements OnInit {
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
-        }, (error) => {
+    }, (error) => {
 
     });
   }
@@ -123,7 +123,7 @@ export class AsociacionComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-     } else {
+    } else {
       this.Service.getByIdEntidadEvaluada(this.IdEntidadSeleccionada).subscribe(result => {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
@@ -143,15 +143,14 @@ export class AsociacionComponent implements OnInit {
 
   public redirectAsociacionesOpcionales = () => {
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-    const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
+    const asociacionCompleta = this.EntidadSeleccionada + " " + asociacion.TipoAsociacion + " " + asociacion.Entidad;
     const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
     //const url = 'AsociacionesOpcionales';
     this.router.navigate([url]);
   }
 
   guardarClick() {
-    if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
-    {
+    if (this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0) {
       this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
         duration: 8000,
       });
@@ -215,7 +214,7 @@ export class AsociacionComponent implements OnInit {
     });
     this.Service.form.patchValue(
       {
-        IdAsociacion:null,
+        IdAsociacion: null,
         IdEntidad1: this.IdEntidadSeleccionada,
         IdEntidad2: asociacion.IdEntidad,
         IdTipoAsociacion: null,
@@ -224,7 +223,7 @@ export class AsociacionComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Nivel:null,
+        Nivel: null,
         Evaluacion: null,
         Estado: null,
         Comentario: null,
@@ -234,13 +233,13 @@ export class AsociacionComponent implements OnInit {
     this.dialogTittle = 'Modificar';
   }
 
-  goToAsociacionesOpcionales(){
+  goToAsociacionesOpcionales() {
 
     this.redirectAsociacionesOpcionales();
 
   }
 
-  goToListAsociaciones(){
+  goToListAsociaciones() {
 
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `AsociacionList/${asociacion.IdEntidad}`;
@@ -343,30 +342,30 @@ export class AsociacionComponent implements OnInit {
     this.cargarEntidadesPorFiltroDetalles(filterValue);
   }
 
- public cargarEntidadesPorFiltroDetalles(filterValue:string){
+  public cargarEntidadesPorFiltroDetalles(filterValue: string) {
 
     this.listEntidadesAux = [];
-   this.listIDS=[];
+    this.listIDS = [];
 
-   this.dataSourceDetalle.filteredData.forEach(element => {
-    this.listIDS.push(element.IdEntidad);
-   });
+    this.dataSourceDetalle.filteredData.forEach(element => {
+      this.listIDS.push(element.IdEntidad);
+    });
 
-   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
 
-   novaArr.forEach(element => {
-     var asociacion = this.listEntidades.find((x:Asociacion)=> x.IdEntidad == element);
-      if(asociacion != null)
-      this.listEntidadesAux.push(asociacion);
-   });
+    novaArr.forEach(element => {
+      var asociacion = this.listEntidades.find((x: Asociacion) => x.IdEntidad == element);
+      if (asociacion != null)
+        this.listEntidadesAux.push(asociacion);
+    });
 
-       this.dataSource = new MatTableDataSource<Asociacion>(null);
-       this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux);
-       console.log(this.listEntidadesAux);
-      if(filterValue == "")
+    this.dataSource = new MatTableDataSource<Asociacion>(null);
+    this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux);
+    console.log(this.listEntidadesAux);
+    if (filterValue == "")
       this.CargarDgvElements();
 
- }
+  }
 
   backClicked() {
 

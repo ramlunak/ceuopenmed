@@ -89,7 +89,7 @@
         </li>
 
         <!-- Estadisticas -->
-        <li class="nav-item" *ngIf="isAdmin">
+        <li class="nav-item">
           <a data-toggle="collapse" href="#estadisticas-nav">
             <i class="fa fa-layer-group"></i>
             <p>Estadísticas</p>
@@ -99,13 +99,13 @@
             <ul class="nav nav-collapse">
 
               <li>
-                <a routerLink="/estadisticasUarios">
-                  <span class="sub-item">Usuarios</span>
+                <a routerLink="/estadisticasUarios" *ngIf="isAdmin || isProf">
+                  <span class="sub-item">Estudiantes</span>
                 </a>
               </li>
 
               <li>
-                <a routerLink="/estadisticasUarios">
+                <a routerLink="/estadisticasEntidades">
                   <span class="sub-item">Entidades</span>
                 </a>
               </li>

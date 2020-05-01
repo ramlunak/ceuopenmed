@@ -211,6 +211,23 @@ export class EntidadService {
   }
 
 
+  getEntidadesMenosEvaluadas(): Observable<any> {
+    this.loadingSubject.next(true);
+    return this.httpClient
+
+      .get<any>(
+
+        this.CONSTANS.getApiUrl(this.BaseURL + 'entidades-menos-asociadas'),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }
+
+
   getByEtudiante(): Observable<any> {
     this.loadingSubject.next(true);
     let idestudiante: number;

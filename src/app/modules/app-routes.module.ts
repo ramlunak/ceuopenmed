@@ -39,6 +39,7 @@ import { AsociacionesOpcionalesComponent } from '../componentes/Entity/asociacio
 import { AsociacionListComponent } from '../componentes/Entity/asociacion-list/asociacion-list.component';
 import { VisorEntidadComponent } from '../componentes/visor/visor-entidad/visor-entidad.component';
 import { EstadisticasUsuariosComponent } from '../componentes/Estadisticas/usuarios/usuarios.component';
+import { EstadisticasEntidadesComponent } from '../componentes/Estadisticas/estadisticas-entidades/estadisticas-entidades.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthVerifyService] },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'sobreCOpendMed', component: SobreCOpendMedComponent },
   { path: 'paginaInicio', component: PaginaInicioComponent },
   { path: 'estadisticasUarios', component: EstadisticasUsuariosComponent, canActivate: [AuthVerifyService] },
+  { path: 'estadisticasEntidades', component: EstadisticasEntidadesComponent, canActivate: [AuthVerifyService] },
   { path: 'segRol', component: SegRolComponent, canActivate: [AuthVerifyService] },
   { path: 'docEspecialidad', component: DocEspecialidadComponent, canActivate: [AuthVerifyService] },
   { path: 'docGrupo', component: DocGrupoComponent, canActivate: [AuthVerifyService] },

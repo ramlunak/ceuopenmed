@@ -26,11 +26,12 @@ export class AuthVerifyService implements CanActivate {
   public verifyPermissions(url: string): boolean {
     const roles = this.CONSTANS.getRoles();
     switch (url) {
-      case '': case 'DialogChangePassword':
+      case '': case 'DialogChangePassword': case 'estadisticasUarios': case 'estadisticasEntidades':
         return true;
       case 'segRol': case 'docEspecialidad': case 'docGrupo': case 'docEstudiante': case 'docProfesor':
       case 'docProfesorGrupos': case 'docProfesorEspecialidades': case 'tipoEntidad':
-      case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple': case 'traduccion': case 'estadisticasUarios':
+      // tslint:disable-next-line: max-line-length
+      case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple': case 'traduccion': case 'estadisticasUarios': case 'estadisticasEntidades':
         return (this.authService.currentUser.IdRol === roles.Administrador);
       case 'entidad':
       case 'EntidadesEvaluadas':
@@ -41,6 +42,8 @@ export class AuthVerifyService implements CanActivate {
       case 'EntidadRecurso':
       case 'additionalInfo':
       case 'EntidadRecursoDescripcion':
+      case 'estadisticasUarios':
+      case 'estadisticasEntidades':
         return (this.authService.currentUser.IdRol === roles.Profesor || this.authService.currentUser.IdRol === roles.Estudiante);
       default:
         return false;

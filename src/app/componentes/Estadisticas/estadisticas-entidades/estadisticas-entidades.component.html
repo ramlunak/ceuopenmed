@@ -3,7 +3,7 @@
   <mat-toolbar-row>
 
     <button mat-button>
-      <span style="font-size: 20px;"> ACTIVIDAD POR ESTUDIANTES</span>
+      <span style="font-size: 20px;"> ENTIDADES MENOS ASOCIADAS</span>
     </button>
 
     <span class="material-spacer"></span>
@@ -20,29 +20,20 @@
 <!-- GRID -->
 <table mat-table [dataSource]="dataSource" matSort class="ceu-table">
 
-  <ng-container matColumnDef="IdEstudiante">
-    <th mat-header-cell hidden *matHeaderCellDef> IdEstudiante </th>
-    <td mat-cell hidden *matCellDef="let element"> {{element.IdEstudiante}} </td>
+  <ng-container matColumnDef="IdEntidad">
+    <th mat-header-cell hidden *matHeaderCellDef> IdEntidad </th>
+    <td mat-cell hidden *matCellDef="let element"> {{element.IdEntidad}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="usuario">
-    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="entidades">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Entidades </th>
-    <td mat-cell *matCellDef="let element"> {{element.entidades}} </td>
+  <ng-container matColumnDef="entidad">
+    <th mat-header-cell *matHeaderCellDef> Entidad </th>
+    <td mat-cell class="link" *matCellDef="let element"
+      (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()"> {{element.entidad}} </td>
   </ng-container>
 
   <ng-container matColumnDef="asociaciones">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Asociaciones </th>
     <td mat-cell *matCellDef="let element"> {{element.asociaciones}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="suma">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
-    <td mat-cell *matCellDef="let element"> {{element.suma}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
