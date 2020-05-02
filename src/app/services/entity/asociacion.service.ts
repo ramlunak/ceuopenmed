@@ -34,6 +34,7 @@ export class AsociacionService {
     Evaluacion: new FormControl(null),
     Estado: new FormControl(null),
     Comentario: new FormControl(null),
+    Descripcion: new FormControl(null),
     Nivel: new FormControl(null),
     entidadSelecionada: new FormControl(null),
 
@@ -53,6 +54,7 @@ export class AsociacionService {
       Evaluacion: 0,
       Estado: 0,
       Comentario: '',
+      Descripcion: null,
       Nivel: '',
       entidadSelecionada: '',
     });
@@ -105,7 +107,7 @@ export class AsociacionService {
 
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'lista/' + this.form.value.IdEntidad1 +'/'+IdEntidad2),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'lista/' + this.form.value.IdEntidad1 + '/' + IdEntidad2),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(

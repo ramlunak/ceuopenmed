@@ -64,6 +64,7 @@ export class AsociacionComponent implements OnInit {
 
   listTipoAsociacion: TipoAsociacionService[];
   listTiposEntidad: TipoEntidad[];
+  dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
 
   constructor(
     private Service: AsociacionService,
@@ -96,6 +97,8 @@ export class AsociacionComponent implements OnInit {
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.applyPredicate();
     }, (error) => {
 
     });
@@ -103,11 +106,7 @@ export class AsociacionComponent implements OnInit {
 
 
   CargarSelects() {
-    /*
-        this.tipoAsociacionService.get().subscribe(result => {
-          this.listTipoAsociacion = result.data;
-        }); */
-    // Tipo Entidad
+
     this.tipoEntidadService.get().subscribe(result => {
       this.listTiposEntidad = result.data;
     });
@@ -226,7 +225,7 @@ export class AsociacionComponent implements OnInit {
         Nivel: null,
         Evaluacion: null,
         Estado: null,
-        Comentario: null,
+        Descripcion: null,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
 
@@ -272,6 +271,7 @@ export class AsociacionComponent implements OnInit {
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
     this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
+    this.ASOCIACION.Descripcion = this.Service.form.value.Descripcion;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,
@@ -283,6 +283,7 @@ export class AsociacionComponent implements OnInit {
       Evaluacion: this.ASOCIACION.Evaluacion,
       Estado: this.ASOCIACION.Estado,
       Comentario: this.ASOCIACION.Comentario,
+      Descripcion: this.ASOCIACION.Descripcion,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
       Nivel: this.ASOCIACION.Nivel,
@@ -338,9 +339,28 @@ export class AsociacionComponent implements OnInit {
   }
 
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase();
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
+    this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSourceDetalle.filteredData.length > 0)
+          this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+        this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
+        this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+      }
+
+    });
+
     this.cargarEntidadesPorFiltroDetalles(filterValue);
+
   }
+
 
   public cargarEntidadesPorFiltroDetalles(filterValue: string) {
 
@@ -366,6 +386,21 @@ export class AsociacionComponent implements OnInit {
       this.CargarDgvElements();
 
   }
+
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
+  }
+
 
   backClicked() {
 

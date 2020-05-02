@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { EstadistiasUsuarios } from './../../../models/estadisticas';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EntidadService } from 'src/app/services/entity/entidad.service';
@@ -24,8 +25,8 @@ export class EstadisticasUsuariosComponent implements OnInit {
   dataSource: MatTableDataSource<EstadistiasUsuarios>;
   displayedColumns = ['IdEstudiante', 'usuario', 'entidades', 'asociaciones', 'suma'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  dataSourceAux: any;
-  dataSourcePalabras: any;
+  dataSourceAux: MatTableDataSource<EstadistiasUsuarios>;;
+  dataSourcePalabras: MatTableDataSource<EstadistiasUsuarios>;;
 
 
   constructor(
@@ -36,13 +37,15 @@ export class EstadisticasUsuariosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.CargarDgvElements();
+
   }
 
   CargarDgvElements() {
 
     this.Service.getEstadisticasUsuarios().subscribe(result => {
-      console.log(result.data);
+
       this.dataSource = new MatTableDataSource<EstadistiasUsuarios>(result.data);
       this.dataSourceAux = new MatTableDataSource<EstadistiasUsuarios>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<EstadistiasUsuarios>(result.data);
@@ -56,33 +59,37 @@ export class EstadisticasUsuariosComponent implements OnInit {
 
   applyFilter(filterValue: string) {
 
-    //dividir el filtro por spacio
-    var palabras = filterValue.split(' ');
-
+    const palabras = filterValue.split(' ');
     this.dataSource.data = this.dataSourceAux.data;
-
     this.dataSourcePalabras.data = this.dataSource.data;
     this.dataSource.filteredData = this.dataSource.data;
 
     palabras.forEach(element => {
+      if (element !== '' && element !== ' ') {
 
-      if (element != "" && element != " ") {
         if (this.dataSource.filteredData.length > 0)
           this.dataSourcePalabras.data = this.dataSource.filteredData;
 
-        this.dataSourcePalabras.filter = this.eliminarDiacriticosEs(element.trim().toLowerCase());
+        this.dataSourcePalabras.filter = element.trim().toLowerCase();
         this.dataSource.data = this.dataSourcePalabras.filteredData;
       }
-
     });
+  }
+
+
+  applyPredicate() {
+    this.dataSourcePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
 
   }
 
-  public eliminarDiacriticosEs(texto) {
-    return texto
-      .normalize('NFD')
-      .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
-      .normalize();
-  }
 
 }

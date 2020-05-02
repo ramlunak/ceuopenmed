@@ -99,7 +99,7 @@ export class AsociacionService {
   }
   getByIdEntidadEvaluada(Id: number): Observable<any> {
     this.loadingSubject.next(true);
-  
+
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'evaluated-associate-entitys/' + Id),
@@ -110,7 +110,7 @@ export class AsociacionService {
         map(res => res)
       );
   }
-  
+
 
   viewDetalle(Id: number) {
     this.loadingSubject.next(true);

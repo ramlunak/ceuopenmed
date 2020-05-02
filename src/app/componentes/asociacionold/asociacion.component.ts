@@ -28,7 +28,7 @@ import { AsociacionService } from 'src/app/services/asociacion.service';
   styleUrls: ['./asociacion.component.css']
 })
 
-export class AsociacionComponent implements OnInit {
+export class AsociacionOldComponent implements OnInit {
 
   // para cargar evaluacion
   IdEntidadSeleccionada = 0;
@@ -183,6 +183,7 @@ export class AsociacionComponent implements OnInit {
         Evaluacion: asociacion.Evaluacion,
         Estado: asociacion.Estado,
         Comentario: asociacion.Comentario,
+        Descripcion: asociacion.Descripcion,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
 
@@ -212,6 +213,7 @@ export class AsociacionComponent implements OnInit {
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
     this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
+    this.ASOCIACION.Descripcion = this.Service.form.value.Descripcion;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,
@@ -223,6 +225,7 @@ export class AsociacionComponent implements OnInit {
       Evaluacion: this.ASOCIACION.Evaluacion,
       Estado: this.ASOCIACION.Estado,
       Comentario: this.ASOCIACION.Comentario,
+      Descripcion: this.ASOCIACION.Descripcion,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
       IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion

@@ -44,10 +44,13 @@ export class EstadisticasEntidadesComponent implements OnInit {
   CargarDgvElements() {
 
     this.Service.getEntidadesMenosEvaluadas().subscribe(result => {
+
       this.dataSource = new MatTableDataSource<EntidadesMenosAsociadas>(result.data);
       this.dataSourceAux = new MatTableDataSource<EntidadesMenosAsociadas>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<EntidadesMenosAsociadas>(result.data);
+      this.applyPredicate();
       this.dataSource.paginator = this.paginator;
+
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -69,51 +72,40 @@ export class EstadisticasEntidadesComponent implements OnInit {
     this.router.navigate(['Asociacion']);
   }
 
+
   applyFilter(filterValue: string) {
 
-    //dividir el filtro por spacio
-    var palabras = filterValue.split(' ');
-
+    const palabras = filterValue.split(' ');
     this.dataSource.data = this.dataSourceAux.data;
-
     this.dataSourcePalabras.data = this.dataSource.data;
     this.dataSource.filteredData = this.dataSource.data;
 
     palabras.forEach(element => {
+      if (element !== '' && element !== ' ') {
 
-      if (element != "" && element != " ") {
         if (this.dataSource.filteredData.length > 0)
           this.dataSourcePalabras.data = this.dataSource.filteredData;
 
-        this.dataSourcePalabras.filter = this.normalize(element.trim().toLowerCase());
+        this.dataSourcePalabras.filter = element.trim().toLowerCase();
         this.dataSource.data = this.dataSourcePalabras.filteredData;
       }
-
     });
-
   }
 
-  normalize = (function () {
-    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
-      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
-      mapping = {};
 
-    for (var i = 0, j = from.length; i < j; i++)
-      mapping[from.charAt(i)] = to.charAt(i);
+  applyPredicate() {
+    this.dataSourcePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    return function (str) {
-      var ret = [];
-      for (var i = 0, j = str.length; i < j; i++) {
-        var c = str.charAt(i);
-        if (mapping.hasOwnProperty(str.charAt(i)))
-          ret.push(mapping[c]);
-        else
-          ret.push(c);
-      }
-      return ret.join('');
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
     }
 
-  })();
+
+  }
 
 
 }

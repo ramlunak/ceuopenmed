@@ -91,11 +91,9 @@ export class EntidadComponent implements OnInit {
 
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
-      result.data.forEach(element => {
-        element.EntidadFilter = this.normalize(element.Entidad);
-      });
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.applyPredicate();
     }, (error) => {
 
     });
@@ -345,7 +343,7 @@ export class EntidadComponent implements OnInit {
         if (this.dataSourceDetalle.filteredData.length > 0)
           this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
 
-        this.dataSourceDetallePalabras.filter = this.normalize(element.trim().toLowerCase());
+        this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
         this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
       }
 
@@ -391,27 +389,19 @@ export class EntidadComponent implements OnInit {
   }
 
 
-  normalize = (function () {
-    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
-      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
-      mapping = {};
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    for (var i = 0, j = from.length; i < j; i++)
-      mapping[from.charAt(i)] = to.charAt(i);
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    return function (str) {
-      var ret = [];
-      for (var i = 0, j = str.length; i < j; i++) {
-        var c = str.charAt(i);
-        if (mapping.hasOwnProperty(str.charAt(i)))
-          ret.push(mapping[c]);
-        else
-          ret.push(c);
-      }
-      return ret.join('');
+      return dataStr.indexOf(transformedFilter) != -1;
     }
 
-  })();
+
+  }
 
 }
 

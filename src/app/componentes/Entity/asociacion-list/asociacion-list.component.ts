@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
-import {Location} from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
@@ -50,7 +50,7 @@ export class AsociacionListComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion','Nivel', 'info','asociacionOpcional', 'commands'];
+  displayedColumns = ['IdAsociacion', 'IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'TipoAsociacion', 'Nivel', 'info', 'asociacionOpcional', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listTipoAsociacion: TipoAsociacionService[];
@@ -86,9 +86,9 @@ export class AsociacionListComponent implements OnInit {
 
   CargarSelects() {
 
-        this.tipoAsociacionService.get().subscribe(result => {
-          this.listTipoAsociacion = result.data;
-        });
+    this.tipoAsociacionService.get().subscribe(result => {
+      this.listTipoAsociacion = result.data;
+    });
     // Tipo Entidad
     this.tipoEntidadService.get().subscribe(result => {
       this.listTiposEntidad = result.data;
@@ -96,16 +96,16 @@ export class AsociacionListComponent implements OnInit {
   }
 
   CargarDgvElements() {
-   this.Service.form.value.IdEntidad1 =  this.IdEntidadSeleccionada;
-    //if (this.authService.currentUser.Rol === 'Estudiante') {
-      this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
-        this.dataSource = new MatTableDataSource<Asociacion>(result.data);
-        this.dataSource.paginator = this.paginator;
-      }, (error) => {
-        console.log(error);
-        this.errorService.handleError(error);
-      });
-    //}
+    this.Service.form.value.IdEntidad1 = this.IdEntidadSeleccionada;
+
+    this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
+      this.dataSource = new MatTableDataSource<Asociacion>(result.data);
+      this.applyPredicate()
+      this.dataSource.paginator = this.paginator;
+    }, (error) => {
+      console.log(error);
+      this.errorService.handleError(error);
+    });
 
   }
 
@@ -117,15 +117,14 @@ export class AsociacionListComponent implements OnInit {
 
   public redirectAsociacionesOpcionales = () => {
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-    const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
+    const asociacionCompleta = this.EntidadSeleccionada + " " + asociacion.TipoAsociacion + " " + asociacion.Entidad;
     const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
     //const url = 'AsociacionesOpcionales';
     this.router.navigate([url]);
   }
 
   guardarClick() {
-    if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
-    {
+    if (this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0) {
       this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
         duration: 8000,
       });
@@ -168,14 +167,14 @@ export class AsociacionListComponent implements OnInit {
   eliminarClick() {
     this.Service.delete().subscribe(result => {
 
-    if (result.status == 1) {
+      if (result.status == 1) {
         this.CargarDgvElements();
       } else {
         this.errorService.handleError(result.error);
       }
 
     }, (error) => {
-    console.log('error',error);
+      console.log('error', error);
       this.errorService.handleError(error);
     });
     this.Limpiar();
@@ -203,13 +202,14 @@ export class AsociacionListComponent implements OnInit {
         Evaluacion: 0,
         Estado: 0,
         Comentario: asociacion.Comentario,
+        Descripcion: asociacion.Descripcion,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-console.log( this.Service.form.value);
+    console.log(this.Service.form.value);
     this.dialogTittle = 'Modificar';
   }
 
-  goToAsociacionesOpcionales(){
+  goToAsociacionesOpcionales() {
 
     this.redirectAsociacionesOpcionales();
 
@@ -238,6 +238,7 @@ console.log( this.Service.form.value);
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
     this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
+    this.ASOCIACION.Descripcion = this.Service.form.value.Descripcion;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,
@@ -249,6 +250,7 @@ console.log( this.Service.form.value);
       Evaluacion: this.ASOCIACION.Evaluacion,
       Estado: this.ASOCIACION.Estado,
       Comentario: this.ASOCIACION.Comentario,
+      Descripcion: this.ASOCIACION.Descripcion,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
       Nivel: this.ASOCIACION.Nivel,
@@ -301,6 +303,20 @@ console.log( this.Service.form.value);
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyPredicate() {
+    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
   }
 
   backClicked() {
