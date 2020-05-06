@@ -47,10 +47,10 @@ export class VisorAsociacionesMultiplesComponent implements OnInit {
     this.expand = false;
   }
 
-  refresh(id: number): void {
+  refresh(id: number, idTipoEntidad): void {
 
     this.router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
-      this.router.navigate([decodeURI('/VisorEntidad/' + id)]);
+      this.router.navigate([decodeURI('/VisorEntidad/' + id + '/' + idTipoEntidad)]);
     });
   }
 

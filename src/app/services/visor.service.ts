@@ -85,7 +85,8 @@ export class VisorService {
       .get<any>(
         this.CONSTANS.getApiUrl('entidad/'),
         {
-          headers: this.CONSTANS.getApiHeaders(this.authService.getToken())
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
+          params: new HttpParams().set('search[Estado]', '1')
         }
       )
       .pipe(

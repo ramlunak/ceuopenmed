@@ -1,5 +1,5 @@
 <!-- TOOL BAR-->
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="!authService.showMenus" color="primary">
   <mat-toolbar-row>
 
     <a class="logo">
@@ -32,7 +32,10 @@
     <div class="serach-autocomplete" *ngIf="ArrayEntidadSearch.length > 0">
 
       <li *ngFor=" let item of ArrayEntidadSearch">
-        <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}"> {{item.Entidad}}</div>
+        {{item.IdEntidad}}/{{item.IdTipoEntidad}}
+        <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
+          {{item.Entidad}}
+        </div>
       </li>
     </div>
   </div>

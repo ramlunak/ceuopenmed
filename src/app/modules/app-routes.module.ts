@@ -72,7 +72,7 @@ const routes: Routes = [
   { path: 'AsociacionesOpcionales/:idAsociacion/:Asociacion/:idEntidad1/:idEntidad2', component: AsociacionesOpcionalesComponent, canActivate: [AuthVerifyService] },
   { path: 'additionalInfo/:idEntidad/:idTipoEntidad/:EvaluacionEntidad/:IdEstudiante', component: AdditionalInfoComponent, canActivate: [AuthVerifyService] },
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
-  { path: 'VisorEntidad/:idEntidad', component: VisorEntidadComponent },
+  { path: 'VisorEntidad/:idEntidad/:idTipoEntidad', component: VisorEntidadComponent },
   { path: 'VisorAsociacionesMultiples/:idAsociacion', component: VisorAsociacionesMultiplesComponent },
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },

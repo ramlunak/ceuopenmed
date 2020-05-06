@@ -47,9 +47,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of ArrarDetalleEntidad  | orderBy: order:reverse:'case-insensitive'">
-          <td> <i routerLink="/VisorEntidad"> {{item.Entidad}} </i></td>
-          <td> <i routerLink="/VisorEntidad"> {{item.Idioma}} </i></td>
-          <td> <i routerLink="/VisorEntidad"> {{item.Nivel}} </i></td>
+          <td> <i> {{item.Entidad}} </i></td>
+          <td> <i> {{item.Idioma}} </i></td>
+          <td> <i> {{item.Nivel}} </i></td>
         </tr>
       </tbody>
     </table>

@@ -3,7 +3,7 @@ import { Idioma } from './../../../models/idioma';
 import { IdiomaService } from './../../../services/idioma.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -42,6 +42,7 @@ export class AdmTraduccionComponent implements OnInit {
     private profesorService: DocProfesorService,
     private idiomaService: IdiomaService,
     private errorService: ErrorHandlerService,
+    private location: Location,
     private router: Router,
     private activeRoute: ActivatedRoute
   ) { }
@@ -144,7 +145,8 @@ export class AdmTraduccionComponent implements OnInit {
   }
 
   public redirectToTipoAsocicion = () => {
-    this.router.navigateByUrl(this.Tabla);
+    // this.router.navigateByUrl(this.Tabla);
+    this.location.back();
   }
 
   GetTableInfo(table: string, idTable: number) {

@@ -20,6 +20,7 @@ export class VisorEntidadDetalleComponent implements OnInit {
   reverse: boolean = false;
 
   @Input() ID_ENTIDAD: number;
+  @Input() ID_TIPOENTIDAD: number;
   valueSearch: string;
   expand: boolean;
   search: boolean;

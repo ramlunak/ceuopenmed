@@ -270,8 +270,6 @@ export class AsociacionComponent implements OnInit {
     this.transaccionIsNew = false;
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
-    this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
-    this.ASOCIACION.Descripcion = this.Service.form.value.Descripcion;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,

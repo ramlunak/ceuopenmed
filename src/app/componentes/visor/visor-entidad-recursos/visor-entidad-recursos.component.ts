@@ -8,6 +8,7 @@ import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { OrderPipe } from 'ngx-order-pipe';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 @Component({
   selector: 'app-visor-entidad-recursos',
@@ -19,6 +20,7 @@ export class VisorEntidadRecursosComponent implements OnInit {
   reverse: boolean = false;
 
   @Input() ID_ENTIDAD: number;
+  @Input() ID_TIPOENTIDAD: number;
   valueSearch: string;
   expand: boolean;
   search: boolean;
@@ -28,6 +30,7 @@ export class VisorEntidadRecursosComponent implements OnInit {
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
+    private authService: AuthService,
     private orderPipe: OrderPipe
   ) {
     this.expand = true;

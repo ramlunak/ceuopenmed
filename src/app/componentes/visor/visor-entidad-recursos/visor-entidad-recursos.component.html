@@ -35,6 +35,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th style="width: 10px;"></th>
           <th [class.active]="order == 'IsImage'" (click)="setOrder('IsImage')">
             Imagen <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
@@ -46,12 +47,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of ArrarEntidadRecursos | orderBy: order:reverse:'case-insensitive'">
-
+          <td>
+            <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0/0"
+              style="cursor: pointer;color:dodgerblue;" *ngIf="authService.showMenus">info</mat-icon>
+          </td>
           <td>
             <span *ngIf="item.IsImage == 1">SI</span>
             <span *ngIf="item.IsImage == 0">NO</span>
           </td>
-          <td> <i routerLink="/VisorEntidad"> {{item.Nivel}} </i></td>
+          <td> <i routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}"> {{item.Nivel}} </i></td>
           <td>
             <a *ngIf="item.IsImage == 0" class="link" [href]="item.URL" target="_blank"> {{item.URL}} </a>
             <a *ngIf="item.IsImage == 1" [href]="item.URL" target="_blank">

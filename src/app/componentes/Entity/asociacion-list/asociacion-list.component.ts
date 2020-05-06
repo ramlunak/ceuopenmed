@@ -205,7 +205,7 @@ export class AsociacionListComponent implements OnInit {
         Descripcion: asociacion.Descripcion,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-    console.log(this.Service.form.value);
+
     this.dialogTittle = 'Modificar';
   }
 
@@ -225,6 +225,7 @@ export class AsociacionListComponent implements OnInit {
     this.transaccionIsNew = false;
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     this.ASOCIACION = this.dataSource.filteredData[this.ROW_NUMBER];
+    console.log(this.ASOCIACION);
     this.EstadoEntidad = parseInt(asociacion.Estado, 32);
     this.EvaluacionEntidad = parseInt(asociacion.Evaluacion, 32);
     this.ComentarioEntidad = asociacion.Comentario;
@@ -237,8 +238,6 @@ export class AsociacionListComponent implements OnInit {
     this.transaccionIsNew = false;
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
-    this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
-    this.ASOCIACION.Descripcion = this.Service.form.value.Descripcion;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,
@@ -271,7 +270,6 @@ export class AsociacionListComponent implements OnInit {
         this.errorService.handleError(error);
       });
     }
-
 
   }
 

@@ -9,6 +9,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { Router } from '@angular/router';
 import { DetalleEntidadService } from 'src/app/services/entity/detalle-entidad.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -34,6 +35,7 @@ export class PaginaInicioComponent implements OnInit {
     private Service: VisorService,
     private router: Router,
     private detalleEntidadService: DetalleEntidadService,
+    private authService: AuthService,
     private errorService: ErrorHandlerService
   ) {
 

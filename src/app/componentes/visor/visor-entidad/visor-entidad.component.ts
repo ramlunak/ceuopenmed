@@ -5,6 +5,7 @@ import { Entidad } from './../../../models/entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { delay } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 
 @Component({
@@ -15,16 +16,20 @@ import { delay } from 'rxjs/operators';
 export class VisorEntidadComponent implements OnInit {
   ENIDAD: Entidad;
   IdEntidad: number;
+  IdTipoEntidad: number;
   constructor(
     private Service: VisorService,
     private activeRoute: ActivatedRoute,
     public location: Location,
+    private authService: AuthService,
     public router: Router,
 
     private errorService: ErrorHandlerService) { }
 
   ngOnInit() {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
+    this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    console.log(this.IdTipoEntidad);
     this.EntidadByIdEntidad();
   }
 

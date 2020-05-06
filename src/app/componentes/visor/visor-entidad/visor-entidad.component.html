@@ -1,5 +1,5 @@
 <!-- TOOL BAR-->
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="!authService.showMenus" color="primary">
   <mat-toolbar-row>
 
     <a class="logo" href="/">
@@ -32,8 +32,8 @@
   <div class="separator"></div>
   <div class="te-name">Tipo Entidad: {{ENIDAD.TipoEntidad}}</div>
 
-  <app-visor-entidad-detalle [ID_ENTIDAD]="IdEntidad"></app-visor-entidad-detalle>
-  <app-visor-entidad-recursos [ID_ENTIDAD]="IdEntidad"></app-visor-entidad-recursos>
+  <app-visor-entidad-detalle [ID_ENTIDAD]="IdEntidad" [ID_TIPOENTIDAD]="IdTipoEntidad"></app-visor-entidad-detalle>
+  <app-visor-entidad-recursos [ID_ENTIDAD]="IdEntidad" [ID_TIPOENTIDAD]="IdTipoEntidad"></app-visor-entidad-recursos>
   <app-visor-entidad-asociaciones [ENTIDAD]="ENIDAD.Entidad" [DIRECCION]="true" [ID_ENTIDAD]="IdEntidad">
   </app-visor-entidad-asociaciones>
   <app-visor-entidad-asociaciones [ENTIDAD]="ENIDAD.Entidad" [DIRECCION]="false" [ID_ENTIDAD]="IdEntidad">

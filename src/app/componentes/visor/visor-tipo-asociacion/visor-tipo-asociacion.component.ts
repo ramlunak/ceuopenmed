@@ -5,6 +5,7 @@ import { VisorService } from './../../../services/visor.service';
 import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { OrderPipe } from 'ngx-order-pipe';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 @Component({
   selector: 'app-visor-tipo-asociacion',
@@ -29,6 +30,7 @@ export class VisorTipoAsociacionComponent implements OnInit {
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
+    private authService: AuthService,
     private orderPipe: OrderPipe
   ) {
     this.expand = false;
