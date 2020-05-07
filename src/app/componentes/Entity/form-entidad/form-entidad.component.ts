@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -47,6 +48,8 @@ export class FormEntidadComponent implements OnInit {
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
   EntidadIdEStudiante: number;
+  ParametroBusqueda: string;
+  Search = '';
 
   constructor(
     private entidadService: EntidadService,
@@ -68,6 +71,7 @@ export class FormEntidadComponent implements OnInit {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
+    this.ParametroBusqueda = this.activeRoute.snapshot.params.parametroBusqueda;
     this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarDgvElements();
@@ -107,6 +111,10 @@ export class FormEntidadComponent implements OnInit {
       this.dataSourceAux = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
+      if (!isNullOrUndefined(this.ParametroBusqueda)) {
+        this.Search = this.ParametroBusqueda;
+        this.applyFilter(this.Search);
+      }
     }, (error) => {
       this.errorService.handleError(error);
       this.router.navigateByUrl('entidad');

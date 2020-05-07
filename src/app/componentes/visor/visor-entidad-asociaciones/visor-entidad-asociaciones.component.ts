@@ -26,7 +26,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   expand: boolean;
   search: boolean;
   ArrarAsociaicones: Asociacion[];
-  ArrarAsociaiconesSearch: Asociacion[];
+  ArrarAsociaiconesSearch: Asociacion[] = [];
   order: string = 'TipoAsociacion';
   reverse: boolean = false;
   Titulo: string;

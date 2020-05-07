@@ -8,6 +8,7 @@ import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { OrderPipe } from 'ngx-order-pipe';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 
 @Component({
@@ -25,12 +26,13 @@ export class VisorEntidadDetalleComponent implements OnInit {
   expand: boolean;
   search: boolean;
   ArrarDetalleEntidad: DetalleEntidad[];
-  ArrarDetalleEntidadSearch: DetalleEntidad[];
+  ArrarDetalleEntidadSearch: DetalleEntidad[] = [];
 
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
-    private orderPipe: OrderPipe
+    private orderPipe: OrderPipe,
+    public authService: AuthService
   ) {
     this.expand = true;
   }

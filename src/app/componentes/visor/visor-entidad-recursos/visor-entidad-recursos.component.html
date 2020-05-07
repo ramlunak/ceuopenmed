@@ -1,7 +1,11 @@
 <div *ngIf="ArrarEntidadRecursosSearch.length > 0" class="tipo-asociacion">
 
   <div style="background-color: gainsboro;" class="name-img-content">
-    <div class="ta-name">RECURSOS</div>
+    <div class="ta-name">
+      <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/1"
+        style="cursor: pointer;color:black;margin: 5px;;">add_box</mat-icon>
+      RECURSOS
+    </div>
     <div class="ta-img">
 
       <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
@@ -48,8 +52,8 @@
       <tbody>
         <tr *ngFor="let item of ArrarEntidadRecursos | orderBy: order:reverse:'case-insensitive'">
           <td>
-            <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0/0"
-              style="cursor: pointer;color:dodgerblue;" *ngIf="authService.showMenus">info</mat-icon>
+            <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/1/{{item.IdRecurso}}/1"
+              style="cursor: pointer;color:black;" *ngIf="authService.showMenus">edit</mat-icon>
           </td>
           <td>
             <span *ngIf="item.IsImage == 1">SI</span>

@@ -25,12 +25,12 @@ export class VisorEntidadRecursosComponent implements OnInit {
   expand: boolean;
   search: boolean;
   ArrarEntidadRecursos: EntidadRecurso[];
-  ArrarEntidadRecursosSearch: EntidadRecurso[];
+  ArrarEntidadRecursosSearch: EntidadRecurso[] = [];
 
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
-    private authService: AuthService,
+    public authService: AuthService,
     private orderPipe: OrderPipe
   ) {
     this.expand = true;

@@ -25,7 +25,7 @@ export class VisorTipoAsociacionComponent implements OnInit {
   MostrarMasMenos: boolean;
   ArrarEntidad: Entidad[];
   ArrarEntidadCount: Entidad[];
-  ArrarEntidadSearch: Entidad[];
+  ArrarEntidadSearch: Entidad[] = [];
 
   constructor(
     private Service: VisorService,

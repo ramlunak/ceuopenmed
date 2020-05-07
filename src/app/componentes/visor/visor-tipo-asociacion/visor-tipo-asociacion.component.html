@@ -36,8 +36,9 @@
  -->
     <li class="pt-2" *ngFor="let item of ArrarEntidad | orderBy: order:reverse:'case-insensitive' ">
 
-      <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
-        ■ {{item.Entidad}}
+      <i>
+        <mat-icon routerLink="/entidad/{{item.Entidad}}" style="cursor: pointer;color:black;">edit</mat-icon>
+        <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}"> ■ {{item.Entidad}}</i>
       </i>
 
     </li>

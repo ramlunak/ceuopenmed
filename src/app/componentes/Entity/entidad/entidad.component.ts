@@ -1,7 +1,7 @@
 import { element } from 'protractor';
 import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../services/seguridad/auth.service';
@@ -65,6 +65,8 @@ export class EntidadComponent implements OnInit {
   listTiposEntidad: TipoEntidad[];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
   dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
+  VisorEntidad: string;
+  Search: string;
 
   constructor(
     private Service: EntidadService,
@@ -75,6 +77,7 @@ export class EntidadComponent implements OnInit {
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -84,8 +87,15 @@ export class EntidadComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
-    this.CargarDgvElements();
-    this.CargarDetalles();
+    this.VisorEntidad = this.activeRoute.snapshot.params.entidad;
+    this.Search = '';
+
+    if (isNullOrUndefined(this.VisorEntidad)) {
+      this.CargarDgvElements();
+    } else {
+      this.CargarDgvElementsAllEstudent();
+    }
+
     this.CargarSelects();
   }
 
@@ -94,9 +104,14 @@ export class EntidadComponent implements OnInit {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
       this.applyPredicate();
+      if (!isNullOrUndefined(this.VisorEntidad)) {
+        this.Search = this.VisorEntidad;
+        this.applyFilterDetalle(this.Search);
+      }
     }, (error) => {
 
     });
+
   }
 
   CargarSelects() {
@@ -117,6 +132,7 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -125,10 +141,12 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
+
 
   }
 
@@ -138,6 +156,7 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
