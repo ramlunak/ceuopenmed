@@ -32,7 +32,6 @@
     <div class="serach-autocomplete" *ngIf="ArrayEntidadSearch.length > 0">
 
       <li *ngFor=" let item of ArrayEntidadSearch">
-        {{item.IdEntidad}}/{{item.IdTipoEntidad}}
         <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
           {{item.Entidad}}
         </div>

@@ -1,13 +1,24 @@
 <table class="table">
   <tbody>
     <tr>
-      <td style="width: 20%;">
+      <td style="width: 5%;">
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION"
+          (click)="goToAsociciones(ID_ENTIDAD,ENTIDAD,ASOCIACION.Entidad)" style="cursor: pointer;color:forestgreen;">
+          edit
+        </mat-icon>
+
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && !DIRECCION"
+          (click)="goToAsociciones(ASOCIACION.IdEntidad,ASOCIACION.Entidad,ENTIDAD)"
+          style="cursor: pointer;color:forestgreen;">edit
+        </mat-icon>
+      </td>
+      <td style="width: 25%;text-align:left;">
         <i class="link" (click)="refresh(ASOCIACION.IdEntidad,ASOCIACION.IdTipoEntidad)">
           {{ASOCIACION.Entidad}} </i>
       </td>
-      <td style="width: 40%;">{{ASOCIACION.TipoAsociacion}}</td>
-      <td style="width: 10%;">{{ASOCIACION.Nivel}}</td>
-      <td style="width: 20%;">{{ASOCIACION.Descripcion}}</td>
+      <td style="width: 35%;text-align:left;">{{ASOCIACION.TipoAsociacion}}</td>
+      <td style="width: 10%;text-align:left;">{{ASOCIACION.Nivel}}</td>
+      <td style="width: 25%;text-align:left;">{{ASOCIACION.Comentario}}</td>
       <td>
         <div class="ta-img">
 
@@ -25,19 +36,24 @@
 
     <tr *ngFor="let item of ArrarAsociaiconesMultiple" [style.display]="expand ? 'table-row' : 'none' "
       style="color: orangered;">
-
-      <td>
+      <td style="width: 5%;">
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION"
+          (click)="goToAsocicionesMultiples(item.TipoAsociacion,item.Entidad,item.IdAsociacion)"
+          style="cursor: pointer;color:forestgreen;">edit
+        </mat-icon>
+      </td>
+      <td style="width: 25%;;text-align: left;">
         <div> <i class="link2" (click)="refresh(item.IdEntidad,item.IdTipoEntidad)">
             {{item.Entidad}} </i></div>
       </td>
-      <td>
+      <td style="width: 35%;;text-align: left;">
         <div>{{item.TipoAsociacion}}</div>
       </td>
-      <td>
+      <td style="width: 10%;text-align: left;">
         <div>{{item.Nivel}}</div>
       </td>
-      <td>
-        <div>{{item.Descripcion}}</div>
+      <td style="width: 25%;text-align: left;">
+        <div>{{item.Comentario}}</div>
       </td>
 
     </tr>

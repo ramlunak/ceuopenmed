@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -45,6 +46,7 @@ export class AsociacionComponent implements OnInit {
   CountEntidad = 0;
   ComentarioEntidad = '';
   ASOCIACION: Asociacion;
+  Search: string = '';
 
   transaccionIsNew = true;
   asociar = false;
@@ -91,7 +93,6 @@ export class AsociacionComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
     this.CargarSelects();
-    this.CargarDetalles();
   }
 
   CargarDetalles() {
@@ -99,6 +100,13 @@ export class AsociacionComponent implements OnInit {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
       this.applyPredicate();
+      if (!isNullOrUndefined(this.Service.form.value.Buscar)) {
+        this.applyFilter(this.Service.form.value.Buscar);
+        this.Service.form.patchValue({
+          Buscar: ''
+        });
+      }
+
     }, (error) => {
 
     });
@@ -119,6 +127,7 @@ export class AsociacionComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -127,6 +136,7 @@ export class AsociacionComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });

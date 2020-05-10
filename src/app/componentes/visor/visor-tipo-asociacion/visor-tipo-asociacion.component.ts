@@ -30,7 +30,7 @@ export class VisorTipoAsociacionComponent implements OnInit {
   constructor(
     private Service: VisorService,
     private errorService: ErrorHandlerService,
-    private authService: AuthService,
+    public authService: AuthService,
     private orderPipe: OrderPipe
   ) {
     this.expand = false;

@@ -34,6 +34,7 @@ export class AsociacionService {
     Evaluacion: new FormControl(null),
     Estado: new FormControl(null),
     Comentario: new FormControl(null),
+    Descripcion: new FormControl(null),
     entidadSelecionada: new FormControl(null),
 
   });
@@ -52,6 +53,7 @@ export class AsociacionService {
       Evaluacion: 0,
       Estado: 0,
       Comentario: '',
+      Descripcion: '',
       entidadSelecionada: '',
     });
   }

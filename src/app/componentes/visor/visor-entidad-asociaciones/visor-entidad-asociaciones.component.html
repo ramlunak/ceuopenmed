@@ -1,7 +1,12 @@
 <div *ngIf="ArrarAsociaiconesSearch.length > 0" class="tipo-asociacion">
 
   <div style="background-color: gainsboro;" class="name-img-content">
-    <div class="ta-name">{{Titulo}}</div>
+    <div class="ta-name">
+      <mat-icon matTooltip="Adicionar" *ngIf="authService.showMenus && DIRECCION" (click)="goToAsociciones()"
+        style="cursor: pointer;color:orangered;margin: 5px;;">add_circle
+      </mat-icon>
+      {{Titulo}}
+    </div>
     <div class="ta-img">
 
       <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
@@ -21,25 +26,37 @@
 
       <thead>
         <tr>
-          <th [class.active]="order == 'Entidad'" (click)="setOrder('Entidad')">
+          <th style="width: 5%"></th>
+          <th style="width: 25%" [class.active]="order == 'Entidad'" (click)="setOrder('Entidad')">
             Entidad <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th [class.active]="order == 'TipoAsociacion'" (click)="setOrder('TipoAsociacion')">
+          <th style="width: 35%;" [class.active]="order == 'TipoAsociacion'" (click)="setOrder('TipoAsociacion')">
             Tipo de Asociación <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th [class.active]="order == 'Fuerza'" (click)="setOrder('Fuerza')">
+          <th style="width: 10%;" [class.active]="order == 'Fuerza'" (click)="setOrder('Fuerza')">
             Fuerza <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th [class.active]="order == 'Descripcion'" (click)="setOrder('Descripcion')">
+          <th style="width: 25%;" [class.active]="order == 'Descripcion'" (click)="setOrder('Descripcion')">
             Descripción <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
           </th>
-          <th scope="col"></th>
+          <th>
+            <div class="ta-img">
+
+              <button mat-icon-button style="color: transparent;">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </button>
+
+
+            </div>
+          </th>
         </tr>
       </thead>
     </table>
 
     <li class="list-style-none" *ngFor="let item of ArrarAsociaicones | orderBy: order:reverse:'case-insensitive' ">
-      <app-visor-asociaciones-multiples [ASOCIACION]="item"></app-visor-asociaciones-multiples>
+      <app-visor-asociaciones-multiples [DIRECCION]="DIRECCION" [ENTIDAD]="ENTIDAD" [ID_ENTIDAD]="ID_ENTIDAD"
+        [ASOCIACION]="item">
+      </app-visor-asociaciones-multiples>
     </li>
 
 

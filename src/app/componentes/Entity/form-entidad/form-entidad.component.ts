@@ -111,6 +111,7 @@ export class FormEntidadComponent implements OnInit {
       this.dataSourceAux = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
+      this.applyPredicate();
       if (!isNullOrUndefined(this.ParametroBusqueda)) {
         this.Search = this.ParametroBusqueda;
         this.applyFilter(this.Search);
@@ -220,7 +221,7 @@ export class FormEntidadComponent implements OnInit {
         if (this.dataSource.filteredData.length > 0)
           this.dataSourcePalabras.data = this.dataSource.filteredData;
 
-        this.dataSourcePalabras.filter = this.normalize(element.trim().toLowerCase());
+        this.dataSourcePalabras.filter = element.trim();
         this.dataSource.data = this.dataSourcePalabras.filteredData;
       }
 
@@ -228,28 +229,18 @@ export class FormEntidadComponent implements OnInit {
 
   }
 
+  applyPredicate() {
+    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-  normalize = (function () {
-    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
-      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
-      mapping = {};
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    for (var i = 0, j = from.length; i < j; i++)
-      mapping[from.charAt(i)] = to.charAt(i);
-
-    return function (str) {
-      var ret = [];
-      for (var i = 0, j = str.length; i < j; i++) {
-        var c = str.charAt(i);
-        if (mapping.hasOwnProperty(str.charAt(i)))
-          ret.push(mapping[c]);
-        else
-          ret.push(c);
-      }
-      return ret.join('');
+      return dataStr.indexOf(transformedFilter) != -1;
     }
 
-  })();
 
+  }
 
 }

@@ -10,6 +10,8 @@ import { TipoEntidad } from './../../../models/tipo-entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderPipe } from 'ngx-order-pipe';
+import { AsociacionService } from 'src/app/services/entity/asociacion.service';
+import { AuthService } from 'src/app/services/seguridad/auth.service';
 
 @Component({
   selector: 'app-visor-entidad-asociaciones',
@@ -33,7 +35,9 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
 
   constructor(
     private Service: VisorService,
+    private asociacionService: AsociacionService,
     private errorService: ErrorHandlerService,
+    public authService: AuthService,
     private router: Router,
     private orderPipe: OrderPipe
   ) {
@@ -93,6 +97,19 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
   CancelSearch() {
     this.search = false;
     this.ArrarAsociaicones = this.ArrarAsociaiconesSearch;
+  }
+
+  goToAsociciones() {
+
+    this.asociacionService.form.patchValue({
+      IdEntidad1: this.ID_ENTIDAD,
+      entidadSelecionada: this.ENTIDAD
+    });
+    this.redirectToAsociacion();
+  }
+
+  public redirectToAsociacion = () => {
+    this.router.navigate(['Asociacion']);
   }
 
   public RedirectAsociacionesOpcionales = (id) => {

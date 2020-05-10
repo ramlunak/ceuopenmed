@@ -35,8 +35,9 @@ export class AsociacionService {
     Estado: new FormControl(null),
     Comentario: new FormControl(null),
     Descripcion: new FormControl(null),
-    Nivel: new FormControl(null),
+    Nivel: new FormControl('', Validators.required),
     entidadSelecionada: new FormControl(null),
+    Buscar: new FormControl(null),
 
   });
 
@@ -57,6 +58,7 @@ export class AsociacionService {
       Descripcion: null,
       Nivel: '',
       entidadSelecionada: '',
+      Buscar: '',
     });
   }
 

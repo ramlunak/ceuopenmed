@@ -100,7 +100,7 @@ export class AsociacionListComponent implements OnInit {
 
     this.Service.getListaAsociasiones(this.idEntidad2).subscribe(result => {
       this.dataSource = new MatTableDataSource<Asociacion>(result.data);
-      this.applyPredicate()
+      this.applyPredicate();
       this.dataSource.paginator = this.paginator;
     }, (error) => {
       console.log(error);

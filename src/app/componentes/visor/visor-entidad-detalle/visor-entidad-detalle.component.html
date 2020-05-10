@@ -3,8 +3,9 @@
   <div style="background-color: gainsboro;" class="name-img-content">
 
     <div class="ta-name">
-      <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0"
-        style="cursor: pointer;color:black;margin: 5px;;">add_box</mat-icon>
+      <mat-icon matTooltip="Adicionar" *ngIf="authService.showMenus"
+        routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0"
+        style="cursor: pointer;color:orangered;margin: 5px;;">add_circle</mat-icon>
       DETALLES
     </div>
     <div class="ta-img">
@@ -54,8 +55,9 @@
       <tbody>
         <tr *ngFor="let item of ArrarDetalleEntidad  | orderBy: order:reverse:'case-insensitive'">
           <td>
-            <mat-icon routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0/{{item.Entidad}}/1"
-              style="cursor: pointer;color:black;" *ngIf="authService.showMenus">edit</mat-icon>
+            <mat-icon matTooltip="Editar"
+              routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/0/{{item.Entidad}}/1"
+              style="cursor: pointer;color:forestgreen;" *ngIf="authService.showMenus">edit</mat-icon>
           </td>
           <td> <i> {{item.Entidad}} </i></td>
           <td> <i> {{item.Idioma}} </i></td>
