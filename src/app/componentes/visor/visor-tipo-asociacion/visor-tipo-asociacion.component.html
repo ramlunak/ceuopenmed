@@ -37,8 +37,10 @@
     <li class="pt-2" *ngFor="let item of ArrarEntidad | orderBy: order:reverse:'case-insensitive' ">
 
       <i>
-        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus" routerLink="/entidad/{{item.Entidad}}"
-          style="cursor: pointer;color:forestgreen;">edit</mat-icon>
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && this.authService.currentUser.Rol == 'Profesor'"
+          routerLink="/EntidadesEvaluadas" style="cursor: pointer;color:forestgreen;">edit</mat-icon>
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && this.authService.currentUser.Rol == 'Estudiante'"
+          routerLink="/entidad/{{item.Entidad}}" style="cursor: pointer;color:forestgreen;">edit</mat-icon>
         <i class="link" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}"> ■ {{item.Entidad}}</i>
       </i>
 

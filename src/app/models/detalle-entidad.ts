@@ -3,6 +3,7 @@ export interface DetalleEntidad {
   IdIdioma: number;
   IdEntidad: number;
   Entidad: string;
+  IdTipoEntidad: number;
   Nivel: number;
   // Extra Field
   Idioma: string;

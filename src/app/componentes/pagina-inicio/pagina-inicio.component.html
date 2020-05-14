@@ -29,9 +29,9 @@
       <mat-icon>search</mat-icon>
       <input class="input-search" placeholder="Buscar" type="text" (keyup)="applyFilterDetalle($event.target.value)">
     </div>
-    <div class="serach-autocomplete" *ngIf="ArrayEntidadSearch.length > 0">
+    <div class="serach-autocomplete" *ngIf="dataSourceDetalleSearch.filteredData.length > 0">
 
-      <li *ngFor=" let item of ArrayEntidadSearch">
+      <li *ngFor=" let item of dataSourceDetalleSearch.filteredData">
         <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
           {{item.Entidad}}
         </div>

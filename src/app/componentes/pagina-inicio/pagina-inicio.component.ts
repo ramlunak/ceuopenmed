@@ -21,6 +21,7 @@ export class PaginaInicioComponent implements OnInit {
   ArrarTipoEntidad: TipoEntidad[];
   ArrayEntidad: Entidad[];
   ArrayEntidadSearch: Entidad[];
+  ArrayDetalleEntidadSearch: DetalleEntidad[];
 
   //BUSCAR POR DETALLE
   listEntidadesAux: Entidad[];
@@ -29,6 +30,7 @@ export class PaginaInicioComponent implements OnInit {
   listEntidadesDetallePalabrasAux: DetalleEntidad[];
   listIDS: Array<number> = [];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
+  dataSourceDetalleSearch: MatTableDataSource<DetalleEntidad>;
   dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
 
   constructor(
@@ -42,11 +44,13 @@ export class PaginaInicioComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>();
+    this.dataSourceDetalleSearch = new MatTableDataSource<DetalleEntidad>();
     this.CargarEntidades();
     this.CargarTiposEntidades();
     this.CargarDetalles();
-    this.ArrayEntidadSearch = [];
+    // this.ArrayEntidadSearch = [];
+
   }
 
   CargarDetalles() {
@@ -54,9 +58,9 @@ export class PaginaInicioComponent implements OnInit {
 
       this.listEntidadesDetalle = result.data;
 
-      this.listEntidadesDetalle.forEach(element => {
-        element.Entidad = this.eliminarDiacriticosEs(element.Entidad);
-      });
+      /*  this.listEntidadesDetalle.forEach(element => {
+         element.Entidad = this.eliminarDiacriticosEs(element.Entidad);
+       }); */
 
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(this.listEntidadesDetalle);
       this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(this.listEntidadesDetalle);
@@ -65,8 +69,6 @@ export class PaginaInicioComponent implements OnInit {
 
     });
   }
-
-
 
   CargarTiposEntidades() {
     this.Service.get().subscribe(result => {
@@ -97,9 +99,8 @@ export class PaginaInicioComponent implements OnInit {
   applyFilterDetalle(filterValue: string) {
 
     if (filterValue === '') {
-      this.ArrayEntidadSearch = [];
+      this.dataSourceDetalleSearch.data = [];
     } else {
-
 
       //dividir el filtro por spacio
       var palabras = filterValue.split(' ');
@@ -114,11 +115,10 @@ export class PaginaInicioComponent implements OnInit {
 
           this.dataSourceDetallePalabras.filter = this.eliminarDiacriticosEs(element.trim().toLowerCase());
           this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+          this.dataSourceDetalleSearch.filteredData = this.dataSourceDetallePalabras.filteredData;
         }
 
       });
-
-      this.cargarEntidadesPorFiltroDetalles();
 
     }
 
@@ -134,6 +134,8 @@ export class PaginaInicioComponent implements OnInit {
     });
 
     var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+
+
 
     novaArr.forEach(element => {
       if (!isNullOrUndefined(this.ArrayEntidad.find((x: Entidad) => x.IdEntidad == element)))
