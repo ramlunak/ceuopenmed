@@ -69,7 +69,7 @@ export class EntidadComponent implements OnInit {
   Search: string;
 
   constructor(
-    private Service: EntidadService,
+    public Service: EntidadService,
     private asociacionService: AsociacionService,
     private detalleEntidadService: DetalleEntidadService,
     private authService: AuthService,
@@ -90,11 +90,11 @@ export class EntidadComponent implements OnInit {
     this.VisorEntidad = this.activeRoute.snapshot.params.entidad;
     this.Search = '';
 
-    if (isNullOrUndefined(this.VisorEntidad)) {
-      this.CargarDgvElements();
-    } else {
-      this.CargarDgvElementsAllEstudent();
-    }
+    //  if (isNullOrUndefined(this.VisorEntidad)) {
+    //  this.CargarDgvElements();
+    //  } else {
+    this.CargarDgvElementsAllEstudent();
+    //  }
 
     this.CargarSelects();
   }
@@ -246,10 +246,13 @@ export class EntidadComponent implements OnInit {
     this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
-    if (entidad.Comentario != null)
+
+    if (!isNullOrUndefined(entidad.Comentario)) {
       this.ComentarioEntidad = entidad.Comentario;
-    else
-      this.ComentarioEntidad = '';
+    } else {
+      this.ComentarioEntidad = null;
+    }
+
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
     this.verificarAsocioacionesEvaluadas();
@@ -277,6 +280,7 @@ export class EntidadComponent implements OnInit {
 
       if (result.status === 1) {
         this.CargarDgvElements();
+        this.ComentarioEntidad = null;
       } else {
         this.errorService.handleError(result.error);
       }

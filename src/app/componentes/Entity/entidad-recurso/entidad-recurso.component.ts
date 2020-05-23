@@ -101,6 +101,7 @@ export class EntidadRecursoComponent implements OnInit {
   ActualizarEstadoEntidad() {
     this.ENTIDAD.Estado = '0';
     this.ENTIDAD.Evaluacion = '0';
+    this.ENTIDAD.Comentario = '';
     this.entidadService.form.patchValue(this.ENTIDAD);
     this.entidadService.update().subscribe(result => {
       if (result.status === 1) {
