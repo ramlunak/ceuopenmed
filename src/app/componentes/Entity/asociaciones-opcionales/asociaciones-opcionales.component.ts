@@ -148,6 +148,9 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   tdClickEventHandler(option: any) {
     if (isNullOrUndefined(option)) {
       this.selectedText = '';
+      this.Service.form.patchValue({
+        IdEntidad: null
+      });
     } else {
       this.selectedText = option.Entidad;
       this.Service.form.patchValue({
@@ -162,6 +165,9 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   }
 
   applyFilterEntidad(value: string) {
+    this.Service.form.patchValue({
+      IdEntidad: null
+    });
     this.dataSourceEntidad.filter = value;
   }
 

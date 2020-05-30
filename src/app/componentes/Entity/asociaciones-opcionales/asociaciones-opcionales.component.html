@@ -92,7 +92,18 @@
         </mat-form-field> -->
 
         <mat-form-field class="ceu-full-width">
-          <input type="text" placeholder="Entidad" autocomplete="off" matInput (keyup)="applyFilterEntidad($event.target.value)" [value]="selectedText" (click)="inputClick()">
+          <div style="display: inline-flex;justify-content: space-between;width: 100%;">
+            <input type="text" placeholder="Entidad" autocomplete="off" matInput (keyup)="applyFilterEntidad($event.target.value)" [value]="selectedText" (click)="inputClick()">
+
+            <div (click)="inputClick()" class="mat-select-arrow-wrapper" *ngIf="showOptions && dataSourceEntidad.filteredData.length > 0">
+              <div style="transform: rotate(-180deg);" class="mat-select-arrow"></div>
+            </div>
+
+            <div (click)="inputClick()" class="mat-select-arrow-wrapper" *ngIf="!showOptions || dataSourceEntidad.filteredData.length == 0">
+              <div class="mat-select-arrow"></div>
+            </div>
+
+          </div>
           <mat-card class="combo-options" style="position: absolute;width: 100%;z-index: 9999;margin-top: 10px;" *ngIf="showOptions && dataSourceEntidad.filteredData.length > 0">
             <mat-card-content>
               <table style="height: 50px;width: 100%;">
