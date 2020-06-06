@@ -2,13 +2,12 @@
   <tbody>
     <tr>
       <td style="width: 5%;">
-        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION"
-          (click)="goToAsociciones(ID_ENTIDAD,ENTIDAD,ASOCIACION.Entidad)" style="cursor: pointer;color:forestgreen;">
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION" (click)="goToAsociciones(ID_ENTIDAD,ENTIDAD,ASOCIACION.Entidad)"
+          style="cursor: pointer;color:forestgreen;">
           edit
         </mat-icon>
 
-        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && !DIRECCION"
-          (click)="goToAsociciones(ASOCIACION.IdEntidad,ASOCIACION.Entidad,ENTIDAD)"
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && !DIRECCION" (click)="goToAsociciones(ASOCIACION.IdEntidad,ASOCIACION.Entidad,ENTIDAD)"
           style="cursor: pointer;color:forestgreen;">edit
         </mat-icon>
       </td>
@@ -18,7 +17,7 @@
       </td>
       <td style="width: 35%;text-align:left;">{{ASOCIACION.TipoAsociacion}}</td>
       <td style="width: 10%;text-align:left;">{{ASOCIACION.Nivel}}</td>
-      <td style="width: 25%;text-align:left;">{{ASOCIACION.Comentario}}</td>
+      <td style="width: 25%;text-align:left;">{{ASOCIACION.Descripcion}}</td>
       <td>
         <div class="ta-img">
 
@@ -34,11 +33,9 @@
       </td>
     </tr>
 
-    <tr *ngFor="let item of ArrarAsociaiconesMultiple" [style.display]="expand ? 'table-row' : 'none' "
-      style="color: orangered;">
+    <tr *ngFor="let item of ArrarAsociaiconesMultiple" [style.display]="expand ? 'table-row' : 'none' " style="color: orangered;">
       <td style="width: 5%;">
-        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION"
-          (click)="goToAsocicionesMultiples(item.TipoAsociacion,item.Entidad,item.IdAsociacion)"
+        <mat-icon matTooltip="Editar" *ngIf="authService.showMenus && DIRECCION" (click)="goToAsocicionesMultiples(item.TipoAsociacion,item.Entidad,item.IdAsociacion)"
           style="cursor: pointer;color:forestgreen;">edit
         </mat-icon>
       </td>

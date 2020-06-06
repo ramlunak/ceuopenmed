@@ -2,8 +2,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
 
-    <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" mat-button (click)="Limpiar()" data-dismiss="modal"
-      data-toggle="modal" data-target="#OperationModalDialog">
+    <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
       <mat-icon>add</mat-icon>
       Nuevo
     </button>
@@ -26,8 +25,7 @@
 <!--END TOOL BAR-->
 
 <!-- FORMULARIO -->
-<div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
-  aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
+<div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -60,10 +58,9 @@
         </mat-icon>
         <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
-          *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
-        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
-          *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew" data-dismiss="modal"
+          (click)="guardarClick()">Modificar</button>
 
       </div>
     </div>
@@ -72,8 +69,7 @@
 <!--END FORMULARIO -->
 
 <!-- ELIMINAR -->
-<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
-  aria-hidden="true">
+<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -109,8 +105,8 @@
 <table mat-table [dataSource]="dataSource" class="ceu-table">
 
   <ng-container matColumnDef="IdEntidad">
-    <th hidden mat-header-cell *matHeaderCellDef> ID </th>
-    <td hidden mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
   </ng-container>
 
   <ng-container matColumnDef="TipoEntidad">
@@ -123,18 +119,15 @@
     <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
   </ng-container>
 
-
   <ng-container matColumnDef="Entidad">
     <th mat-header-cell *matHeaderCellDef> Entidad </th>
     <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
   </ng-container>
 
   <ng-container matColumnDef="Estudiante">
-    <th mat-header-cell *matHeaderCellDef> <label
-        *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
+    <th mat-header-cell *matHeaderCellDef> <label *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
     <td mat-cell *matCellDef="let element">
-      <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'"
-        matTooltip="{{element.Estudiante}}">face</mat-icon>
+      <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'" matTooltip="{{element.Estudiante}}">face</mat-icon>
     </td>
   </ng-container>
 
@@ -142,33 +135,26 @@
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let element">
 
-      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
-        *ngIf="element.Estado == 1 && element.Evaluacion == 1"
-        (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()' mat-icon-button
-        data-toggle="modal" data-target="#EvaluarModalDialog">
+      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 1 && element.Evaluacion == 1"
+        (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()' mat-icon-button data-toggle="modal" data-target="#EvaluarModalDialog">
         <mat-icon class="green-color" matTooltip="Correcto">done_all</mat-icon>
       </button>
 
       <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 0"
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
-        data-toggle="modal" data-target="#EvaluarModalDialog">
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button data-toggle="modal" data-target="#EvaluarModalDialog">
         <mat-icon class="darkblue-color" matTooltip="En espera">hourglass_empty</mat-icon>
       </button>
 
-      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'"
-        *ngIf="element.Estado == 1 && element.Evaluacion == 0"
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button
-        data-toggle="modal" data-target="#EvaluarModalDialog">
+      <button [disabled]="this.authService.currentUser.Rol == 'Estudiante'" *ngIf="element.Estado == 1 && element.Evaluacion == 0"
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); cargarEvaluacion()" mat-icon-button data-toggle="modal" data-target="#EvaluarModalDialog">
         <mat-icon color="warn" matTooltip="Incorrecto">report</mat-icon>
       </button>
 
-      <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' && element.Estado == 1"
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);" mat-icon-button>
+      <button *ngIf="this.authService.currentUser.Rol == 'Estudiante' && element.Estado == 1" (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);" mat-icon-button>
         <mat-icon class="profesor-color" matTooltip="{{element.Profesor}}">school</mat-icon>
       </button>
 
-      <button *ngIf="element.Estado == 1 && element.Comentario != null"
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
+      <button *ngIf="element.Estado == 1 && element.Comentario != null" (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
         data-toggle="modal">
         <mat-icon class="aqua-color" matTooltip="{{element.Comentario}}">comment</mat-icon>
       </button>
@@ -180,16 +166,14 @@
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let element">
 
-      <button *ngIf="this.authService.currentUser.Rol == 'Profesor'" [disabled]="element.Evaluacion == 0"
-        matBadge="{{element.countAsociaciones}}" matBadgePosition="before" matBadgeColor="primary" mat-icon-button
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
+      <button *ngIf="this.authService.currentUser.Rol == 'Profesor'" [disabled]="element.Evaluacion == 0" matBadge="{{element.countAsociaciones}}" matBadgePosition="before"
+        matBadgeColor="primary" mat-icon-button (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element);goToAsociciones()">
         <mat-icon matTooltip="Asociaciones">shuffle</mat-icon>
       </button>
 
       <button
         *ngIf="this.authService.currentUser.Rol == 'Profesor' || (this.authService.currentUser.Rol == 'Estudiante' && this.authService.currentUser.IdEstudiante == element.IdEstudiante) "
-        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button
-        data-toggle="modal" data-target="#DeleteDialog">
+        (click)="ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()" mat-icon-button data-toggle="modal" data-target="#DeleteDialog">
         <mat-icon color='warn' matTooltip="Eliminar">delete</mat-icon>
       </button>
 
@@ -203,8 +187,7 @@
 <!--END GRID -->
 
 <!-- EVALUAR -->
-<div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog" aria-labelledby="EvaluarModalDialogTitle"
-  aria-hidden="true">
+<div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog" aria-labelledby="EvaluarModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -253,8 +236,7 @@
 
           <mat-form-field class="ceu-full-width">
 
-            <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario"
-              placeholder="Comentario"></textarea>
+            <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario" placeholder="Comentario"></textarea>
             <mat-error>Este campo es requerido.</mat-error>
           </mat-form-field>
 

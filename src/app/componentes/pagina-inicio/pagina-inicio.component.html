@@ -29,11 +29,11 @@
       <mat-icon>search</mat-icon>
       <input class="input-search" placeholder="Buscar" type="text" (keyup)="applyFilterDetalle($event.target.value)">
     </div>
-    <div class="serach-autocomplete" *ngIf="dataSourceDetalleSearch.filteredData.length > 0">
+    <div style="overflow-y: scroll;" class="serach-autocomplete" *ngIf="dataSourceDetalleSearch.filteredData.length > 0">
 
       <li *ngFor=" let item of dataSourceDetalleSearch.filteredData">
         <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
-          {{item.Entidad}}
+          {{item.Entidad}} ({{item.TipoEntidad}})
         </div>
       </li>
     </div>
