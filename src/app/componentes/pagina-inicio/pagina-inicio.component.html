@@ -33,7 +33,7 @@
 
       <li *ngFor=" let item of dataSourceDetalleSearch.filteredData">
         <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
-          {{item.Entidad}} ({{item.TipoEntidad}})
+          Id(<samp style="color: blueviolet;">{{item.IdEntidad}}</samp>) - {{item.Entidad}} ({{item.TipoEntidad}})
         </div>
       </li>
     </div>

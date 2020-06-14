@@ -64,6 +64,7 @@ export class PaginaInicioComponent implements OnInit {
 
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(this.listEntidadesDetalle);
       this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(this.listEntidadesDetalle);
+      this.applyPredicate();
 
     }, (error) => {
 
@@ -150,6 +151,20 @@ export class PaginaInicioComponent implements OnInit {
       .normalize('NFD')
       .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
       .normalize();
+  }
+
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
   }
 
 }
