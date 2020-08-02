@@ -326,6 +326,11 @@ export class EntidadesEvaluadasComponent implements OnInit {
     if (filterValue === '') {
       this.CargarDgvElements();
     } else {
+
+      if (filterValue.length < 3) {
+        return;
+      }
+
       //dividir el filtro por spacio
       var palabras = filterValue.split(' ');
 

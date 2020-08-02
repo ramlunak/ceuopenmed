@@ -348,6 +348,10 @@ export class AsociacionComponent implements OnInit {
 
   applyFilterDetalle(filterValue: string) {
 
+    if (filterValue.length < 3) {
+      return;
+    }
+
     //dividir el filtro por spacio
     var palabras = filterValue.split(' ');
 

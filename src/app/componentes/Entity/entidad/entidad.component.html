@@ -23,7 +23,7 @@
     </mat-button-toggle-group>
 
     <mat-form-field id="mat-form-field-search" style="margin: 5px;">
-      <input matInput [value]="Search" (keyup)="applyFilterDetalle($event.target.value)">
+      <input matInput [value]="Search" matTooltip="Mínimo 3 caracteres" (keyup)="applyFilterDetalle($event.target.value)">
       <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
     </mat-form-field>
 

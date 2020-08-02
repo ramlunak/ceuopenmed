@@ -15,7 +15,7 @@
     <span class="material-spacer"></span>
 
     <mat-form-field id="mat-form-field-search" style="margin: 5px;">
-      <input matInput [value]="Search" (keyup)="applyFilterDetalle($event.target.value)">
+      <input matInput [value]="Search" matTooltip="Mínimo 3 caracteres" (keyup)="applyFilterDetalle($event.target.value)">
       <mat-placeholder class="placeholder">Buscar por Detalles</mat-placeholder>
     </mat-form-field>
 
@@ -37,8 +37,7 @@
 </table>
 
 <!-- FORMULARIO -->
-<div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog"
-  aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
+<div class="modal fade" id="OperationModalDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -81,10 +80,9 @@
         </mat-icon>
         <button mat-stroked-button data-dismiss="modal" (click)="Limpiar()">Cancelar</button>
 
-        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
-          *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
-        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)"
-          *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">Modificar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="transaccionIsNew" (click)="guardarClick()">Guardar</button>
+        <button mat-raised-button color='primary' [disabled]="Service.form.invalid || (Service.loading$ | async)" *ngIf="!transaccionIsNew" data-dismiss="modal"
+          (click)="guardarClick()">Modificar</button>
 
       </div>
     </div>
@@ -93,8 +91,7 @@
 <!--END FORMULARIO -->
 
 <!-- ELIMINAR -->
-<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle"
-  aria-hidden="true">
+<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="OperationModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -225,21 +222,18 @@
     <td mat-cell *matCellDef="let element">
 
       <button *ngIf="this.authService.currentUser.Rol == 'Estudiante'" class="m-r20" mat-icon-button
-        (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()' data-toggle="modal"
-        data-target="#OperationModalDialog">
+        (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); setOperationsData()' data-toggle="modal" data-target="#OperationModalDialog">
         <mat-icon color='primary' matTooltip="Agregar asociacion">add</mat-icon>
       </button>
 
-      <button *ngIf="element.CountAsociacion > 0" matBadge="{{element.CountAsociacionEvaluadas}}"
-        matBadgePosition="before" matBadgeColor="warn" mat-icon-button
+      <button *ngIf="element.CountAsociacion > 0" matBadge="{{element.CountAsociacionEvaluadas}}" matBadgePosition="before" matBadgeColor="warn" mat-icon-button
         (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); goToListAsociaciones()'>
         <mat-icon class="green-icon" matTooltip="Ver lista de asociaciones">view_module</mat-icon>
       </button>
 
 
       <!-- contador a la derecha -->
-      <button disabled *ngIf="element.CountAsociacion > 0" matBadge="{{element.CountAsociacionPendientes}}"
-        matBadgePosition="before" matBadgeColor="primary" mat-icon-button
+      <button disabled *ngIf="element.CountAsociacion > 0" matBadge="{{element.CountAsociacionPendientes}}" matBadgePosition="before" matBadgeColor="primary" mat-icon-button
         (click)='ROW_NUMBER = dataSource.filteredData.indexOf(element); goToListAsociaciones()'>
         <mat-icon class="green-icon"></mat-icon>
       </button>
@@ -265,8 +259,7 @@
 <!--END GRID -->
 
 <!-- EVALUAR -->
-<div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog" aria-labelledby="EvaluarModalDialogTitle"
-  aria-hidden="true">
+<div class="modal fade" id="EvaluarModalDialog" tabindex="-1" role="dialog" aria-labelledby="EvaluarModalDialogTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -315,8 +308,7 @@
 
           <mat-form-field class="ceu-full-width">
 
-            <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario"
-              placeholder="Comentario"></textarea>
+            <textarea formControlName="Comentario" [value]="ComentarioEntidad" rows="3" matInput name="Comentario" placeholder="Comentario"></textarea>
             <mat-error>Este campo es requerido.</mat-error>
           </mat-form-field>
 
