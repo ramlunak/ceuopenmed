@@ -1,0 +1,47 @@
+<!-- TOOL BAR-->
+<mat-toolbar *ngIf="!authService.showMenus" color="primary">
+  <mat-toolbar-row>
+
+    <a class="logo" href="/">
+      <img style="width: 90px;" src="../../assets/img/ceo_logo.png" alt="COpenMed" class="navbar-brand">
+      <!--  <span style="color: white;font-size: 14px;font-weight:900">COpenMed</span> -->
+    </a>
+
+    <span class="material-spacer"></span>
+    <span class="material-spacer"></span>
+
+    <button mat-button routerLink="/sobreCOpendMed">
+      <a class="link" style="color: cyan;text-decoration:underline">Sobre COpendMed</a>
+    </button>
+
+    <button mat-button routerLink="/login">
+      Login
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+<div class="content p-5">
+
+  <div class="name-img-content">
+    <div class="ta-name">{{ENIDAD.Entidad}}</div>
+    <div class="ta-img">
+      <button mat-icon-button color="primary" (click)="backClicked()">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+  <div class="te-name">Tipo Entidad: {{ENIDAD.TipoEntidad}}</div>
+
+  <app-visor-entidad-detalle [ID_ENTIDAD]="IdEntidad" [ID_TIPOENTIDAD]="IdTipoEntidad"></app-visor-entidad-detalle>
+  <app-visor-entidad-recursos [ID_ENTIDAD]="IdEntidad" [ID_TIPOENTIDAD]="IdTipoEntidad"></app-visor-entidad-recursos>
+  <app-visor-entidad-asociaciones [ENTIDAD]="ENIDAD.Entidad" [DIRECCION]="true" [ID_ENTIDAD]="IdEntidad">
+  </app-visor-entidad-asociaciones>
+  <app-visor-entidad-asociaciones [ENTIDAD]="ENIDAD.Entidad" [DIRECCION]="false" [ID_ENTIDAD]="IdEntidad">
+  </app-visor-entidad-asociaciones>
+
+
+</div>

@@ -1,5 +1,7 @@
+import { element } from 'protractor';
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../services/seguridad/auth.service';
@@ -53,7 +55,7 @@ export class EntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad','IdEntidad','Idioma', 'Entidad','Estudiante', 'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'Estudiante', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listEntidadesAux: Entidad[];
@@ -62,9 +64,12 @@ export class EntidadComponent implements OnInit {
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
+  dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
+  VisorEntidad: string;
+  Search: string;
 
   constructor(
-    private Service: EntidadService,
+    public Service: EntidadService,
     private asociacionService: AsociacionService,
     private detalleEntidadService: DetalleEntidadService,
     private authService: AuthService,
@@ -72,6 +77,7 @@ export class EntidadComponent implements OnInit {
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -81,17 +87,31 @@ export class EntidadComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
-    this.CargarDgvElements();
-    this.CargarDetalles();
+    this.VisorEntidad = this.activeRoute.snapshot.params.entidad;
+    this.Search = '';
+
+    //  if (isNullOrUndefined(this.VisorEntidad)) {
+    //  this.CargarDgvElements();
+    //  } else {
+    this.CargarDgvElementsAllEstudent();
+    //  }
+
     this.CargarSelects();
   }
 
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
-        }, (error) => {
-  
+      this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.applyPredicate();
+      if (!isNullOrUndefined(this.VisorEntidad)) {
+        this.Search = this.VisorEntidad;
+        this.applyFilterDetalle(this.Search);
+      }
+    }, (error) => {
+
     });
+
   }
 
   CargarSelects() {
@@ -112,6 +132,7 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -120,10 +141,12 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
     }
+
 
   }
 
@@ -133,14 +156,15 @@ export class EntidadComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } 
+    }
   }
 
   public redirectToDetalleEntidad = (entidad: any) => {
-    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}`;
+    const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}/${entidad.Evaluacion}/${this.authService.currentUser.IdEstudiante}`;
     this.router.navigate([url]);
   }
 
@@ -222,10 +246,13 @@ export class EntidadComponent implements OnInit {
     this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
-    if(entidad.Comentario != null)
-    this.ComentarioEntidad = entidad.Comentario;
-    else
-    this.ComentarioEntidad = '';
+
+    if (!isNullOrUndefined(entidad.Comentario)) {
+      this.ComentarioEntidad = entidad.Comentario;
+    } else {
+      this.ComentarioEntidad = null;
+    }
+
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
     this.verificarAsocioacionesEvaluadas();
@@ -253,6 +280,7 @@ export class EntidadComponent implements OnInit {
 
       if (result.status === 1) {
         this.CargarDgvElements();
+        this.ComentarioEntidad = null;
       } else {
         this.errorService.handleError(result.error);
       }
@@ -272,9 +300,9 @@ export class EntidadComponent implements OnInit {
   }
 
   goToAsociciones() {
-   
+
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
-   
+
     this.asociacionService.form.patchValue({
       IdEntidad1: entidad.IdEntidad,
       entidadSelecionada: entidad.Entidad
@@ -321,30 +349,56 @@ export class EntidadComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator;
   }
 
-  
+
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
-    this.cargarEntidadesPorFiltroDetalles();   
+
+    if (filterValue.length < 3) {
+      return;
+    }
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
+    this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSourceDetalle.filteredData.length > 0)
+          this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+        this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
+        this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+      }
+
+    });
+
+    this.cargarEntidadesPorFiltroDetalles();
+
   }
 
- public cargarEntidadesPorFiltroDetalles(){
- 
-   this.listEntidadesAux = [];
-   this.listIDS=[];
+  public cargarEntidadesPorFiltroDetalles() {
 
-   this.dataSourceDetalle.filteredData.forEach(element => {
-    this.listIDS.push(element.IdEntidad);
-   });  
+    this.listEntidadesAux = [];
+    this.listIDS = [];
 
-   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+    this.dataSourceDetalle.filteredData.forEach(element => {
+      this.listIDS.push(element.IdEntidad);
+    });
 
-   novaArr.forEach(element => {
-    this.listEntidadesAux.push(this.listEntidades.find((x:Entidad)=> x.IdEntidad == element));
-   });     
-      this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
- }
+    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+
+    novaArr.forEach(element => {
+      if (!isNullOrUndefined(this.listEntidades.find((x: Entidad) => x.IdEntidad == element)))
+        this.listEntidadesAux.push(this.listEntidades.find((x: Entidad) => x.IdEntidad == element));
+    });
+
+    this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
+    this.dataSource.paginator = this.paginator;
+  }
 
   public redirectToAdditionalInfo = () => {
     const entidad = this.dataSource.filteredData[this.ROW_NUMBER];
@@ -352,13 +406,29 @@ export class EntidadComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  onValChange(value){
-    if(value == "todas"){
+  onValChange(value) {
+    if (value == "todas") {
       this.CargarDgvElementsAllEstudent();
     }
-    else{
+    else {
       this.CargarDgvElements();
     }
-}
+  }
+
+
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
+  }
 
 }
+

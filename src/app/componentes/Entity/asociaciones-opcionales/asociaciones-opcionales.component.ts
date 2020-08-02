@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -27,14 +28,14 @@ import { TipoEntidadService } from '../../../services/administracion/tipo-entida
 import { Entidad } from 'src/app/models/entidad';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Asociacion } from 'src/app/models/asociacion';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -67,31 +68,35 @@ export class AsociacionesOpcionalesComponent implements OnInit {
   IdEntidad1: number;
   IdEntidad2: number;
   ENTIDAD: Entidad;
-  
+
   // DataTable --
   dataSource: MatTableDataSource<AsociacionMultiple>;
-  displayedColumns = [ 'Entidad','IdAsociacionMultiple','TipoAsociacion', 'Nivel','Comentario','commands'];
+  dataSourceEntidad: MatTableDataSource<Entidad>;
+  displayedColumns = ['Entidad', 'IdAsociacionMultiple', 'TipoAsociacion', 'Nivel', 'Comentario', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
   listEntidad: Entidad[] = [];
   GridLista: Entidad[] = [];
-  
+
   listTipoAsociacion: AsociacionMultiple[];
 
-//AUTOCOMPLETE
-myControl = new FormControl();
-options: string[] = [];
-values: string[] = [];
-filteredOptions: Observable<string[]>;
+  //AUTOCOMPLETE
+  myControl = new FormControl();
+  options: string[] = [];
+  values: string[] = [];
+  filteredOptions: Observable<string[]>;
 
-private _filter(value: string): string[] {  
-  const filterValue = value.toLowerCase();
-  return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-}
+  selectedText = '';
+  showOptions: boolean;
 
-//--------------
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  //--------------
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -106,37 +111,78 @@ private _filter(value: string): string[] {
     private errorService: ErrorHandlerService,
     private router: Router,
     private activeRoute: ActivatedRoute,
-   private snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
+    this.dataSourceEntidad = new MatTableDataSource<Entidad>([]);
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
     this.paginator._intl.previousPageLabel = 'Anterior';
     this.paginator._intl.nextPageLabel = 'Siguiente';
     this.paginator._intl.firstPageLabel = 'Primero';
-    this.paginator._intl.lastPageLabel = 'Último';  
+    this.paginator._intl.lastPageLabel = 'Último';
     this.IdAsociacion = this.activeRoute.snapshot.params.idAsociacion;
     this.AsocioacionSeleccionada = this.activeRoute.snapshot.params.Asociacion;
     this.IdEntidad1 = this.activeRoute.snapshot.params.idEntidad1;
     this.IdEntidad2 = this.activeRoute.snapshot.params.idEntidad2;
-          
-    this.CargarDgvElements();   
+
+    this.CargarDgvElements();
     this.CargarSelects();
 
-     this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
-     );
+    );
 
-     this.Service.form.patchValue({ IdAsociacion: this.IdAsociacion });
+    this.Service.form.patchValue({ IdAsociacion: this.IdAsociacion });
   }
- 
-  CargarSelects() {   
-      // Tipo Entidad
-      this.tipoEntidadService.get().subscribe(result => {
-        this.listTiposEntidad = result.data;
+
+  CargarSelects() {
+    // Tipo Entidad
+    this.tipoEntidadService.get().subscribe(result => {
+      this.listTiposEntidad = result.data;
+    });
+  }
+  // Combobox ---------------------------
+
+  tdClickEventHandler(option: any) {
+    if (isNullOrUndefined(option)) {
+      this.selectedText = '';
+      this.Service.form.patchValue({
+        IdEntidad: null
       });
+    } else {
+      this.selectedText = option.Entidad;
+      this.Service.form.patchValue({
+        IdEntidad: option.IdEntidad
+      });
+    }
+    this.showOptions = false;
   }
+
+  inputClick() {
+    this.showOptions = !this.showOptions;
+  }
+
+  applyFilterEntidad(value: string) {
+    this.Service.form.patchValue({
+      IdEntidad: null
+    });
+    this.dataSourceEntidad.filter = value;
+  }
+
+  applyPredicatedataSourceEntidad() {
+    this.dataSourceEntidad.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+  }
+  // end combobox -------------------------
 
   CargarExtraInfo() {
     // Tipo Entidad
@@ -161,7 +207,7 @@ private _filter(value: string): string[] {
       this.dataSource = new MatTableDataSource<AsociacionMultiple>(result.data);
       this.dataSource.paginator = this.paginator;
     }, (error) => {
-      this.errorService.handleError(error);   
+      this.errorService.handleError(error);
     });
   }
 
@@ -182,13 +228,12 @@ private _filter(value: string): string[] {
 
   guardarClick() {
 
-if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
-{
-  this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
-    duration: 8000,
-  });
-  return;
-}
+    if (this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0) {
+      this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
+        duration: 8000,
+      });
+      return;
+    }
 
     if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
@@ -208,7 +253,7 @@ if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
       this.Service.update().subscribe(result => {
 
         if (result.status === 1) {
-        
+
           this.CargarDgvElements();
         } else {
           this.errorService.handleError(result.error);
@@ -234,93 +279,95 @@ if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
     });
   }
 
-  change(event){
+  change(event) {
     this.options = [];
     this.values = [];
-    
+
     this.filtrarEntidades(event.value);
 
     this.SeTipoAsociacionMultipleServicervice.asociacionByIdTipoEntidad(event.value).subscribe(result => {
-      this.listTipoAsociacion = result.data;        
+      this.listTipoAsociacion = result.data;
     });
- }
+  }
 
-  filtrarEntidades(id){
+  filtrarEntidades(id) {
     this.listEntidad = [];
-      this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(id).subscribe(result => {
-         result.data.forEach(element => {    
-           if(element.IdEntidad != this.IdEntidad1 && element.IdEntidad != this.IdEntidad2) {
-           var bandera = 0;
-         
-            this.GridLista.forEach(item => {        
-           
-              if(item.IdEntidad == element.IdEntidad)
-                {
-                 bandera = 1;               
-                }
-            }); 
-         
-           if(bandera == 0)
+    this.dataSourceEntidad = new MatTableDataSource<Entidad>([]);
+    this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(id).subscribe(result => {
+      result.data.forEach(element => {
+        if (element.IdEntidad != this.IdEntidad1 && element.IdEntidad != this.IdEntidad2) {
+          var bandera = 0;
+
+          this.GridLista.forEach(item => {
+
+            if (item.IdEntidad == element.IdEntidad) {
+              bandera = 1;
+            }
+          });
+
+          if (bandera == 0)
             this.listEntidad.push(element);
-           }            
-     });  
-    }); 
+        }
+      });
+      this.dataSourceEntidad = new MatTableDataSource<Entidad>(this.listEntidad);
+      this.applyPredicatedataSourceEntidad();
+    });
 
   }
 
-   arrayRemove(arr, value) {
+  arrayRemove(arr, value) {
 
-    return arr.filter(function(ele){
-        return ele != value;
+    return arr.filter(function (ele) {
+      return ele != value;
     });
- 
- }
- 
+
+  }
 
 
- autocompleteChange(event){
-  alert();return;
-  this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(event.value).subscribe(result => {
-         result.data.forEach(element => {     
-      this.options.push(element.Entidad);
-      this.values[element.Entidad] = element.IdEntidad;
+
+  autocompleteChange(event) {
+    alert(); return;
+    this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(event.value).subscribe(result => {
+      result.data.forEach(element => {
+        this.options.push(element.Entidad);
+        this.values[element.Entidad] = element.IdEntidad;
+      });
     });
-  });
-}
- 
- cargarEntidadByName(){
-  this.IdEntidadSelected = this.values[this.Service.form.value.Entidad]; 
- }
+  }
 
-CargarDatosModificar(asociaconmultiple){
-  
-  this.Service.form.patchValue(
-    {
-      IdTipoEntidad: asociaconmultiple.IdTipoEntidad,       
-    });
+  cargarEntidadByName() {
+    this.IdEntidadSelected = this.values[this.Service.form.value.Entidad];
+  }
+
+  CargarDatosModificar(asociaconmultiple) {
+
+    this.Service.form.patchValue(
+      {
+        IdTipoEntidad: asociaconmultiple.IdTipoEntidad,
+      });
 
     this.entidadService.actionEntidadEvaluadaByIdTipoEntidad(asociaconmultiple.IdTipoEntidad).subscribe(result => {
-      this.listEntidad = result.data;        
+      this.listEntidad = result.data;
     });
 
     this.Service.form.patchValue(
       {
-        IdEntidad: asociaconmultiple.IdEntidad,       
+        IdEntidad: asociaconmultiple.IdEntidad,
       });
 
-      this.SeTipoAsociacionMultipleServicervice.asociacionByIdTipoEntidad(asociaconmultiple.IdTipoEntidad).subscribe(result => {
-        this.listTipoAsociacion = result.data;        
-      });
+    this.SeTipoAsociacionMultipleServicervice.asociacionByIdTipoEntidad(asociaconmultiple.IdTipoEntidad).subscribe(result => {
+      this.listTipoAsociacion = result.data;
+    });
 
-      this.Service.form.patchValue(
-        {
-          idAsociacion:this.IdAsociacion,
-          IdAsociacionMultiple:asociaconmultiple.IdAsociacionMultiple, 
-          IdTipoAsociacionMultiple: asociaconmultiple.IdTipoAsociacionMultiple,      
-          Nivel: asociaconmultiple.Nivel,      
-          Comentario: asociaconmultiple.Comentario           
-        });
-}
+    this.Service.form.patchValue(
+      {
+        idAsociacion: this.IdAsociacion,
+        IdAsociacionMultiple: asociaconmultiple.IdAsociacionMultiple,
+        IdTipoAsociacionMultiple: asociaconmultiple.IdTipoAsociacionMultiple,
+        Nivel: asociaconmultiple.Nivel,
+        Comentario: asociaconmultiple.Comentario
+      });
+  }
 
   setOperationsData() {
     this.transaccionIsNew = false;
@@ -328,25 +375,27 @@ CargarDatosModificar(asociaconmultiple){
     this.CargarDatosModificar(asociaconmultiple);
     this.Service.form.patchValue(
       {
-        IdAsociacionMultiple: asociaconmultiple.IdAsociacionMultiple,       
-      }); 
+        IdAsociacionMultiple: asociaconmultiple.IdAsociacionMultiple,
+      });
   }
 
   setEliminarData() {
     this.transaccionIsNew = true;
     const asociaconmultiple = this.dataSource.filteredData[this.ROW_NUMBER];
-  
+
     this.Service.form.patchValue(
       {
-        IdAsociacionMultiple: asociaconmultiple.IdAsociacionMultiple,       
-      }); 
+        IdAsociacionMultiple: asociaconmultiple.IdAsociacionMultiple,
+      });
   }
 
-  Limpiar() {   
+  Limpiar() {
     this.transaccionIsNew = true;
     this.Service.InicializarValoresFormGroup();
     this.Service.form.reset();
     this.Service.form.patchValue({ IdAsociacion: this.IdAsociacion });
+    this.dataSourceEntidad = new MatTableDataSource<Entidad>([]);
+    this.selectedText = '';
   }
 
   applyFilter(filterValue: string) {

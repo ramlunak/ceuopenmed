@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -39,12 +40,16 @@ export class FormEntidadComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<DetalleEntidad>;
+  dataSourceAux: MatTableDataSource<DetalleEntidad>;
+  dataSourcePalabras: MatTableDataSource<DetalleEntidad>;
   displayedColumns = ['Idioma', 'Entidad', 'Nivel', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
   EntidadIdEStudiante: number;
+  ParametroBusqueda: string;
+  Search = '';
 
   constructor(
     private entidadService: EntidadService,
@@ -66,6 +71,7 @@ export class FormEntidadComponent implements OnInit {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
+    this.ParametroBusqueda = this.activeRoute.snapshot.params.parametroBusqueda;
     this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
     this.CargarDgvElements();
@@ -102,7 +108,14 @@ export class FormEntidadComponent implements OnInit {
   CargarDgvElements() {
     this.entidadService.viewDetalle(this.IdEntidad).subscribe(result => {
       this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.dataSourceAux = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.dataSourcePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSource.paginator = this.paginator;
+      this.applyPredicate();
+      if (!isNullOrUndefined(this.ParametroBusqueda)) {
+        this.Search = this.ParametroBusqueda;
+        this.applyFilter(this.Search);
+      }
     }, (error) => {
       this.errorService.handleError(error);
       this.router.navigateByUrl('entidad');
@@ -112,6 +125,7 @@ export class FormEntidadComponent implements OnInit {
   ActualizarEstadoEntidad() {
     this.ENTIDAD.Estado = '0';
     this.ENTIDAD.Evaluacion = '0';
+    this.ENTIDAD.Comentario = '';
     this.entidadService.form.patchValue(this.ENTIDAD);
     this.entidadService.update().subscribe(result => {
       if (result.status === 1) {
@@ -193,7 +207,41 @@ export class FormEntidadComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSource.data = this.dataSourceAux.data;
+
+    this.dataSourcePalabras.data = this.dataSource.data;
+    this.dataSource.filteredData = this.dataSource.data;
+
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSource.filteredData.length > 0)
+          this.dataSourcePalabras.data = this.dataSource.filteredData;
+
+        this.dataSourcePalabras.filter = element.trim();
+        this.dataSource.data = this.dataSourcePalabras.filteredData;
+      }
+
+    });
+
+  }
+
+  applyPredicate() {
+    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
   }
 
 }

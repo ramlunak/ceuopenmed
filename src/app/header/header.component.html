@@ -3,8 +3,8 @@
   <div class="logo-header" data-background-color="blue">
 
     <a href="../index.html" class="logo">
-      <img src="../../assets/img/ceo_logo.png" alt="COpenMed" class="navbar-brand">
-      <span style="color: white;font-size: 14px;font-weight:900">COpenMed</span>
+      <img style="width: 90px;" src="../../assets/img/ceo_logo.png" alt="COpenMed" class="navbar-brand">
+      <!--  <span style="color: white;font-size: 14px;font-weight:900">COpenMed</span> -->
     </a>
     <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -28,31 +28,30 @@
         <form class="navbar-left navbar-form nav-search mr-md-3">
           <div class="input-group">
             <div class="input-group-prepend">
-              
+
             </div>
-          
+
           </div>
         </form>
       </div>
       <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-        
 
         <li class="nav-item dropdown hidden-caret">
           <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
-           
-              <div class="user-box" >
-                  <div class="avatar-sm">
-                    <img style="cursor: pointer" src="../assets/img/avatar.png" alt="image profile"
-                      class="avatar-img rounded">
-                    </div>
-                  <div style="text-align: center">
-                    <h4 style="text-align: center;color: white;cursor: pointer">
-                   <a>  </a>
-                      {{authService.currentUser.username}} 
-                    
-                    </h4>                    
-                   </div>
-                </div>
+
+            <div class="user-box">
+              <div class="avatar-sm">
+                <img style="cursor: pointer" src="../assets/img/avatar.png" alt="image profile"
+                  class="avatar-img rounded">
+              </div>
+              <div style="text-align: center">
+                <h4 style="text-align: center;color: white;cursor: pointer">
+                  <a>  </a>
+                  {{authService.currentUser.username}}
+
+                </h4>
+              </div>
+            </div>
           </a>
 
           <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -61,8 +60,7 @@
 
                 <div class="user-box">
                   <div class="avatar-lg">
-                    <img src="../assets/img/avatar.png" alt="image profile"
-                      class="avatar-img rounded"></div>
+                    <img src="../assets/img/avatar.png" alt="image profile" class="avatar-img rounded"></div>
                   <div class="u-text">
                     <h4>{{authService.currentUser.username}} <p class="text-muted">({{authService.currentUser.Rol}})</p>
                     </h4>
@@ -70,21 +68,23 @@
                     <!-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
                   </div>
                 </div>
-                
+
               </li>
               <li>
-                  <div class="dropdown-divider"></div>
-                  <a style="cursor: pointer" class="dropdown-item" routerLink="">Inicio</a>
-                  <div class="dropdown-divider"></div>
-                  <a style="cursor: pointer" class="dropdown-item" (click)="openDialog()">Cambiar Contraseña</a>
-                  <div class="dropdown-divider"></div>
-                  <a style="cursor: pointer" class="dropdown-item" (click)="Logout()">Cerrar sesión</a>
-                </li>
+                <div class="dropdown-divider"></div>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" routerLink="">Inicio</a>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" (click)="openDialog()">Cambiar
+                  Contraseña</a>
+                <a style="cursor: pointer;margin-bottom: 5px;" class="dropdown-item" (click)="Logout()">Cerrar
+                  sesión</a>
+                <div class="dropdown-divider"></div>
+                <a style="cursor: pointer" class="dropdown-item" routerLink="sobreCOpendMed">Sobre COpendMed</a>
+              </li>
             </div>
           </ul>
         </li>
 
-     
+
       </ul>
     </div>
   </nav>

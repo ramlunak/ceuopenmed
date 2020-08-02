@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -40,6 +41,7 @@ export class EntidadRecursoComponent implements OnInit {
   // Selects
   listTiposEntidad: TipoEntidad[];
   EntidadIdEStudiante: number;
+  ParametroBusqueda: string;
 
   constructor(
     private entidadService: EntidadService,
@@ -61,6 +63,7 @@ export class EntidadRecursoComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
+    this.ParametroBusqueda = this.activeRoute.snapshot.params.parametroBusqueda;
     this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.entidadRecursoService.form.patchValue({ IdEntidad: this.IdEntidad });
@@ -86,6 +89,9 @@ export class EntidadRecursoComponent implements OnInit {
     this.entidadRecursoService.getByEntidad().subscribe(result => {
       this.dataSource = new MatTableDataSource<EntidadRecurso>(result.data);
       this.dataSource.paginator = this.paginator;
+      if (!isNullOrUndefined(this.ParametroBusqueda)) {
+        this.applyFilter('BuscarRecurso' + this.ParametroBusqueda);
+      }
     }, (error) => {
       this.errorService.handleError(error);
       this.router.navigateByUrl('entidad');
@@ -95,6 +101,7 @@ export class EntidadRecursoComponent implements OnInit {
   ActualizarEstadoEntidad() {
     this.ENTIDAD.Estado = '0';
     this.ENTIDAD.Evaluacion = '0';
+    this.ENTIDAD.Comentario = '';
     this.entidadService.form.patchValue(this.ENTIDAD);
     this.entidadService.update().subscribe(result => {
       if (result.status === 1) {

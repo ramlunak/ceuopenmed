@@ -1,0 +1,13 @@
+.td-combo{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.td-combo:hover { background-color : tomato }
+
+.combo-options{
+  height: auto;
+  max-height: 200px;
+  overflow-y: scroll;
+}

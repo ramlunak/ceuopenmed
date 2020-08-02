@@ -1,0 +1,46 @@
+<!-- TOOL BAR-->
+<mat-toolbar *ngIf="!authService.showMenus" color="primary">
+  <mat-toolbar-row>
+
+    <a class="logo">
+      <img style="width: 90px;" src="../../assets/img/ceo_logo.png" alt="COpenMed" class="navbar-brand">
+      <!--  <span style="color: white;font-size: 14px;font-weight:900">COpenMed</span> -->
+    </a>
+
+    <span class="material-spacer"></span>
+    <span class="material-spacer"></span>
+
+    <button mat-button routerLink="/sobreCOpendMed">
+      <a class="link" style="color: cyan;text-decoration:underline">Sobre COpendMed</a>
+    </button>
+
+    <button mat-button routerLink="/login">
+      Login
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+<div class="d-block container mt-3">
+
+  <div class="d-block position-relative mb-3">
+    <div class="div-search d-flex">
+      <mat-icon>search</mat-icon>
+      <input class="input-search" placeholder="Buscar" type="text" (keyup)="applyFilterDetalle($event.target.value)">
+    </div>
+    <div style="overflow-y: scroll;" class="serach-autocomplete" *ngIf="dataSourceDetalleSearch.filteredData.length > 0">
+
+      <li *ngFor=" let item of dataSourceDetalleSearch.filteredData">
+        <div class="autocomplete-item" routerLink="/VisorEntidad/{{item.IdEntidad}}/{{item.IdTipoEntidad}}">
+          Id(<samp style="color: blueviolet;">{{item.IdEntidad}}</samp>) - {{item.Entidad}} ({{item.TipoEntidad}})
+        </div>
+      </li>
+    </div>
+  </div>
+
+  <li *ngFor=" let item of ArrarTipoEntidad">
+    <app-visor-tipo-asociacion [TIPO_ENIDAD]="item"></app-visor-tipo-asociacion>
+  </li>
+
+</div>

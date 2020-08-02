@@ -24,7 +24,7 @@ export class AsociacionService {
   form: FormGroup = new FormGroup({
     IdAsociacion: new FormControl(null),
     IdEntidad1: new FormControl('', Validators.required),
-    IdEntidad2: new FormControl('', Validators.required),
+    IdEntidad2: new FormControl(null),
     IdTipoAsociacion: new FormControl(null, Validators.required),
     IdEstudiante: new FormControl(null, Validators.required),
     IdProfesor: new FormControl(null),
@@ -34,8 +34,10 @@ export class AsociacionService {
     Evaluacion: new FormControl(null),
     Estado: new FormControl(null),
     Comentario: new FormControl(null),
-    Nivel: new FormControl(null),
+    Descripcion: new FormControl(null),
+    Nivel: new FormControl('', Validators.required),
     entidadSelecionada: new FormControl(null),
+    Buscar: new FormControl(null),
 
   });
 
@@ -53,8 +55,10 @@ export class AsociacionService {
       Evaluacion: 0,
       Estado: 0,
       Comentario: '',
+      Descripcion: null,
       Nivel: '',
       entidadSelecionada: '',
+      Buscar: '',
     });
   }
 
@@ -105,7 +109,7 @@ export class AsociacionService {
 
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'lista/' + this.form.value.IdEntidad1 +'/'+IdEntidad2),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'lista/' + this.form.value.IdEntidad1 + '/' + IdEntidad2),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -158,7 +162,7 @@ export class AsociacionService {
   }
 
   update() {
-    
+
     this.loadingSubject.next(true);
     return this.httpClient
       .put<any>(

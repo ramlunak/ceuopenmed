@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,6 +18,8 @@ import { AsociacionService } from 'src/app/services/entity/asociacion.service';
 
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../services/error-handler.service';
+import { DetalleEntidad } from 'src/app/models/detalle-entidad';
+import { DetalleEntidadService } from 'src/app/services/entity/detalle-entidad.service';
 
 // Selector jQuery
 declare var $: any;
@@ -50,17 +53,25 @@ export class EntidadesEvaluadasComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Entidad>;
-  displayedColumns = ['TipoEntidad','IdEntidad','Idioma', 'Entidad','Estudiante', 'info', 'commands'];
+  displayedColumns = ['IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'Estudiante', 'info', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
   listTiposEntidad: TipoEntidad[];
+
+  //BUSCAR POR DETALLE
+  listEntidades: Entidad[];
+  listEntidadesAux: Entidad[];
+  listIDS: Array<number> = [];
+  dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
+  dataSourceDetallePalabras: any;
 
   constructor(
     private Service: EntidadService,
     private asociacionService: AsociacionService,
     private authService: AuthService,
     private idiomaService: IdiomaService,
+    private detalleEntidadService: DetalleEntidadService,
     private tipoEntidadService: TipoEntidadService,
     private errorService: ErrorHandlerService,
     private router: Router,
@@ -75,6 +86,17 @@ export class EntidadesEvaluadasComponent implements OnInit {
     this.Service.form.patchValue({ IdEstudiante: this.authService.currentUser.IdEstudiante, Estado: 0 });
     this.CargarDgvElements();
     this.CargarSelects();
+    this.CargarDetalles();
+  }
+
+  CargarDetalles() {
+    this.detalleEntidadService.get().subscribe(result => {
+      this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.applyPredicate();
+    }, (error) => {
+
+    });
   }
 
   CargarSelects() {
@@ -93,6 +115,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
     if (this.authService.currentUser.Rol === 'Estudiante') {
       this.Service.getByEtudiante().subscribe(result => {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -100,6 +123,7 @@ export class EntidadesEvaluadasComponent implements OnInit {
     } else {
       this.Service.getByProfesorEstado1().subscribe(result => {
         this.dataSource = new MatTableDataSource<Entidad>(result.data);
+        this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
       }, (error) => {
         this.errorService.handleError(error);
@@ -192,10 +216,10 @@ export class EntidadesEvaluadasComponent implements OnInit {
     this.ENTIDAD = this.dataSource.filteredData[this.ROW_NUMBER];
     this.EstadoEntidad = parseInt(entidad.Estado, 32);
     this.EvaluacionEntidad = parseInt(entidad.Evaluacion, 32);
-    if(entidad.Comentario != null)
-    this.ComentarioEntidad = entidad.Comentario;
+    if (entidad.Comentario != null)
+      this.ComentarioEntidad = entidad.Comentario;
     else
-    this.ComentarioEntidad = '';
+      this.ComentarioEntidad = '';
     this.Service.form.patchValue({ IdEntidad: entidad.IdEntidad });
     this.dialogTittle = 'Modificar';
     this.verificarAsocioacionesEvaluadas();
@@ -294,5 +318,73 @@ export class EntidadesEvaluadasComponent implements OnInit {
     const url = `additionalInfo/${entidad.IdEntidad}/${entidad.IdTipoEntidad}`;
     this.router.navigate([url]);
   }
+
+
+  //BUSCAR POR DETALLES
+  applyFilterDetalle(filterValue: string) {
+
+    if (filterValue === '') {
+      this.CargarDgvElements();
+    } else {
+
+      if (filterValue.length < 3) {
+        return;
+      }
+
+      //dividir el filtro por spacio
+      var palabras = filterValue.split(' ');
+
+      this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
+      this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
+      palabras.forEach(element => {
+
+        if (element != "" && element != " ") {
+          if (this.dataSourceDetalle.filteredData.length > 0)
+            this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+          this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
+          this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+        }
+
+      });
+
+      this.cargarEntidadesPorFiltroDetalles();
+    }
+
+  }
+
+  public cargarEntidadesPorFiltroDetalles() {
+
+    this.listEntidadesAux = [];
+    this.listIDS = [];
+
+    this.dataSourceDetalle.filteredData.forEach(element => {
+      this.listIDS.push(element.IdEntidad);
+    });
+
+    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+
+    novaArr.forEach(element => {
+      if (!isNullOrUndefined(this.listEntidades.find((x: Entidad) => x.IdEntidad == element)))
+        this.listEntidadesAux.push(this.listEntidades.find((x: Entidad) => x.IdEntidad == element));
+    });
+
+    this.dataSource = new MatTableDataSource<Entidad>(this.listEntidadesAux);
+  }
+
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
+  }
+
 
 }

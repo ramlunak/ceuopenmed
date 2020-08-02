@@ -1,0 +1,19 @@
+.link{
+  cursor: pointer;
+  color: dodgerblue;
+  display: inline;
+  }
+  .link2{
+    cursor: pointer;
+    color: orangered;
+    display: inline;
+    }
+
+  .link:hover{
+    text-decoration: underline;
+  }
+
+
+  .link2:hover{
+    text-decoration: underline;
+  }

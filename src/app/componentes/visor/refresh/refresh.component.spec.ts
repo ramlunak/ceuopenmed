@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TipoSociacionComponent } from './tipo-sociacion.component';
+import { RefreshComponent } from './refresh.component';
 
-describe('TipoSociacionComponent', () => {
-  let component: TipoSociacionComponent;
-  let fixture: ComponentFixture<TipoSociacionComponent>;
+describe('RefreshComponent', () => {
+  let component: RefreshComponent;
+  let fixture: ComponentFixture<RefreshComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TipoSociacionComponent ]
+      declarations: [ RefreshComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TipoSociacionComponent);
+    fixture = TestBed.createComponent(RefreshComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

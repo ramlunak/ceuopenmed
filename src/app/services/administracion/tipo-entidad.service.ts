@@ -21,13 +21,15 @@ export class TipoEntidadService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdTipoEntidad: new FormControl(null),   
+    IdTipoEntidad: new FormControl(null),
+    IdIdioma: new FormControl(null),
     TipoEntidad: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdTipoEntidad: null,     
+      IdTipoEntidad: null,
+      IdIdioma: null,
       TipoEntidad: ''
     });
   }

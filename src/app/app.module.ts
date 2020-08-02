@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
 // Módulo de importación de Bibliotecas de Angular Material
 import { MaterialModule } from './modules/material.module';
@@ -48,6 +49,18 @@ import { EntidadRecursoDescripcionComponent } from './componentes/Entity/entidad
 import { AsociacionesOpcionalesComponent } from './componentes/Entity/asociaciones-opcionales/asociaciones-opcionales.component';
 import { ListaAsociacionesComponent } from './componentes/Entity/lista-asociaciones/lista-asociaciones.component';
 import { AsociacionListComponent } from './componentes/Entity/asociacion-list/asociacion-list.component';
+import { VisorTipoAsociacionComponent } from './componentes/visor/visor-tipo-asociacion/visor-tipo-asociacion.component';
+import { PaginaInicioComponent } from './componentes/pagina-inicio/pagina-inicio.component';
+import { VisorEntidadComponent } from './componentes/visor/visor-entidad/visor-entidad.component';
+import { VisorEntidadDetalleComponent } from './componentes/visor/visor-entidad-detalle/visor-entidad-detalle.component';
+import { VisorEntidadRecursosComponent } from './componentes/visor/visor-entidad-recursos/visor-entidad-recursos.component';
+import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-entidad-asociaciones/visor-entidad-asociaciones.component';
+import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
+import { RefreshComponent } from './componentes/visor/refresh/refresh.component';
+import { AdmTraduccionComponent } from './componentes/Administracion/adm-traduccion/adm-traduccion.component';
+import { SobreCOpendMedComponent } from './componentes/sobre-copend-med/sobre-copend-med.component';
+import { EstadisticasUsuariosComponent } from './componentes/Estadisticas/usuarios/usuarios.component';
+import { EstadisticasEntidadesComponent } from './componentes/Estadisticas/estadisticas-entidades/estadisticas-entidades.component';
 
 
 @NgModule({
@@ -82,7 +95,19 @@ import { AsociacionListComponent } from './componentes/Entity/asociacion-list/as
     AsociacionesOpcionalesComponent,
     TipoAsociacionMultipleComponent,
     ListaAsociacionesComponent,
-    AsociacionListComponent    
+    AsociacionListComponent,
+    VisorTipoAsociacionComponent,
+    PaginaInicioComponent,
+    VisorEntidadComponent,
+    VisorEntidadDetalleComponent,
+    VisorEntidadRecursosComponent,
+    VisorEntidadAsociacionesComponent,
+    VisorAsociacionesMultiplesComponent,
+    RefreshComponent,
+    AdmTraduccionComponent,
+    SobreCOpendMedComponent,
+    EstadisticasUsuariosComponent,
+    EstadisticasEntidadesComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +117,8 @@ import { AsociacionListComponent } from './componentes/Entity/asociacion-list/as
     HttpClientModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule // <- import OrderModule
   ],
   providers: [
     AppServicesModule

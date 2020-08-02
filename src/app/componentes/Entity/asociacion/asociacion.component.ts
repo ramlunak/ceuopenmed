@@ -1,6 +1,7 @@
+import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 declare var $: any;
 import { MatPaginator } from '@angular/material/paginator';
@@ -45,6 +46,7 @@ export class AsociacionComponent implements OnInit {
   CountEntidad = 0;
   ComentarioEntidad = '';
   ASOCIACION: Asociacion;
+  Search: string = '';
 
   transaccionIsNew = true;
   asociar = false;
@@ -53,17 +55,18 @@ export class AsociacionComponent implements OnInit {
 
   // DataTable --
   dataSource: MatTableDataSource<Asociacion>;
-  displayedColumns = ['IdAsociacion','IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'info', 'commands'];
+  displayedColumns = ['IdAsociacion', 'IdEntidad', 'TipoEntidad', 'Idioma', 'Entidad', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listEntidadesAux: Asociacion[];
   listEntidades: Asociacion[];
   listIDS: Array<number> = [];
-  listIdiomas: Idioma[];  
+  listIdiomas: Idioma[];
   dataSourceDetalle: MatTableDataSource<DetalleEntidad>;
-  
+
   listTipoAsociacion: TipoAsociacionService[];
   listTiposEntidad: TipoEntidad[];
+  dataSourceDetallePalabras: MatTableDataSource<DetalleEntidad>;
 
   constructor(
     private Service: AsociacionService,
@@ -90,24 +93,28 @@ export class AsociacionComponent implements OnInit {
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
     this.CargarSelects();
-    this.CargarDetalles();
   }
 
   CargarDetalles() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalle = new MatTableDataSource<DetalleEntidad>(result.data);
-        }, (error) => {
-  
+      this.dataSourceDetallePalabras = new MatTableDataSource<DetalleEntidad>(result.data);
+      this.applyPredicate();
+      if (!isNullOrUndefined(this.Service.form.value.Buscar)) {
+        this.applyFilter(this.Service.form.value.Buscar);
+        this.Service.form.patchValue({
+          Buscar: ''
+        });
+      }
+
+    }, (error) => {
+
     });
   }
 
 
   CargarSelects() {
-    /*
-        this.tipoAsociacionService.get().subscribe(result => {
-          this.listTipoAsociacion = result.data;
-        }); */
-    // Tipo Entidad
+
     this.tipoEntidadService.get().subscribe(result => {
       this.listTiposEntidad = result.data;
     });
@@ -120,6 +127,7 @@ export class AsociacionComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -128,6 +136,7 @@ export class AsociacionComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Asociacion>(result.data);
         this.listEntidades = result.data;
         this.dataSource.paginator = this.paginator;
+        this.CargarDetalles();
       }, (error) => {
         this.errorService.handleError(error);
       });
@@ -143,15 +152,14 @@ export class AsociacionComponent implements OnInit {
 
   public redirectAsociacionesOpcionales = () => {
     const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
-    const asociacionCompleta = this.EntidadSeleccionada +" "+asociacion.TipoAsociacion+" "+asociacion.Entidad;
+    const asociacionCompleta = this.EntidadSeleccionada + " " + asociacion.TipoAsociacion + " " + asociacion.Entidad;
     const url = `AsociacionesOpcionales/${asociacion.IdAsociacion}/${asociacionCompleta}/${asociacion.IdEntidad}/${this.IdEntidadSeleccionada}`;
     //const url = 'AsociacionesOpcionales';
     this.router.navigate([url]);
   }
 
   guardarClick() {
-    if(this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0)
-    {
+    if (this.Service.form.value.Nivel > 1 || this.Service.form.value.Nivel < 0) {
       this.snackBar.open('La fuerza debe ser un valor entre 0 y 1.', 'OK', {
         duration: 8000,
       });
@@ -215,7 +223,7 @@ export class AsociacionComponent implements OnInit {
     });
     this.Service.form.patchValue(
       {
-        IdAsociacion:null,
+        IdAsociacion: null,
         IdEntidad1: this.IdEntidadSeleccionada,
         IdEntidad2: asociacion.IdEntidad,
         IdTipoAsociacion: null,
@@ -224,32 +232,32 @@ export class AsociacionComponent implements OnInit {
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
         TipoEntidad: asociacion.TipoEntidad,
-        Nivel:null,      
+        Nivel: null,
         Evaluacion: null,
         Estado: null,
-        Comentario: null,
+        Descripcion: null,
         EntidadSeleccionada: this.EntidadSeleccionada
       });
-    
+
     this.dialogTittle = 'Modificar';
   }
 
-  goToAsociacionesOpcionales(){
+  goToAsociacionesOpcionales() {
 
     this.redirectAsociacionesOpcionales();
-    
-  }
-  
-  goToListAsociaciones(){
 
-    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];    
+  }
+
+  goToListAsociaciones() {
+
+    const asociacion = this.dataSource.filteredData[this.ROW_NUMBER];
     const url = `AsociacionList/${asociacion.IdEntidad}`;
 
     //const url = 'AsociacionList';
-    this.router.navigate([url]);    
+    this.router.navigate([url]);
   }
- 
-  
+
+
   setEvalucacion(estado, evaluacion) {
     this.EstadoEntidad = parseInt(estado, 32);
     this.EvaluacionEntidad = parseInt(evaluacion, 32);
@@ -272,7 +280,6 @@ export class AsociacionComponent implements OnInit {
     this.transaccionIsNew = false;
     this.ASOCIACION.Estado = this.EstadoEntidad.toString();
     this.ASOCIACION.Evaluacion = this.EvaluacionEntidad.toString();
-    this.ASOCIACION.Comentario = this.Service.form.value.Comentario;
 
     this.Service.form.patchValue({
       IdAsociacion: this.ASOCIACION.IdAsociacion,
@@ -284,8 +291,10 @@ export class AsociacionComponent implements OnInit {
       Evaluacion: this.ASOCIACION.Evaluacion,
       Estado: this.ASOCIACION.Estado,
       Comentario: this.ASOCIACION.Comentario,
+      Descripcion: this.ASOCIACION.Descripcion,
       IdEntidad1: this.ASOCIACION.IdEntidad1,
       IdEntidad2: this.ASOCIACION.IdEntidad2,
+      Nivel: this.ASOCIACION.Nivel,
       IdTipoAsociacion: this.ASOCIACION.IdTipoAsociacion
     });
 
@@ -334,38 +343,76 @@ export class AsociacionComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();   
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   applyFilterDetalle(filterValue: string) {
-    this.dataSourceDetalle.filter = filterValue.trim().toLowerCase(); 
-    this.cargarEntidadesPorFiltroDetalles(filterValue);   
+
+    if (filterValue.length < 3) {
+      return;
+    }
+
+    //dividir el filtro por spacio
+    var palabras = filterValue.split(' ');
+
+    this.dataSourceDetallePalabras.data = this.dataSourceDetalle.data;
+    this.dataSourceDetalle.filteredData = this.dataSourceDetalle.data;
+    palabras.forEach(element => {
+
+      if (element != "" && element != " ") {
+        if (this.dataSourceDetalle.filteredData.length > 0)
+          this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+        this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
+        this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
+      }
+
+    });
+
+    this.cargarEntidadesPorFiltroDetalles(filterValue);
+
   }
 
- public cargarEntidadesPorFiltroDetalles(filterValue:string){
+
+  public cargarEntidadesPorFiltroDetalles(filterValue: string) {
 
     this.listEntidadesAux = [];
-   this.listIDS=[];
+    this.listIDS = [];
 
-   this.dataSourceDetalle.filteredData.forEach(element => {
-    this.listIDS.push(element.IdEntidad);
-   });  
- 
-   var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
-       
-   novaArr.forEach(element => {
-     var asociacion = this.listEntidades.find((x:Asociacion)=> x.IdEntidad == element);
-      if(asociacion != null)
-      this.listEntidadesAux.push(asociacion);
-   });     
+    this.dataSourceDetalle.filteredData.forEach(element => {
+      this.listIDS.push(element.IdEntidad);
+    });
 
-       this.dataSource = new MatTableDataSource<Asociacion>(null);
-       this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux); 
-       console.log(this.listEntidadesAux);
-      if(filterValue == "")
+    var novaArr = this.listIDS.filter((este, i) => this.listIDS.indexOf(este) === i);
+
+    novaArr.forEach(element => {
+      var asociacion = this.listEntidades.find((x: Asociacion) => x.IdEntidad == element);
+      if (asociacion != null)
+        this.listEntidadesAux.push(asociacion);
+    });
+
+    this.dataSource = new MatTableDataSource<Asociacion>(null);
+    this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux);
+    console.log(this.listEntidadesAux);
+    if (filterValue == "")
       this.CargarDgvElements();
-       
- }
+
+  }
+
+  applyPredicate() {
+    this.dataSourceDetallePalabras.filterPredicate = (data: any, filter: string): boolean => {
+      const dataStr = Object.keys(data).reduce((currentTerm: string, key: string) => {
+        return (currentTerm + (data as { [key: string]: any })[key] + '◬');
+      }, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      const transformedFilter = filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      return dataStr.indexOf(transformedFilter) != -1;
+    }
+
+
+  }
+
 
   backClicked() {
 

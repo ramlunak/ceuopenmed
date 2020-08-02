@@ -17,30 +17,33 @@ export class AuthVerifyService implements CanActivate {
       const url = state.url.split('/');
       return this.verifyPermissions(url[1]);
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['paginaInicio']);
       this.authService.showMenus = false;
       return false;
     }
   }
-  
+
   public verifyPermissions(url: string): boolean {
     const roles = this.CONSTANS.getRoles();
     switch (url) {
-      case '': case 'DialogChangePassword':
+      case '': case 'DialogChangePassword': case 'estadisticasUarios': case 'estadisticasEntidades':
         return true;
       case 'segRol': case 'docEspecialidad': case 'docGrupo': case 'docEstudiante': case 'docProfesor':
       case 'docProfesorGrupos': case 'docProfesorEspecialidades': case 'tipoEntidad':
-      case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple':
+      // tslint:disable-next-line: max-line-length
+      case 'idioma': case 'TipoAsociacion': case 'TipoAsociacionMultiple': case 'traduccion': case 'estadisticasUarios': case 'estadisticasEntidades':
         return (this.authService.currentUser.IdRol === roles.Administrador);
       case 'entidad':
-       case 'EntidadesEvaluadas':
-        case 'FormEntidad' :
-         case 'AsociacionesOpcionales':
-          case 'Asociacion': 
-          case 'AsociacionList': 
-          case 'EntidadRecurso': 
-          case 'additionalInfo':
+      case 'EntidadesEvaluadas':
+      case 'FormEntidad':
+      case 'AsociacionesOpcionales':
+      case 'Asociacion':
+      case 'AsociacionList':
+      case 'EntidadRecurso':
+      case 'additionalInfo':
       case 'EntidadRecursoDescripcion':
+      case 'estadisticasUarios':
+      case 'estadisticasEntidades':
         return (this.authService.currentUser.IdRol === roles.Profesor || this.authService.currentUser.IdRol === roles.Estudiante);
       default:
         return false;

@@ -34,6 +34,7 @@ export class AsociacionService {
     Evaluacion: new FormControl(null),
     Estado: new FormControl(null),
     Comentario: new FormControl(null),
+    Descripcion: new FormControl(null),
     entidadSelecionada: new FormControl(null),
 
   });
@@ -52,6 +53,7 @@ export class AsociacionService {
       Evaluacion: 0,
       Estado: 0,
       Comentario: '',
+      Descripcion: '',
       entidadSelecionada: '',
     });
   }
@@ -99,7 +101,7 @@ export class AsociacionService {
   }
   getByIdEntidadEvaluada(Id: number): Observable<any> {
     this.loadingSubject.next(true);
-  
+
     return this.httpClient
       .get<any>(
         this.CONSTANS.getApiUrl(this.BaseURL + 'evaluated-associate-entitys/' + Id),
@@ -110,7 +112,7 @@ export class AsociacionService {
         map(res => res)
       );
   }
-  
+
 
   viewDetalle(Id: number) {
     this.loadingSubject.next(true);

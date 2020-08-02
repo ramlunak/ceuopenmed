@@ -1,0 +1,48 @@
+li{
+  list-style: none;
+}
+
+.input-search{
+width: 100%;
+border: none;
+}
+
+.div-search{
+  background-color: white;
+  padding: 15px;
+  border: solid 1px;
+  height: 50px;
+  border-radius: 15px;
+  border-color: gray;
+}
+
+.serach-autocomplete{
+  position: absolute;
+  top: 37px;
+  background-color: white;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  overflow: hidden;
+  padding-left: 40px;
+  border-top: none;
+  border-left:1px solid;
+  border-bottom:1px solid;
+  border-right:1px solid;
+  border-color: gray;
+  border-radius:0px 0px 15px 15px;
+  z-index: 9999;
+}
+
+.autocomplete-item{
+cursor: pointer;
+color: gray;
+font-weight: 500;
+}
+
+.autocomplete-item:hover{
+color: gray;
+font-weight: 700;
+margin-left: 5px;
+transition: all 0.5s;
+}
