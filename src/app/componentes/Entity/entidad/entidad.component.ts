@@ -355,9 +355,10 @@ export class EntidadComponent implements OnInit {
 
   applyFilterDetalle(filterValue: string) {
 
-    if (filterValue.length < 3) {
-      return;
-    }
+    if (filterValue.length !== 0)
+      if (filterValue.length < 3) {
+        return;
+      }
 
     //dividir el filtro por spacio
     var palabras = filterValue.split(' ');
