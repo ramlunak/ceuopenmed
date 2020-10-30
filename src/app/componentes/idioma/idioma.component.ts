@@ -30,7 +30,10 @@ export class IdiomaComponent implements OnInit {
   displayedColumns = ['IdIdioma', 'Idioma', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private Service: IdiomaService, private errorService: ErrorHandlerService) { }
+  constructor(
+    private Service: IdiomaService,
+    private errorService: ErrorHandlerService
+  ) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -51,9 +54,9 @@ export class IdiomaComponent implements OnInit {
 
   }
 
-
-
   guardarClick() {
+    console.log('exec');
+    return;
 
     if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
@@ -117,7 +120,5 @@ export class IdiomaComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-
 
 }
