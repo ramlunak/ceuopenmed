@@ -33,7 +33,6 @@ export class VisorEntidadComponent implements OnInit {
     this.EntidadByIdEntidad();
   }
 
-
   EntidadByIdEntidad() {
     this.Service.EntidadById(this.IdEntidad).subscribe(result => {
       this.ENIDAD = result.data[0];

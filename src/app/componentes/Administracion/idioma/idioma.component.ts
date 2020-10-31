@@ -12,8 +12,6 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
 
 import { ExcelService } from '../../../services/excel.service';
 
-import { Network, DataSet, Node, Edge } from 'vis-network/standalone';
-
 // Selector jQuery
 declare var $: any;
 
@@ -35,7 +33,7 @@ export class IdiomaComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private Service: IdiomaService,
+    public Service: IdiomaService,
     private errorService: ErrorHandlerService,
     private excelService: ExcelService) { }
 
@@ -46,33 +44,6 @@ export class IdiomaComponent implements OnInit {
     this.paginator._intl.firstPageLabel = 'Primero';
     this.paginator._intl.lastPageLabel = 'Último';
     this.CargarDgvElements();
-
-
-    // create an array with nodes
-    const nodesArray = new DataSet([
-      { id: 1, label: 'Node 1' },
-      { id: 2, label: 'Node 2' },
-      { id: 3, label: 'Node 3' },
-      { id: 4, label: 'Node 4' },
-      { id: 5, label: 'Node 5' },
-    ]);
-
-    // create an array with edges
-    const edgesArray: Edge[] = [
-      { from: 1, to: 3 },
-      { from: 1, to: 2 },
-      { from: 2, to: 4 },
-      { from: 3, to: 5 },
-    ];
-
-    const container = document.getElementById('mynetwork');
-    const data = {
-      nodes: nodesArray,
-      edges: edgesArray,
-    };
-    const options = {};
-    const network = new Network(container, data, options);
-
   }
 
   CargarDgvElements() {

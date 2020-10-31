@@ -61,6 +61,7 @@ import { AdmTraduccionComponent } from './componentes/Administracion/adm-traducc
 import { SobreCOpendMedComponent } from './componentes/sobre-copend-med/sobre-copend-med.component';
 import { EstadisticasUsuariosComponent } from './componentes/Estadisticas/usuarios/usuarios.component';
 import { EstadisticasEntidadesComponent } from './componentes/Estadisticas/estadisticas-entidades/estadisticas-entidades.component';
+import { GrafoComponent } from './componentes/visor/grafo/grafo.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { EstadisticasEntidadesComponent } from './componentes/Estadisticas/estad
     AdmTraduccionComponent,
     SobreCOpendMedComponent,
     EstadisticasUsuariosComponent,
-    EstadisticasEntidadesComponent
+    EstadisticasEntidadesComponent,
+    GrafoComponent
   ],
   imports: [
     BrowserModule,

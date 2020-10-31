@@ -41,7 +41,6 @@ export class VisorAsociacionesMultiplesComponent implements OnInit {
   AsociacionMultipleByIdAsociacion() {
     this.Service.AsociasionMultipleyIdAsociacion(this.ASOCIACION.IdAsociacion).subscribe(result => {
       this.ArrarAsociaiconesMultiple = result.data;
-      console.log(this.ArrarAsociaiconesMultiple);
     }, (error) => {
       this.errorService.handleError(error);
     });
@@ -56,8 +55,6 @@ export class VisorAsociacionesMultiplesComponent implements OnInit {
   }
 
   goToAsociciones(idEntidad1: number, entidad: string, asociacion: string) {
-
-    console.log(idEntidad1, entidad, asociacion);
 
     this.asociacionService.form.patchValue({
       IdEntidad1: idEntidad1,
