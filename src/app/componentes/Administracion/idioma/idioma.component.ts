@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,9 +10,10 @@ import { Idioma } from 'src/app/models/idioma';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
+import { ExcelService } from '../../../services/excel.service';
+
 // Selector jQuery
 declare var $: any;
-
 
 @Component({
   selector: 'app-idioma',
@@ -30,7 +32,10 @@ export class IdiomaComponent implements OnInit {
   displayedColumns = ['IdIdioma', 'Idioma', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private Service: IdiomaService, private errorService: ErrorHandlerService) { }
+  constructor(
+    public Service: IdiomaService,
+    private errorService: ErrorHandlerService,
+    private excelService: ExcelService) { }
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Registros por página';
@@ -51,10 +56,7 @@ export class IdiomaComponent implements OnInit {
 
   }
 
-
-
   guardarClick() {
-
     if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
 
@@ -119,5 +121,8 @@ export class IdiomaComponent implements OnInit {
   }
 
 
+  ExportaExcel() {
+    this.excelService.exportAsExcelFile(this.dataSource.data, 'myExcelFile');
+  }
 
 }
