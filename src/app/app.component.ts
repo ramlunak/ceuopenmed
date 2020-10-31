@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/seguridad/auth.service';
+import { enableProdMode } from '@angular/core';
+
+enableProdMode();
 
 @Component({
   selector: 'app-root',
