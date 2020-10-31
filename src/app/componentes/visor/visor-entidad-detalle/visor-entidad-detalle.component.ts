@@ -34,7 +34,7 @@ export class VisorEntidadDetalleComponent implements OnInit {
     private orderPipe: OrderPipe,
     public authService: AuthService
   ) {
-    this.expand = true;
+    this.expand = false;
   }
 
   ngOnInit() {

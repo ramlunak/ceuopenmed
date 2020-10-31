@@ -1,3 +1,4 @@
+import { AsociacionService } from 'src/app/services/entity/asociacion.service';
 import { Entidad } from 'src/app/models/entidad';
 import { Component, OnInit, Input } from '@angular/core';
 import { title } from 'process';
@@ -6,6 +7,8 @@ import { Asociacion } from 'src/app/models/asociacion';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { VisorService } from 'src/app/services/visor.service';
 import { Network, DataSet, Node, Edge } from 'vis-network/standalone';
+import { Router } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 
 @Component({
   selector: 'app-grafo',
@@ -22,9 +25,14 @@ export class GrafoComponent implements OnInit {
   ArrarAsociaiconesFrom: Asociacion[] = [];
   AsociacionNodos: AsociacionNodo[] = [];
   FlechaNodos: FlechaNodo[] = [];
+  CARACTERES = 12;
+
+  APP = this;
 
   constructor(
     private Service: VisorService,
+    private asociacionService: AsociacionService,
+    public router: Router,
     private errorService: ErrorHandlerService
   ) { }
 
@@ -62,8 +70,8 @@ export class GrafoComponent implements OnInit {
 
   GrafoAddAsociacionBase() {
 
-    let label = this.ENTIDAD.slice(0, 12);
-    if (this.ENTIDAD.length > 12) {
+    let label = this.ENTIDAD.slice(0, this.CARACTERES);
+    if (this.ENTIDAD.length > this.CARACTERES) {
       label = label + '...';
     }
 
@@ -75,8 +83,8 @@ export class GrafoComponent implements OnInit {
 
     this.ArrarAsociaiconesTo.forEach(item => {
 
-      let label = item.Entidad.slice(0, 12);
-      if (item.Entidad.length > 12) {
+      let label = item.Entidad.slice(0, this.CARACTERES);
+      if (item.Entidad.length > this.CARACTERES) {
         label = label + '...';
       }
 
@@ -92,8 +100,8 @@ export class GrafoComponent implements OnInit {
 
     this.ArrarAsociaiconesFrom.forEach(item => {
 
-      let label = item.Entidad.slice(0, 12);
-      if (item.Entidad.length > 12) {
+      let label = item.Entidad.slice(0, this.CARACTERES);
+      if (item.Entidad.length > this.CARACTERES) {
         label = label + '...';
       }
 
@@ -120,8 +128,23 @@ export class GrafoComponent implements OnInit {
     };
     const options = {};
     const network = new Network(container, data, options);
+    var APP = this;
+
+
+    const id = this.ID_ENTIDAD;
+
+    network.on('click', function (params) {
+
+      console.log(params.nodes[0]);
+
+      APP.router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
+        APP.router.navigate([decodeURI('/VisorEntidad/182/20')]);
+      });
+
+    });
 
   }
+
 
 }
 
