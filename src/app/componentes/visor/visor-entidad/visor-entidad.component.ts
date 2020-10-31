@@ -29,7 +29,6 @@ export class VisorEntidadComponent implements OnInit {
   ngOnInit() {
     this.IdEntidad = this.activeRoute.snapshot.params.idEntidad;
     this.IdTipoEntidad = this.activeRoute.snapshot.params.idTipoEntidad;
-    console.log(this.IdTipoEntidad);
     this.EntidadByIdEntidad();
   }
 

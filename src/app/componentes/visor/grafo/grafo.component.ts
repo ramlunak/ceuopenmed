@@ -1,3 +1,4 @@
+import { EntidadService } from 'src/app/services/entity/entidad.service';
 import { AsociacionService } from 'src/app/services/entity/asociacion.service';
 import { Entidad } from 'src/app/models/entidad';
 import { Component, OnInit, Input } from '@angular/core';
@@ -21,16 +22,18 @@ export class GrafoComponent implements OnInit {
   @Input() ENTIDAD: string;
   @Input() ID_ENTIDAD: number;
   @Input() DIRECCION: boolean;
+
   ArrarAsociaiconesTo: Asociacion[] = [];
   ArrarAsociaiconesFrom: Asociacion[] = [];
   AsociacionNodos: AsociacionNodo[] = [];
   FlechaNodos: FlechaNodo[] = [];
   CARACTERES = 12;
-
   APP = this;
+  ID_TIPOENTIDAD = 0;
 
   constructor(
     private Service: VisorService,
+    private entidadService: EntidadService,
     private asociacionService: AsociacionService,
     public router: Router,
     private errorService: ErrorHandlerService
@@ -128,18 +131,27 @@ export class GrafoComponent implements OnInit {
     };
     const options = {};
     const network = new Network(container, data, options);
+
     var APP = this;
-
-
-    const id = this.ID_ENTIDAD;
 
     network.on('click', function (params) {
 
-      console.log(params.nodes[0]);
+      let idEntidad = params.nodes[0];
 
-      APP.router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
-        APP.router.navigate([decodeURI('/VisorEntidad/182/20')]);
+      //CARGAR ENTIDAD PARA OBTENER IdTIpoEntidad;
+      APP.entidadService.view(idEntidad).subscribe(result => {
+        console.log(result.data.IdTipoEntidad);
+        APP.ID_TIPOENTIDAD = result.data.IdTipoEntidad;
+
+        APP.router.navigateByUrl("/refresh", { skipLocationChange: true }).then(() => {
+          APP.router.navigate([decodeURI('/VisorEntidad/' + idEntidad + '/' + APP.ID_TIPOENTIDAD + '')]);
+        });
+
+      }, (error) => {
+
       });
+
+
 
     });
 
