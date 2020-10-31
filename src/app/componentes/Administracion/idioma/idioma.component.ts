@@ -58,9 +58,7 @@ export class IdiomaComponent implements OnInit {
   }
 
   guardarClick() {
-    this.ExportaExcel();
-    return;
-    /* if (this.transaccionIsNew) {
+    if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
 
         if (result.status === 1) {
@@ -84,7 +82,7 @@ export class IdiomaComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } */
+    }
   }
 
   eliminarClick() {
