@@ -118,10 +118,16 @@ export class GrafoComponent implements OnInit {
 
   PintarGrafo() {
 
-    console.log('AsociacionNodo', this.AsociacionNodos);
+    // console.log('AsociacionNodo', this.AsociacionNodos);
+    //console.log('flechas', this.FlechaNodos);
+
+    const distinctThings = this.AsociacionNodos.filter(
+      (thing, i, arr) => arr.findIndex(t => t.id === thing.id) === i
+    );
+    console.log('AsociacionNodo', distinctThings);
     console.log('flechas', this.FlechaNodos);
 
-    const nodesArray = new DataSet(this.AsociacionNodos);
+    const nodesArray = new DataSet(distinctThings);
     const edgesArray: Edge[] = this.FlechaNodos;
 
     const container = document.getElementById('mynetwork');
@@ -150,8 +156,6 @@ export class GrafoComponent implements OnInit {
       }, (error) => {
 
       });
-
-
 
     });
 
@@ -194,9 +198,11 @@ class Arrows {
 class To {
   enabled: boolean;
   type: string;
-  constructor(ENABLED: boolean = false, TYPE: string = 'arrow') {
+  scaleFactor: number;
+  constructor(ENABLED: boolean = false, TYPE: string = 'arrow', SCALEFACTOR: number = 1) {
     this.enabled = ENABLED;
     this.type = TYPE;
+    this.scaleFactor = SCALEFACTOR;
   }
 }
 
@@ -204,8 +210,10 @@ class To {
 class From {
   enabled: boolean;
   type: string;
-  constructor(ENABLED: boolean = false, TYPE: string = 'arrow') {
+  scaleFactor: number;
+  constructor(ENABLED: boolean = false, TYPE: string = 'arrow', SCALEFACTOR: number = 1) {
     this.enabled = ENABLED;
     this.type = TYPE;
+    this.scaleFactor = SCALEFACTOR;
   }
 }
