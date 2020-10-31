@@ -1,3 +1,5 @@
+import { ExcelService } from './../services/excel.service';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,7 +21,6 @@ import { ValidationsService } from '../services/validations.service';
 import { EntidadRecursoService } from '../services/entity/entidad-recurso.service';
 import { PreviousRouteService } from '../services/previous-route-service.service';
 
-
 @NgModule({
   declarations: [],
   imports: [
@@ -39,7 +40,8 @@ import { PreviousRouteService } from '../services/previous-route-service.service
     DocEstudianteService,
     ValidationsService,
     EntidadRecursoService,
-    PreviousRouteService
+    PreviousRouteService,
+    ExcelService
   ]
 })
 export class AppServicesModule { }
