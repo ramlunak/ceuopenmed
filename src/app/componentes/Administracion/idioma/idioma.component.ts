@@ -10,11 +10,10 @@ import { Idioma } from 'src/app/models/idioma';
 // Servicio de captura error implementado por mi
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 
-import { ExcelService } from './../../../services/excel.service';
+import { ExcelService } from '../../../services/excel.service';
 
 // Selector jQuery
 declare var $: any;
-
 
 @Component({
   selector: 'app-idioma',
@@ -34,7 +33,7 @@ export class IdiomaComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private Service: IdiomaService,
+    public Service: IdiomaService,
     private errorService: ErrorHandlerService,
     private excelService: ExcelService) { }
 
@@ -58,9 +57,7 @@ export class IdiomaComponent implements OnInit {
   }
 
   guardarClick() {
-    this.ExportaExcel();
-    return;
-    /* if (this.transaccionIsNew) {
+    if (this.transaccionIsNew) {
       this.Service.set().subscribe(result => {
 
         if (result.status === 1) {
@@ -84,7 +81,7 @@ export class IdiomaComponent implements OnInit {
       }, (error) => {
         this.errorService.handleError(error);
       });
-    } */
+    }
   }
 
   eliminarClick() {
