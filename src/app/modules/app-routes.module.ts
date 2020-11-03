@@ -1,3 +1,4 @@
+import { TiposEntidadComponent } from './../componentes/reportes/tipos-entidad/tipos-entidad.component';
 import { SobreCOpendMedComponent } from './../componentes/sobre-copend-med/sobre-copend-med.component';
 import { AdmTraduccionComponent } from './../componentes/Administracion/adm-traduccion/adm-traduccion.component';
 import { RefreshComponent } from './../componentes/visor/refresh/refresh.component';
@@ -77,6 +78,9 @@ const routes: Routes = [
   { path: 'DialogChangePassword', component: DialogChangePasswordComponent, canActivate: [AuthVerifyService] },
   { path: 'VisorEntidad/:idEntidad/:idTipoEntidad', component: VisorEntidadComponent },
   { path: 'VisorAsociacionesMultiples/:idAsociacion', component: VisorAsociacionesMultiplesComponent },
+
+  { path: 'RTiposEntidad', component: TiposEntidadComponent, canActivate: [AuthVerifyService] },
+
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
   // declarar los path arriba de esto

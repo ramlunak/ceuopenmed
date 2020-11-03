@@ -2,18 +2,12 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
 
-    <button mat-button (click)="Limpiar()" data-dismiss="modal" data-toggle="modal" data-target="#OperationModalDialog">
-      <mat-icon>add</mat-icon>
-      Nuevo
-    </button>
-
-
     <span class="material-spacer"></span>
 
-    <mat-form-field id="mat-form-field-search">
-      <input matInput (keyup)="applyFilter($event.target.value)">
-      <mat-placeholder class="placeholder">Buscar</mat-placeholder>
-    </mat-form-field>
+    <button mat-button (click)="Descargar()">
+      <mat-icon>save_alt</mat-icon>
+      Descargar
+    </button>
 
   </mat-toolbar-row>
 </mat-toolbar>

@@ -120,7 +120,6 @@ export class IdiomaComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
   ExportaExcel() {
     this.excelService.exportAsExcelFile(this.dataSource.data, 'myExcelFile');
   }
