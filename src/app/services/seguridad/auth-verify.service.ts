@@ -38,6 +38,9 @@ export class AuthVerifyService implements CanActivate {
       case 'estadisticasUarios':
       case 'estadisticasEntidades':
       case 'RTiposEntidad':
+      case 'RTiposRelaciones':
+      case 'RIdiomas':
+      case 'RAsocioaciones':
         return (this.authService.currentUser.IdRol === roles.Administrador);
       case 'entidad':
       case 'EntidadesEvaluadas':
