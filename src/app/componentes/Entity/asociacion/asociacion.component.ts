@@ -221,13 +221,16 @@ export class AsociacionComponent implements OnInit {
     this.tipoAsociacionService.grelationshipet(this.IdEntidadSeleccionada, asociacion.IdEntidad).subscribe(result => {
       this.listTipoAsociacion = result.data;
     });
+
+    var idEstudianteLogado = this.authService.currentUser.IdEstudiante;
+    console.log('idEstudianteLogado', idEstudianteLogado);
     this.Service.form.patchValue(
       {
         IdAsociacion: null,
         IdEntidad1: this.IdEntidadSeleccionada,
         IdEntidad2: asociacion.IdEntidad,
         IdTipoAsociacion: null,
-        IdEstudiante: asociacion.IdEstudiante,
+        IdEstudiante: idEstudianteLogado,
         IdProfesor: null,
         IdEntidad: asociacion.IdEntidad,
         IdTipoEntidad: asociacion.IdTipoEntidad,
