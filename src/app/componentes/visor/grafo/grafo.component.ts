@@ -22,6 +22,7 @@ export class GrafoComponent implements OnInit {
 
   @Input() ENTIDAD: string;
   @Input() ID_ENTIDAD: number;
+  @Input() ID_TIPO_ENTIDAD: number;
   @Input() DIRECCION: boolean;
 
   ArrarAsociaiconesTo: Asociacion[] = [];
@@ -33,7 +34,6 @@ export class GrafoComponent implements OnInit {
   ID_TIPOENTIDAD = 0;
   COLORES: string[] = [];
   DAFAULT_NODE_COLOR = '#007bff';
-  DAFAULT_BASENODO_COLOR = '#5DADE2';
 
   constructor(
     private Service: VisorService,
@@ -106,7 +106,14 @@ export class GrafoComponent implements OnInit {
       label = label + '...';
     }
 
-    var asociacionBase = new AsociacionNodo(this.ID_ENTIDAD, label, this.ENTIDAD, this.DAFAULT_BASENODO_COLOR, new Font());
+
+
+    let color = this.COLORES[this.ID_TIPO_ENTIDAD];
+    if (isNullOrUndefined(color)) {
+      color = this.DAFAULT_NODE_COLOR;
+    }
+
+    var asociacionBase = new AsociacionNodo(this.ID_ENTIDAD, label, this.ENTIDAD, color, new Font());
     this.AsociacionNodos.push(asociacionBase);
   }
 
