@@ -1,3 +1,6 @@
+import { RelacionesComponent } from './../componentes/reportes/relaciones/relaciones.component';
+import { IdiomasComponent } from './../componentes/reportes/idiomas/idiomas.component';
+import { TiposRelacionesComponent } from './../componentes/reportes/tipos-relaciones/tipos-relaciones.component';
 import { TiposEntidadComponent } from './../componentes/reportes/tipos-entidad/tipos-entidad.component';
 import { SobreCOpendMedComponent } from './../componentes/sobre-copend-med/sobre-copend-med.component';
 import { AdmTraduccionComponent } from './../componentes/Administracion/adm-traduccion/adm-traduccion.component';
@@ -80,6 +83,9 @@ const routes: Routes = [
   { path: 'VisorAsociacionesMultiples/:idAsociacion', component: VisorAsociacionesMultiplesComponent },
 
   { path: 'RTiposEntidad', component: TiposEntidadComponent, canActivate: [AuthVerifyService] },
+  { path: 'RTiposRelaciones', component: TiposRelacionesComponent, canActivate: [AuthVerifyService] },
+  { path: 'RIdiomas', component: IdiomasComponent, canActivate: [AuthVerifyService] },
+  { path: 'RAsocioaciones', component: RelacionesComponent, canActivate: [AuthVerifyService] },
 
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
