@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { EntidadService } from 'src/app/services/entity/entidad.service';
 import { AsociacionService } from 'src/app/services/entity/asociacion.service';
 import { Entidad } from 'src/app/models/entidad';
@@ -21,6 +22,7 @@ export class GrafoComponent implements OnInit {
 
   @Input() ENTIDAD: string;
   @Input() ID_ENTIDAD: number;
+  @Input() ID_TIPO_ENTIDAD: number;
   @Input() DIRECCION: boolean;
 
   ArrarAsociaiconesTo: Asociacion[] = [];
@@ -30,6 +32,8 @@ export class GrafoComponent implements OnInit {
   CARACTERES = 12;
   APP = this;
   ID_TIPOENTIDAD = 0;
+  COLORES: string[] = [];
+  DAFAULT_NODE_COLOR = '#007bff';
 
   constructor(
     private Service: VisorService,
@@ -40,7 +44,31 @@ export class GrafoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.CargarColores();
     this.AsociacionByIdEntidadEvaluadaLimit();
+  }
+
+  CargarColores() {
+    this.COLORES[6] = '#9370DB';
+    this.COLORES[7] = '#663399';
+    this.COLORES[8] = '#8B008B';
+    this.COLORES[9] = '#7B68EE';
+    this.COLORES[10] = '#32CD32';
+    this.COLORES[11] = '#FFD700';
+    this.COLORES[12] = '#F4A460';
+    this.COLORES[13] = '#C71585';
+    this.COLORES[14] = '#FFC0CB';
+    this.COLORES[15] = '#D8BFD8';
+    this.COLORES[16] = '#87CEFA';
+    this.COLORES[17] = '#DDA0DD';
+    this.COLORES[18] = '#DDA0DD';
+    this.COLORES[19] = '#C71585';
+    this.COLORES[20] = '#FFA07A';
+    this.COLORES[21] = '#FF4500';
+    this.COLORES[22] = '#FF8C00';
+    this.COLORES[23] = '#BDB76B';
+    this.COLORES[24] = '#EE82EE';
+    this.COLORES[25] = '#FF00FF';
   }
 
   AsociacionByIdEntidadEvaluadaLimit() {
@@ -78,7 +106,14 @@ export class GrafoComponent implements OnInit {
       label = label + '...';
     }
 
-    var asociacionBase = new AsociacionNodo(this.ID_ENTIDAD, label, this.ENTIDAD);
+
+
+    let color = this.COLORES[this.ID_TIPO_ENTIDAD];
+    if (isNullOrUndefined(color)) {
+      color = this.DAFAULT_NODE_COLOR;
+    }
+
+    var asociacionBase = new AsociacionNodo(this.ID_ENTIDAD, label, this.ENTIDAD, color, new Font());
     this.AsociacionNodos.push(asociacionBase);
   }
 
@@ -91,10 +126,16 @@ export class GrafoComponent implements OnInit {
         label = label + '...';
       }
 
-      let asociacionNodo = new AsociacionNodo(item.IdEntidad, label, item.Entidad);
+      let color = this.COLORES[item.IdTipoEntidad];
+      if (isNullOrUndefined(color)) {
+        color = this.DAFAULT_NODE_COLOR;
+      }
+
+
+      let asociacionNodo = new AsociacionNodo(item.IdEntidad, label, item.Entidad, color, new Font());
       this.AsociacionNodos.push(asociacionNodo);
 
-      let flechaNodo = new FlechaNodo(this.ID_ENTIDAD, item.IdEntidad, new Arrows(new To(true), new From(false)));
+      let flechaNodo = new FlechaNodo(this.ID_ENTIDAD, item.IdEntidad, new Arrows(new To(true), new From(false)), new Color(color));
       this.FlechaNodos.push(flechaNodo);
     });
   }
@@ -108,10 +149,15 @@ export class GrafoComponent implements OnInit {
         label = label + '...';
       }
 
-      let asociacionNodo = new AsociacionNodo(item.IdEntidad, label, item.Entidad);
+      let color = this.COLORES[item.IdTipoEntidad];
+      if (isNullOrUndefined(color)) {
+        color = this.DAFAULT_NODE_COLOR;
+      }
+
+      let asociacionNodo = new AsociacionNodo(item.IdEntidad, label, item.Entidad, color, new Font());
       this.AsociacionNodos.push(asociacionNodo);
 
-      let flechaNodo = new FlechaNodo(this.ID_ENTIDAD, item.IdEntidad, new Arrows(new To(false), new From(true)));
+      let flechaNodo = new FlechaNodo(this.ID_ENTIDAD, item.IdEntidad, new Arrows(new To(false), new From(true)), new Color(color));
       this.FlechaNodos.push(flechaNodo);
     });
   }
@@ -124,8 +170,6 @@ export class GrafoComponent implements OnInit {
     const distinctThings = this.AsociacionNodos.filter(
       (thing, i, arr) => arr.findIndex(t => t.id === thing.id) === i
     );
-    console.log('AsociacionNodo', distinctThings);
-    console.log('flechas', this.FlechaNodos);
 
     const nodesArray = new DataSet(distinctThings);
     const edgesArray: Edge[] = this.FlechaNodos;
@@ -161,17 +205,20 @@ export class GrafoComponent implements OnInit {
 
   }
 
-
 }
 
 class AsociacionNodo {
   id: number;
   label: string;
   title: string;
-  constructor(ID: number, LABEL: string, TITLE: string = '') {
+  color: string;
+  font: Font;
+  constructor(ID: number, LABEL: string, TITLE: string = '', COLOR: string = '#AED6F1', FONT: Font) {
     this.id = ID;
     this.label = LABEL;
     this.title = TITLE;
+    this.color = COLOR;
+    this.font = FONT;
   }
 }
 
@@ -179,16 +226,19 @@ class FlechaNodo {
   from: number;
   to: number;
   arrows: Arrows;
-  constructor(FROM: number, TO: number, ARROWS: Arrows) {
+  color: Color;
+  constructor(FROM: number, TO: number, ARROWS: Arrows, COLOR: Color) {
     this.from = FROM;
     this.to = TO;
     this.arrows = ARROWS;
+    this.color = COLOR;
   }
 }
 
 class Arrows {
   to: To;
   from: From;
+
   constructor(TO: To, FROM: From) {
     this.to = TO;
     this.from = FROM;
@@ -206,7 +256,6 @@ class To {
   }
 }
 
-
 class From {
   enabled: boolean;
   type: string;
@@ -215,5 +264,19 @@ class From {
     this.enabled = ENABLED;
     this.type = TYPE;
     this.scaleFactor = SCALEFACTOR;
+  }
+}
+
+class Color {
+  color: string;
+  constructor(COLOR: string = 'red') {
+    this.color = COLOR;
+  }
+}
+
+class Font {
+  color: string;
+  constructor(COLOR: string = 'white') {
+    this.color = COLOR;
   }
 }

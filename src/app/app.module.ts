@@ -62,6 +62,10 @@ import { SobreCOpendMedComponent } from './componentes/sobre-copend-med/sobre-co
 import { EstadisticasUsuariosComponent } from './componentes/Estadisticas/usuarios/usuarios.component';
 import { EstadisticasEntidadesComponent } from './componentes/Estadisticas/estadisticas-entidades/estadisticas-entidades.component';
 import { GrafoComponent } from './componentes/visor/grafo/grafo.component';
+import { TiposEntidadComponent } from './componentes/reportes/tipos-entidad/tipos-entidad.component';
+import { TiposRelacionesComponent } from './componentes/reportes/tipos-relaciones/tipos-relaciones.component';
+import { IdiomasComponent } from './componentes/reportes/idiomas/idiomas.component';
+import { RelacionesComponent } from './componentes/reportes/relaciones/relaciones.component';
 
 
 @NgModule({
@@ -109,7 +113,11 @@ import { GrafoComponent } from './componentes/visor/grafo/grafo.component';
     SobreCOpendMedComponent,
     EstadisticasUsuariosComponent,
     EstadisticasEntidadesComponent,
-    GrafoComponent
+    GrafoComponent,
+    TiposEntidadComponent,
+    TiposRelacionesComponent,
+    IdiomasComponent,
+    RelacionesComponent
   ],
   imports: [
     BrowserModule,

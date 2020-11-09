@@ -62,7 +62,7 @@ export class AsociacionService {
     });
   }
 
-  /* get(): Observable<any> {
+  get(): Observable<any> {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
@@ -75,7 +75,7 @@ export class AsociacionService {
         finalize(() => this.loadingSubject.next(false)),
         map(res => res)
       );
-  } */
+  }
 
   view(Id: number) {
     this.loadingSubject.next(true);

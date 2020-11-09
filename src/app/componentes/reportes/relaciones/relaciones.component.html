@@ -1,0 +1,48 @@
+<!-- TOOL BAR-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+
+    <span class="material-spacer"></span>
+
+    <button mat-button (click)="Descargar()">
+      <mat-icon>save_alt</mat-icon>
+      Descargar
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+<div class="shadow-sm p-3 mb-5 bg-white rounded">
+
+  <table mat-table [dataSource]="dataSource" class="ceu-table">
+
+    <ng-container matColumnDef="IdAsociacion">
+      <th mat-header-cell hidden *matHeaderCellDef> IdAsociacion </th>
+      <td mat-cell hidden *matCellDef="let element"> {{element.IdAsociacion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="IdEntidad1">
+      <th mat-header-cell *matHeaderCellDef> Id Entidad1 </th>
+      <td mat-cell *matCellDef="let element"> {{element.IdEntidad1}} </td>
+    </ng-container>
+
+ <ng-container matColumnDef="IdEntidad2">
+      <th mat-header-cell *matHeaderCellDef> Id Entidad2 </th>
+      <td mat-cell *matCellDef="let element"> {{element.IdEntidad2}} </td>
+    </ng-container>
+
+ <ng-container matColumnDef="TipoAsociacion">
+      <th mat-header-cell *matHeaderCellDef> Tipo de Asociacion </th>
+      <td mat-cell *matCellDef="let element"> {{element.TipoAsociacion}} </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+  <!--END GRID -->
+
+</div>
