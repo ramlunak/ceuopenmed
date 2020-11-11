@@ -12,7 +12,6 @@ import { EntidadRecurso, EntidadRecursoReporte } from 'src/app/models/entidad-re
 import { TipoEntidadService } from '../../../services/administracion/tipo-entidad.service';
 import { TipoEntidad } from 'src/app/models/tipo-entidad';
 import { MatDialog } from '@angular/material/dialog';
-import { EntidadRecursoDescripcionComponent } from '../entidad-recurso-descripcion/entidad-recurso-descripcion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { EntidadService } from '../../../services/entity/entidad.service';
