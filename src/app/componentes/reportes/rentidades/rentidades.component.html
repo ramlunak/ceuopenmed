@@ -1,0 +1,66 @@
+<!-- TOOL BAR-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+
+    <span class="material-spacer"></span>
+
+    <button mat-button (click)="Descargar()">
+      <mat-icon>save_alt</mat-icon>
+      Descargar
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+      <div class="spinner-container" *ngIf="Service.loading$ | async">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
+
+<!-- GRID -->
+<table mat-table [dataSource]="dataSource" class="ceu-table">
+
+  <ng-container matColumnDef="IdEntidad">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.IdEntidad}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="TipoEntidad">
+    <th mat-header-cell *matHeaderCellDef> Tipo de Entidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.TipoEntidad}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Idioma">
+    <th mat-header-cell *matHeaderCellDef> Idioma </th>
+    <td mat-cell *matCellDef="let element"> {{element.Idioma}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Entidad">
+    <th mat-header-cell *matHeaderCellDef> Entidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.Entidad}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Estudiante">
+    <th mat-header-cell *matHeaderCellDef> <label *ngIf="this.authService.currentUser.Rol == 'Profesor'">Estudiante</label> </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon class="green-black" *ngIf="this.authService.currentUser.Rol == 'Profesor'" matTooltip="{{element.Estudiante}}">face</mat-icon>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+<!--END GRID -->
+

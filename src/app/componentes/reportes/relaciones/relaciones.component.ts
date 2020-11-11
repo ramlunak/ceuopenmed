@@ -1,3 +1,4 @@
+
 import { isNullOrUndefined } from 'util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { AuthService } from '../../../services/seguridad/auth.service';
 
 import { EntidadService } from '../../../services/entity/entidad.service';
 import { Entidad } from 'src/app/models/entidad';
-import { Asociacion } from 'src/app/models/asociacion';
+import { Asociacion, AsociacionReport } from 'src/app/models/asociacion';
 
 import { IdiomaService } from '../../../services/administracion/idioma.service';
 import { Idioma } from 'src/app/models/idioma';
@@ -57,6 +58,7 @@ export class RelacionesComponent implements OnInit {
   displayedColumns = ['IdAsociacion', 'IdEntidad1', 'IdEntidad2', 'TipoAsociacion'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  ListAsociacionReport: AsociacionReport[] = [];
   listEntidadesAux: Asociacion[];
   listEntidades: Asociacion[];
   listIDS: Array<number> = [];
@@ -144,7 +146,25 @@ export class RelacionesComponent implements OnInit {
 
 
   Descargar() {
-    this.excelService.exportAsExcelFile(this.dataSource.data, 'Relaciones');
+    this.dataSource.data.forEach(item => {
+
+      if (item.Estado === '1') {
+        var asociacionReport = {
+          IdAsociacion: item.IdAsociacion,
+          IdEntidad1: item.IdEntidad1,
+          IdEntidad2: item.IdEntidad2,
+          IdTipoAsociacion: item.IdTipoAsociacion,
+          TipoAsociacion: item.TipoAsociacion,
+          Descripcion: item.Descripcion,
+          Nivel: item.Nivel
+        };
+        this.ListAsociacionReport.push(asociacionReport);
+      }
+    });
+
+    this.excelService.exportAsExcelFile(this.ListAsociacionReport, 'Relaciones');
   }
 
 }
+
+

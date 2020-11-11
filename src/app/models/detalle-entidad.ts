@@ -12,3 +12,15 @@ export interface DetalleEntidad {
   IsImage: number;
   EntidadFilter: string;
 }
+
+export interface DetalleEntidadReporte {
+  IdRecurso: number;
+  IdIdioma: number;
+  Idioma: string;
+  IdEntidad: number;
+  Entidad: string;
+  IdTipoEntidad: number;
+  TipoEntidad: string;
+  Nivel: number;
+}
+

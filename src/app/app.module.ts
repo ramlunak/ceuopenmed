@@ -66,6 +66,9 @@ import { TiposEntidadComponent } from './componentes/reportes/tipos-entidad/tipo
 import { TiposRelacionesComponent } from './componentes/reportes/tipos-relaciones/tipos-relaciones.component';
 import { IdiomasComponent } from './componentes/reportes/idiomas/idiomas.component';
 import { RelacionesComponent } from './componentes/reportes/relaciones/relaciones.component';
+import { DetalleComponent } from './componentes/reportes/detalle/detalle.component';
+import { RecursosComponent } from './componentes/reportes/recursos/recursos.component';
+import { RentidadesComponent } from './componentes/reportes/rentidades/rentidades.component';
 
 
 @NgModule({
@@ -117,7 +120,10 @@ import { RelacionesComponent } from './componentes/reportes/relaciones/relacione
     TiposEntidadComponent,
     TiposRelacionesComponent,
     IdiomasComponent,
-    RelacionesComponent
+    RelacionesComponent,
+    DetalleComponent,
+    RecursosComponent,
+    RentidadesComponent
   ],
   imports: [
     BrowserModule,

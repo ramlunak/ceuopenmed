@@ -1,3 +1,6 @@
+import { RentidadesComponent } from './../componentes/reportes/rentidades/rentidades.component';
+import { RecursosComponent } from './../componentes/reportes/recursos/recursos.component';
+import { DetalleComponent } from './../componentes/reportes/detalle/detalle.component';
 import { RelacionesComponent } from './../componentes/reportes/relaciones/relaciones.component';
 import { IdiomasComponent } from './../componentes/reportes/idiomas/idiomas.component';
 import { TiposRelacionesComponent } from './../componentes/reportes/tipos-relaciones/tipos-relaciones.component';
@@ -86,6 +89,9 @@ const routes: Routes = [
   { path: 'RTiposRelaciones', component: TiposRelacionesComponent, canActivate: [AuthVerifyService] },
   { path: 'RIdiomas', component: IdiomasComponent, canActivate: [AuthVerifyService] },
   { path: 'RAsocioaciones', component: RelacionesComponent, canActivate: [AuthVerifyService] },
+  { path: 'REntidades', component: RentidadesComponent, canActivate: [AuthVerifyService] },
+  { path: 'RDetalles', component: DetalleComponent, canActivate: [AuthVerifyService] },
+  { path: 'RRecursos', component: RecursosComponent, canActivate: [AuthVerifyService] },
 
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },

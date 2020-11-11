@@ -16,3 +16,13 @@ export interface Asociacion {
   Descripcion: string,
   Nivel: number,
 }
+
+export interface AsociacionReport {
+  IdAsociacion: number,
+  IdEntidad1: number,
+  IdEntidad2: number,
+  IdTipoAsociacion: number,
+  TipoAsociacion: string,
+  Descripcion: string,
+  Nivel: number,
+}
