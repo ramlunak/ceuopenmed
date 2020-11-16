@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import alasql from 'alasql';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
@@ -21,9 +22,29 @@ export class ExcelService {
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
+
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    //FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
 
+  public exportAllExcelFile(
+    fileName: string,
+    tiposEntidad: any,
+    tiposRelaciones: any,
+    idiomas: any,
+    relaciones: any,
+    entidades: any,
+    detalles: any,
+    recursos: any): void {
+    var opts = [
+      { sheetid: 'tipos_entidad', header: true },
+      { sheetid: 'tipos_relaciones', header: true },
+      { sheetid: 'idiomas', header: true },
+      { sheetid: 'relaciones', header: true },
+      { sheetid: 'entidades', header: true },
+      { sheetid: 'detalles', header: true },
+      { sheetid: 'recursos', header: false }];
+    var res = alasql('SELECT INTO XLSX("' + fileName + '.xlsx",?) FROM ?',
+      [opts, [tiposEntidad, tiposRelaciones, idiomas, relaciones, entidades, detalles, recursos]]);
+  }
 }

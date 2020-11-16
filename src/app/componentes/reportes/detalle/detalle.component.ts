@@ -100,7 +100,7 @@ export class DetalleComponent implements OnInit {
 
 
   CargarDgvElements() {
-    this.entidadService.get().subscribe(result => {
+    this.detalleEntidadService.get().subscribe(result => {
       this.dataSource = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourceAux = new MatTableDataSource<DetalleEntidad>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<DetalleEntidad>(result.data);

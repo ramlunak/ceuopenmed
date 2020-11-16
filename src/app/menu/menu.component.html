@@ -134,6 +134,12 @@
               <ul class="nav nav-collapse">
 
                 <li>
+                  <a (click)="CargarDatosReporteYExportar()" style="cursor: pointer;"  *ngIf="isAdmin">
+                    <span class="sub-item" style="display: flex;align-items: center;"><i class="fa fa-arrow-circle-down" style="margin: 0px;"></i>Exportar Todos</span>
+                  </a>
+                </li>
+
+                <li>
                   <a routerLink="/RTiposEntidad" *ngIf="isAdmin">
                     <span class="sub-item">Tipos de Entidad </span>
                   </a>
