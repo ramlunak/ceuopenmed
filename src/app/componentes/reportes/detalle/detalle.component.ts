@@ -114,7 +114,6 @@ export class DetalleComponent implements OnInit {
 
   Descargar() {
     this.dataSource.data.forEach(item => {
-
       var detalle = {
         IdRecurso: item.IdRecurso,
         IdIdioma: item.IdIdioma,

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { Asociacion } from '../models/asociacion';
-import { DetalleEntidad } from '../models/detalle-entidad';
-import { Entidad } from '../models/entidad';
-import { EntidadRecurso } from '../models/entidad-recurso';
+import { Asociacion, AsociacionReport } from '../models/asociacion';
+import { DetalleEntidad, DetalleEntidadReporte } from '../models/detalle-entidad';
+import { Entidad, EntidadReporte } from '../models/entidad';
+import { EntidadRecurso, EntidadRecursoReporte } from '../models/entidad-recurso';
 import { Idioma } from '../models/idioma';
 import { TipoAsociacion } from '../models/tipo-asociacion';
 import { TipoEntidad } from '../models/tipo-entidad';
@@ -35,6 +35,11 @@ export class MenuComponent implements OnInit {
   dataSourceEntidad: MatTableDataSource<Entidad>;
   dataSourceDetalleEntidad: MatTableDataSource<DetalleEntidad>;
   dataSourceEntidadRecurso: MatTableDataSource<EntidadRecurso>;
+
+  listDetalleEntidadReporte: DetalleEntidadReporte[] = [];
+  listRecursosReporte: EntidadRecursoReporte[] = [];
+  ListAsociacionReport: AsociacionReport[] = [];
+  ListEntidadReporte: EntidadReporte[] = [];
 
   constructor(
     private authService: AuthService,
@@ -87,6 +92,23 @@ export class MenuComponent implements OnInit {
     this.asociacionService.get().subscribe(result => {
       this.dataSourceAsociacion = new MatTableDataSource<Asociacion>(result.data);
       this.CargarDgvElementsEntidad();
+
+      this.dataSourceAsociacion.data.forEach(item => {
+
+        if (item.Estado === '1') {
+          var asociacionReport = {
+            IdAsociacion: item.IdAsociacion,
+            IdEntidad1: item.IdEntidad1,
+            IdEntidad2: item.IdEntidad2,
+            IdTipoAsociacion: item.IdTipoAsociacion,
+            TipoAsociacion: item.TipoAsociacion,
+            Descripcion: item.Descripcion,
+            Nivel: item.Nivel
+          };
+          this.ListAsociacionReport.push(asociacionReport);
+        }
+      });
+
     }, (error) => {
       this.CargarDgvElementsEntidad();
     });
@@ -96,6 +118,21 @@ export class MenuComponent implements OnInit {
     this.entidadService.get().subscribe(result => {
       this.dataSourceEntidad = new MatTableDataSource<Entidad>(result.data);
       this.CargarDgvElementsDetalleEntidad();
+
+      this.dataSourceEntidad.data.forEach(item => {
+        if (item.Estado === '1') {
+          var entidad = {
+            IdEntidad: item.IdEntidad,
+            Entidad: item.Entidad,
+            IdTipoEntidad: item.IdTipoEntidad,
+            TipoEntidad: item.TipoEntidad,
+            Idioma: item.Idioma,
+            Comentario: item.Comentario
+          };
+          this.ListEntidadReporte.push(entidad);
+        }
+      });
+
     }, (error) => {
       this.CargarDgvElementsDetalleEntidad();
     });
@@ -105,15 +142,45 @@ export class MenuComponent implements OnInit {
   CargarDgvElementsDetalleEntidad() {
     this.detalleEntidadService.get().subscribe(result => {
       this.dataSourceDetalleEntidad = new MatTableDataSource<DetalleEntidad>(result.data);
-      this.CargarDgvElements();
+      this.CargarDgvElementsEntidadRecurso();
+
+      this.dataSourceDetalleEntidad.data.forEach(item => {
+        var detalle = {
+          IdRecurso: item.IdRecurso,
+          IdIdioma: item.IdIdioma,
+          Idioma: item.Idioma,
+          IdEntidad: item.IdEntidad,
+          Entidad: item.Entidad,
+          IdTipoEntidad: item.IdTipoEntidad,
+          TipoEntidad: item.TipoEntidad,
+          Nivel: item.Nivel
+        };
+        this.listDetalleEntidadReporte.push(detalle);
+
+      });
+
     }, (error) => {
-      this.CargarDgvElements();
+      this.CargarDgvElementsEntidadRecurso();
     });
   }
 
-  CargarDgvElements() {
+  CargarDgvElementsEntidadRecurso() {
     this.entidadRecursoService.get().subscribe(result => {
       this.dataSourceEntidadRecurso = new MatTableDataSource<EntidadRecurso>(result.data);
+
+      this.dataSourceEntidadRecurso.data.forEach(item => {
+
+        if (item.IsImage.toString() === '0') {
+          var entidadRecurso = {
+            IdRecurso: item.IdRecurso,
+            IdEntidad: item.IdEntidad,
+            Nivel: item.Nivel,
+            URL: item.URL
+          };
+          this.listRecursosReporte.push(entidadRecurso);
+        }
+      });
+
       this.exportAll();
     }, (error) => {
       this.exportAll();
@@ -124,17 +191,16 @@ export class MenuComponent implements OnInit {
     this.CargarDgvElementsTipoEntidad();
   }
 
-
   exportAll() {
 
     this.excelService.exportAllExcelFile('Reportes',
       this.dataSourceTipoEntidad.data,
       this.dataSourceTipoAsociacion.data,
       this.dataSourceIdioma.data,
-      this.dataSourceAsociacion.data,
-      this.dataSourceEntidad.data,
-      this.dataSourceDetalleEntidad.data,
-      this.dataSourceEntidadRecurso.data);
+      this.ListAsociacionReport,
+      this.ListEntidadReporte,
+      this.listDetalleEntidadReporte,
+      this.listRecursosReporte);
   }
 
 }
