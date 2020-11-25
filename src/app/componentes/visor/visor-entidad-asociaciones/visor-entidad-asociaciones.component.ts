@@ -41,7 +41,7 @@ export class VisorEntidadAsociacionesComponent implements OnInit {
     private router: Router,
     private orderPipe: OrderPipe
   ) {
-    this.expand = false;
+    this.expand = true;
   }
 
   ngOnInit() {
