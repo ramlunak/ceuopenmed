@@ -8,7 +8,7 @@ import { isNullOrUndefined } from 'util';
 
 export class AppConstantsService {
 
-  // private API_URL = 'http://localhost/CeuopenmedAPI/backend/web/';
+  //private API_URL = 'http://localhost/CeuopenmedAPI/backend/web/';
   //private API_URL = 'http://copenmed.org/CeuopenmedAPI/backend/web/';
   private API_URL = 'http://copenmed.org/ceuopenapi_dev/backend/web/';
 
