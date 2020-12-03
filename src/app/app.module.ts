@@ -69,6 +69,7 @@ import { RelacionesComponent } from './componentes/reportes/relaciones/relacione
 import { DetalleComponent } from './componentes/reportes/detalle/detalle.component';
 import { RecursosComponent } from './componentes/reportes/recursos/recursos.component';
 import { RentidadesComponent } from './componentes/reportes/rentidades/rentidades.component';
+import { EntidadDescripcionComponent } from './componentes/Entity/entidad-descripcion/entidad-descripcion.component'
 
 
 @NgModule({
@@ -123,7 +124,8 @@ import { RentidadesComponent } from './componentes/reportes/rentidades/rentidade
     RelacionesComponent,
     DetalleComponent,
     RecursosComponent,
-    RentidadesComponent
+    RentidadesComponent,
+    EntidadDescripcionComponent
   ],
   imports: [
     BrowserModule,

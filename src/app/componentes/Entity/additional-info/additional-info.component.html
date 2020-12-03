@@ -15,4 +15,12 @@
       <app-entidad-recurso></app-entidad-recurso>
     </ng-template>
   </mat-tab>
+  <mat-tab [disabled]="IsDescripcion">
+    <ng-template mat-tab-label>
+      <mat-icon class="ceu-tab-icon">description</mat-icon> Descripción
+    </ng-template>
+    <ng-template matTabContent>
+      <app-entidad-descripcion></app-entidad-descripcion>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

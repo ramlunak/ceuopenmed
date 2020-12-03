@@ -11,6 +11,7 @@ export class AdditionalInfoComponent implements OnInit {
   TabIndex = 0;
   IsRecursos: boolean;
   IsDetalles: boolean;
+  IsDescripcion: boolean;
   VisorEdit: number;
   constructor(private activeRoute: ActivatedRoute) { }
 
