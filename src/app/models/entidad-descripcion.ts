@@ -4,7 +4,7 @@ export interface EntidadDescripcion {
   idIdioma: number;
   descripcion: string;
   //Extra
-  Entidad: string;
+  entidad: string;
   Idioma: number;
 }
 

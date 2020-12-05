@@ -1,3 +1,4 @@
+import { Idioma } from './../models/idioma';
 import { Injectable } from '@angular/core';
 
 import { AuthService } from './seguridad/auth.service';
@@ -22,23 +23,17 @@ export class EntidadDescripcionService {
   constructor(private authService: AuthService, private httpClient: HttpClient, private CONSTANS: AppConstantsService) { }
 
   form: FormGroup = new FormGroup({
-    IdRecurso: new FormControl(null),
+    idEntidadDescripcion: new FormControl(null),
     IdIdioma: new FormControl('', Validators.required),
     IdEntidad: new FormControl('', Validators.required),
-    Nivel: new FormControl('', Validators.required),
-    URL: new FormControl('', Validators.required),
-    IsImage: new FormControl(false, Validators.required),
-    Descripcion: new FormControl('')
+    Descripcion: new FormControl('', Validators.required)
   });
 
   InicializarValoresFormGroup() {
     this.form.setValue({
-      IdRecurso: null,
+      idEntidadDescripcion: null,
       IdIdioma: '',
       IdEntidad: '',
-      Nivel: '',
-      URL: '',
-      IsImage: false,
       Descripcion: '',
     });
   }
@@ -58,34 +53,15 @@ export class EntidadDescripcionService {
       );
   }
 
-  getByEntidad(): Observable<any> {
+  getByEntidad(idEntidad: number): Observable<any> {
     this.loadingSubject.next(true);
-    let idEntidad: number;
-    if (isNullOrUndefined(this.form.value.IdEntidad)) {
-      idEntidad = 0;
-    } else {
-      idEntidad = this.form.value.IdEntidad;
-    }
-    return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL),
-        {
-          headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
-          params: new HttpParams().set('search[IdEntidad]', idEntidad.toString())
-        }
-      )
-      .pipe(
-        finalize(() => this.loadingSubject.next(false)),
-        map(res => res)
-      );
-  }
 
-  view(Id: number) {
-    this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'view/' + Id),
-        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+        this.CONSTANS.getApiUrl(this.BaseURL + 'descripciones/' + idEntidad),
+        {
+          headers: this.CONSTANS.getApiHeaders(this.authService.getToken())
+        }
       )
       .pipe(
         finalize(() => this.loadingSubject.next(false)),
@@ -96,9 +72,11 @@ export class EntidadDescripcionService {
   set() {
     this.loadingSubject.next(true);
     return this.httpClient
-      .post<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'create'),
-        this.form.value,
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'create-descripcion/'
+          + this.form.value.IdEntidad
+          + '/' + this.form.value.Idioma
+          + '/' + this.form.value.Descripcion),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
