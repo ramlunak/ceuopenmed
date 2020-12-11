@@ -24,9 +24,16 @@ export class EntidadDescripcionService {
 
   form: FormGroup = new FormGroup({
     idEntidadDescripcion: new FormControl(null),
+    TipoEntidad: new FormControl(null),
     IdIdioma: new FormControl('', Validators.required),
     IdEntidad: new FormControl('', Validators.required),
     Descripcion: new FormControl('', Validators.required)
+  });
+
+  formEntidadAux: FormGroup = new FormGroup({
+    IdEstudiante: new FormControl(null),
+    IdTipoEntidad: new FormControl(null),
+    Comentario: new FormControl(null)
   });
 
   InicializarValoresFormGroup() {
@@ -71,12 +78,17 @@ export class EntidadDescripcionService {
 
   set() {
     this.loadingSubject.next(true);
+
+    this.formEntidadAux.patchValue({
+      IdEstudiante: this.form.value.IdEntidad,
+      IdTipoEntidad: this.form.value.IdIdioma,
+      Comentario: this.form.value.Descripcion,
+    });
+
     return this.httpClient
-      .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'create-descripcion/'
-          + this.form.value.IdEntidad
-          + '/' + this.form.value.Idioma
-          + '/' + this.form.value.Descripcion),
+      .post<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'create-d'),
+        this.formEntidadAux.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
@@ -84,6 +96,21 @@ export class EntidadDescripcionService {
         map(res => res)
       );
   }
+
+
+  /*
+  set() {
+    this.loadingSubject.next(true);
+    return this.httpClient
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + "create-descripcion/1/1/asdfasdfasdf"),
+        { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
+      )
+      .pipe(
+        finalize(() => this.loadingSubject.next(false)),
+        map(res => res)
+      );
+  }*/
 
   update() {
     this.loadingSubject.next(true);

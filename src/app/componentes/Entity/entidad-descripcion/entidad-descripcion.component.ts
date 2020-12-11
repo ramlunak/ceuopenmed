@@ -46,7 +46,7 @@ export class EntidadDescripcionComponent implements OnInit {
   dataSource: MatTableDataSource<EntidadDescripcion>;
   dataSourceAux: MatTableDataSource<EntidadDescripcion>;
   dataSourcePalabras: MatTableDataSource<EntidadDescripcion>;
-  displayedColumns = ['Idioma', 'Descripcion', 'commands'];
+  displayedColumns = ['idioma', 'descripcion', 'commands'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   listIdiomas: Idioma[];
@@ -58,7 +58,7 @@ export class EntidadDescripcionComponent implements OnInit {
   constructor(
     private entidadService: EntidadService,
     private authService: AuthService,
-    private entidadDescripcion: EntidadDescripcionService,
+    private entidadDescripcionService: EntidadDescripcionService,
     private detalleEntidadService: DetalleEntidadService,
     private idiomaService: IdiomaService,
     private tipoEntidadService: TipoEntidadService,
@@ -78,20 +78,21 @@ export class EntidadDescripcionComponent implements OnInit {
     this.EvaluacionEntidad = this.activeRoute.snapshot.params.EvaluacionEntidad;
     this.ParametroBusqueda = this.activeRoute.snapshot.params.parametroBusqueda;
     this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
-    this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
+    this.entidadDescripcionService.form.patchValue({ IdEntidad: this.IdEntidad });
+
     this.CargarDgvElements();
     this.CargarExtraInfo();
     this.CargarSelects();
 
-
   }
 
   CargarDgvElements() {
-    this.entidadDescripcion.getByEntidad(this.IdEntidad).subscribe(result => {
+    this.entidadDescripcionService.getByEntidad(this.IdEntidad).subscribe(result => {
       this.dataSource = new MatTableDataSource<EntidadDescripcion>(result.data);
       this.dataSourceAux = new MatTableDataSource<EntidadDescripcion>(result.data);
       this.dataSourcePalabras = new MatTableDataSource<EntidadDescripcion>(result.data);
       this.dataSource.paginator = this.paginator;
+      console.log(result.data);
       this.applyPredicate();
       if (!isNullOrUndefined(this.ParametroBusqueda)) {
         this.Search = this.ParametroBusqueda;
@@ -165,7 +166,7 @@ export class EntidadDescripcionComponent implements OnInit {
   guardarClick() {
 
     if (this.transaccionIsNew) {
-      this.detalleEntidadService.set().subscribe(result => {
+      this.entidadDescripcionService.set().subscribe(result => {
 
         if (result.status === 1) {
           this.ActualizarEstadoEntidad();
@@ -179,7 +180,7 @@ export class EntidadDescripcionComponent implements OnInit {
         this.errorService.handleError(error);
       });
     } else {
-      this.detalleEntidadService.update().subscribe(result => {
+      this.entidadDescripcionService.update().subscribe(result => {
 
         if (result.status === 1) {
           this.ActualizarEstadoEntidad();
@@ -195,7 +196,7 @@ export class EntidadDescripcionComponent implements OnInit {
   }
 
   eliminarClick() {
-    this.detalleEntidadService.delete().subscribe(result => {
+    this.entidadDescripcionService.delete().subscribe(result => {
 
       if (result.status === 1) {
         this.ActualizarEstadoEntidad();
@@ -227,9 +228,9 @@ export class EntidadDescripcionComponent implements OnInit {
 
   Limpiar() {
     this.transaccionIsNew = true;
-    this.detalleEntidadService.InicializarValoresFormGroup();
-    this.detalleEntidadService.form.reset();
-    this.detalleEntidadService.form.patchValue({ IdEntidad: this.IdEntidad });
+    this.entidadDescripcionService.InicializarValoresFormGroup();
+    this.entidadDescripcionService.form.reset();
+    this.entidadDescripcionService.form.patchValue({ IdEntidad: this.IdEntidad });
   }
 
   applyFilter(filterValue: string) {

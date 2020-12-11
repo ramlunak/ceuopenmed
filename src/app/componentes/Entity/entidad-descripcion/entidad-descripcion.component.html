@@ -46,7 +46,7 @@
   <div class="row">
     <div class="col-4"></div>
     <div class="col-4">
-      <div class="spinner-container" *ngIf="entidadService.loading$ | async">
+      <div class="spinner-container" *ngIf="entidadDescripcionService.loading$ | async">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
     </div>
@@ -61,10 +61,10 @@
     <td style="width: 280px" valign="top">
 
       <!-- FORMULARIO -->
-      <form [formGroup]="detalleEntidadService.form">
+      <form [formGroup]="entidadDescripcionService.form">
 
         <mat-form-field class="ceu-full-width">
-          <input type="hidden" formControlName="IdRecurso">
+          <input type="hidden" formControlName="idEntidadDescripcion">
           <input type="hidden" formControlName="IdEntidad">
           <input disabled="true" matInput name="TipoEntidad" [value]="TIPO_ENTIDAD" placeholder="Tipo Entidad">
         </mat-form-field>
@@ -80,22 +80,22 @@
         </mat-form-field>
 
         <mat-form-field class="ceu-full-width">
-          <textarea formControlName="descripcion" matInput name="descripcion" rows="5" placeholder="Descripcion"></textarea>
+          <textarea formControlName="Descripcion" matInput name="Descripcion" rows="5" placeholder="Descripcion"></textarea>
           <mat-error>Este campo es requerido.</mat-error>
         </mat-form-field>
 
         <button mat-raised-button color='primary'
-          [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
+          [disabled]="entidadDescripcionService.form.invalid || (entidadDescripcionService.loading$ | async)"
           *ngIf="transaccionIsNew" (click)="guardarClick()">
-          <mat-icon *ngIf="detalleEntidadService.loading$ | async">
+          <mat-icon *ngIf="entidadDescripcionService.loading$ | async">
             <mat-spinner diameter="20" color="accent">
             </mat-spinner>
           </mat-icon>Guardar
         </button>
         <button mat-raised-button color='primary'
-          [disabled]="detalleEntidadService.form.invalid || (detalleEntidadService.loading$ | async)"
+          [disabled]="entidadDescripcionService.form.invalid || (entidadDescripcionService.loading$ | async)"
           *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">
-          <mat-icon *ngIf="detalleEntidadService.loading$ | async">
+          <mat-icon *ngIf="entidadDescripcionService.loading$ | async">
             <mat-spinner diameter="20" color="accent">
             </mat-spinner>
           </mat-icon>Modificar
@@ -114,12 +114,12 @@
       <!-- GRID -->
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ceu-table">
 
-        <ng-container matColumnDef="Idioma">
+        <ng-container matColumnDef="idioma">
           <th mat-header-cell *matHeaderCellDef> Idioma </th>
           <td mat-cell *matCellDef="let element"> {{element.idioma}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Descripcion">
+        <ng-container matColumnDef="descripcion">
           <th mat-header-cell *matHeaderCellDef> Entidad </th>
           <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
         </ng-container>
