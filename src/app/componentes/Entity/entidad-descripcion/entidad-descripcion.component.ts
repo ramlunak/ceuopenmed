@@ -55,13 +55,16 @@ export class EntidadDescripcionComponent implements OnInit {
   ParametroBusqueda: string;
   Search = '';
 
+
   constructor(
-    private entidadService: EntidadService,
+
     private authService: AuthService,
-    private entidadDescripcionService: EntidadDescripcionService,
-    private detalleEntidadService: DetalleEntidadService,
-    private idiomaService: IdiomaService,
+    private entidadService: EntidadService,
+    public entidadDescripcionService: EntidadDescripcionService,
+
     private tipoEntidadService: TipoEntidadService,
+    private idiomaService: IdiomaService,
+
     private errorService: ErrorHandlerService,
     private router: Router,
     private activeRoute: ActivatedRoute
@@ -165,70 +168,64 @@ export class EntidadDescripcionComponent implements OnInit {
 
   guardarClick() {
 
-    if (this.transaccionIsNew) {
-      this.entidadDescripcionService.set().subscribe(result => {
+    // if (this.transaccionIsNew) {
+    this.entidadDescripcionService.set().subscribe(result => {
+      this.Limpiar();
+      this.CargarDgvElements();
+      console.log('result', result);
+      /* if (result.status === 1) {
+         this.ActualizarEstadoEntidad();
 
-        if (result.status === 1) {
-          this.ActualizarEstadoEntidad();
-          this.CargarDgvElements();
-        } else {
-          this.errorService.handleError(result.error);
+       } else {
+         this.errorService.handleError(result.error);
 
-        }
-        this.Limpiar();
-      }, (error) => {
-        this.errorService.handleError(error);
-      });
-    } else {
-      this.entidadDescripcionService.update().subscribe(result => {
+       }*/
 
-        if (result.status === 1) {
-          this.ActualizarEstadoEntidad();
-          this.CargarDgvElements();
-        } else {
-          this.errorService.handleError(result.error);
-        }
-        this.Limpiar();
-      }, (error) => {
-        this.errorService.handleError(error);
-      });
-    }
+    }, (error) => {
+      this.errorService.handleError(error);
+    });
+    /* } else {
+       this.entidadDescripcionService.update().subscribe(result => {
+
+         if (result.status === 1) {
+           this.ActualizarEstadoEntidad();
+           this.CargarDgvElements();
+         } else {
+           this.errorService.handleError(result.error);
+         }
+         this.Limpiar();
+       }, (error) => {
+         this.errorService.handleError(error);
+       });
+     } */
   }
 
   eliminarClick() {
     this.entidadDescripcionService.delete().subscribe(result => {
-
-      if (result.status === 1) {
-        this.ActualizarEstadoEntidad();
-        this.CargarDgvElements();
-      } else {
-        this.errorService.handleError(result.error);
-      }
-      this.Limpiar();
+      this.CargarDgvElements();
     }, (error) => {
-      this.errorService.handleError(error);
+      this.CargarDgvElements();
     });
   }
 
 
   setOperationsData() {
-    /*
-    this.transaccionIsNew = false;
-    const detalle = this.dataSource.filteredData[this.ROW_NUMBER];
-    this.detalleEntidadService.form.patchValue(
+
+    //this.transaccionIsNew = false;
+    const descripcion = this.dataSource.filteredData[this.ROW_NUMBER];
+    this.entidadDescripcionService.form.patchValue(
       {
-        IdRecurso: detalle.IdRecurso,
-        IdIdioma: detalle.IdIdioma,
+        idEntidadDescripcion: descripcion.idEntidadDescripcion,
+        IdIdioma: descripcion.idIdioma,
         IdEntidad: this.IdEntidad,
-        Entidad: detalle.Entidad,
-        Nivel: detalle.Nivel
+        Entidad: descripcion.entidad,
+        Descripcion: descripcion.descripcion
       });
-      */
   }
 
   Limpiar() {
     this.transaccionIsNew = true;
-    this.entidadDescripcionService.InicializarValoresFormGroup();
+    //this.entidadDescripcionService.InicializarValoresFormGroup();
     this.entidadDescripcionService.form.reset();
     this.entidadDescripcionService.form.patchValue({ IdEntidad: this.IdEntidad });
   }

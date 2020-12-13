@@ -40,7 +40,6 @@ export class EntidadDescripcionService {
     this.form.setValue({
       idEntidadDescripcion: null,
       IdIdioma: '',
-      IdEntidad: '',
       Descripcion: '',
     });
   }
@@ -129,8 +128,8 @@ export class EntidadDescripcionService {
   delete() {
     this.loadingSubject.next(true);
     return this.httpClient
-      .delete<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'delete/' + this.form.value.IdRecurso),
+      .get<any>(
+        this.CONSTANS.getApiUrl(this.BaseURL + 'delete-descripcion/' + this.form.value.idEntidadDescripcion),
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
