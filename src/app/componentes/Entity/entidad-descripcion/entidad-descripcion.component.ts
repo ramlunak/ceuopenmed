@@ -168,36 +168,39 @@ export class EntidadDescripcionComponent implements OnInit {
 
   guardarClick() {
 
-    // if (this.transaccionIsNew) {
-    this.entidadDescripcionService.set().subscribe(result => {
-      this.Limpiar();
-      this.CargarDgvElements();
-      console.log('result', result);
-      /* if (result.status === 1) {
-         this.ActualizarEstadoEntidad();
-
-       } else {
-         this.errorService.handleError(result.error);
-
-       }*/
-
-    }, (error) => {
-      this.errorService.handleError(error);
-    });
-    /* } else {
-       this.entidadDescripcionService.update().subscribe(result => {
-
-         if (result.status === 1) {
+    if (this.transaccionIsNew) {
+      this.entidadDescripcionService.set().subscribe(result => {
+        this.Limpiar();
+        this.CargarDgvElements();
+        console.log('result', result);
+        /* if (result.status === 1) {
            this.ActualizarEstadoEntidad();
-           this.CargarDgvElements();
+
          } else {
            this.errorService.handleError(result.error);
-         }
-         this.Limpiar();
-       }, (error) => {
-         this.errorService.handleError(error);
-       });
-     } */
+
+         }*/
+
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    } else {
+      this.entidadDescripcionService.update().subscribe(result => {
+        this.ActualizarEstadoEntidad();
+        this.CargarDgvElements();
+
+        /*if (result.status === 1) {
+          this.ActualizarEstadoEntidad();
+          this.CargarDgvElements();
+        } else {
+          this.errorService.handleError(result.error);
+        }*/
+
+        this.Limpiar();
+      }, (error) => {
+        this.errorService.handleError(error);
+      });
+    }
   }
 
   eliminarClick() {
@@ -211,7 +214,7 @@ export class EntidadDescripcionComponent implements OnInit {
 
   setOperationsData() {
 
-    //this.transaccionIsNew = false;
+    this.transaccionIsNew = false;
     const descripcion = this.dataSource.filteredData[this.ROW_NUMBER];
     this.entidadDescripcionService.form.patchValue(
       {

@@ -113,10 +113,17 @@ export class EntidadDescripcionService {
 
   update() {
     this.loadingSubject.next(true);
+
+    this.formEntidadAux.patchValue({
+      IdEstudiante: this.form.value.IdEntidad,
+      IdTipoEntidad: this.form.value.IdIdioma,
+      Comentario: this.form.value.Descripcion,
+    });
+
     return this.httpClient
       .put<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL + 'update/' + this.form.value.IdRecurso),
-        this.form.value,
+        this.CONSTANS.getApiUrl(this.BaseURL + 'update-d/' + this.form.value.idEntidadDescripcion),
+        this.formEntidadAux.value,
         { headers: this.CONSTANS.getApiHeaders(this.authService.getToken()) }
       )
       .pipe(
