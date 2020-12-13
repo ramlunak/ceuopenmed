@@ -53,6 +53,7 @@ import { VisorTipoAsociacionComponent } from './componentes/visor/visor-tipo-aso
 import { PaginaInicioComponent } from './componentes/pagina-inicio/pagina-inicio.component';
 import { VisorEntidadComponent } from './componentes/visor/visor-entidad/visor-entidad.component';
 import { VisorEntidadDetalleComponent } from './componentes/visor/visor-entidad-detalle/visor-entidad-detalle.component';
+import { VisorEntidadDescripcionComponent } from './componentes/visor/visor-entidad-descripcion/visor-entidad-descripcion.component';
 import { VisorEntidadRecursosComponent } from './componentes/visor/visor-entidad-recursos/visor-entidad-recursos.component';
 import { VisorEntidadAsociacionesComponent } from './componentes/visor/visor-entidad-asociaciones/visor-entidad-asociaciones.component';
 import { VisorAsociacionesMultiplesComponent } from './componentes/visor/visor-asociaciones-multiples/visor-asociaciones-multiples.component';
@@ -109,6 +110,7 @@ import { EntidadDescripcionComponent } from './componentes/Entity/entidad-descri
     PaginaInicioComponent,
     VisorEntidadComponent,
     VisorEntidadDetalleComponent,
+    VisorEntidadDescripcionComponent,
     VisorEntidadRecursosComponent,
     VisorEntidadAsociacionesComponent,
     VisorAsociacionesMultiplesComponent,

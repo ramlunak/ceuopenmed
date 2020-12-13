@@ -1,0 +1,68 @@
+<div class="tipo-asociacion">
+
+  <div style="background-color: gainsboro;" class="name-img-content">
+
+    <div class="ta-name">
+      <mat-icon matTooltip="Adicionar" *ngIf="authService.showMenus"
+        routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/2"
+        style="cursor: pointer;color:orangered;margin: 5px;;">add_circle</mat-icon>
+      Descripciones
+    </div>
+    <div class="ta-img">
+
+      <button *ngIf="!expand" (click)="Expand()" mat-icon-button color="primary">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+
+      <button *ngIf="expand" (click)="Collapse()" mat-icon-button color="primary">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+      </button>
+
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div *ngIf="expand" class="tipo-asociacion-body">
+
+    <!--   <div class="task-bar">
+      <button *ngIf="!search" (click)="Search()" mat-icon-button class="black">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button *ngIf="search" (click)="CancelSearch()" mat-icon-button class="black">
+        <mat-icon>cancel</mat-icon>
+      </button>
+
+      <mat-form-field *ngIf="search" class="mat-form-field">
+        <input matInput [value]="valueSearch" (keyup)="SearchOnChange($event)">
+      </mat-form-field>
+    </div> -->
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 10px;"></th>
+          <th [class.active]="order == 'descripcion'" (click)="setOrder('descripcion')">
+            Descripción <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
+          <th [class.active]="order == 'idioma'" (click)="setOrder('idioma')">
+            Idioma <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ArrarDescripcionEntidad  | orderBy: order:reverse:'case-insensitive'">
+          <td>
+            <mat-icon matTooltip="Editar"
+              routerLink="/additionalInfo/{{ID_ENTIDAD}}/{{ID_TIPOENTIDAD}}/2/{{item.descripcion}}/1"
+              style="cursor: pointer;color:forestgreen;" *ngIf="authService.showMenus">edit</mat-icon>
+          </td>
+          <td> <i> {{item.descripcion}} </i></td>
+          <td> <i> {{item.idioma}} </i></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+
+</div>

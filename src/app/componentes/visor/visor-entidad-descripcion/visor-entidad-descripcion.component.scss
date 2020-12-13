@@ -1,0 +1,61 @@
+.tipo-asociacion{
+  position: relative;
+  display: block;
+  margin-bottom: 30px;
+  }
+  .name-img-content{
+  display: flex;
+  justify-content: space-between;
+  }
+  .ta-name{
+  font-size: 24px;
+  color:blueviolet;
+  }
+  .ta-img{
+
+  }
+  .separator{
+  border-bottom: 1px solid ;
+  border-bottom-color: black;
+  margin-top: 5px;
+  }
+
+  .tipo-asociacion-body{
+  display: block;
+  }
+
+  .mat-form-field{
+  margin: 0px;
+  }
+
+  .task-bar{
+   display: flex;
+   justify-content: flex-end;
+  }
+
+  .link{
+  cursor: pointer;
+  color: dodgerblue;
+  display: inline;
+  }
+
+  .link:hover{
+    text-decoration: underline;
+  }
+
+  thead th {
+    user-select: none;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-left: 15px;
+ }
+  thead th span {
+    user-select: none;
+    visibility: hidden;
+ }
+  thead th.active {
+    color: #000;
+ }
+  thead th.active span {
+    visibility: visible;
+ }
