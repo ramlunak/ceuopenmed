@@ -83,6 +83,7 @@ export class EntidadDescripcionComponent implements OnInit {
     this.EntidadIdEStudiante = this.activeRoute.snapshot.params.IdEstudiante;
     this.entidadDescripcionService.form.patchValue({ IdEntidad: this.IdEntidad });
 
+    this.Limpiar();
     this.CargarDgvElements();
     this.CargarExtraInfo();
     this.CargarSelects();
@@ -97,9 +98,11 @@ export class EntidadDescripcionComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       console.log(result.data);
       this.applyPredicate();
+      //FILTRO DEL VISOR
       if (!isNullOrUndefined(this.ParametroBusqueda)) {
-        this.Search = this.ParametroBusqueda;
-        this.applyFilter(this.Search);
+        this.applyFilterById(this.ParametroBusqueda);
+        this.ROW_NUMBER = 0;
+        this.setOperationsData();
       }
     }, (error) => {
       this.errorService.handleError(error);
@@ -231,6 +234,14 @@ export class EntidadDescripcionComponent implements OnInit {
     //this.entidadDescripcionService.InicializarValoresFormGroup();
     this.entidadDescripcionService.form.reset();
     this.entidadDescripcionService.form.patchValue({ IdEntidad: this.IdEntidad });
+  }
+
+  applyFilterById(id) {
+    var dataFilter = this.dataSource.data
+      .filter((book: EntidadDescripcion) => book.idEntidadDescripcion === id);
+    this.dataSource.data = dataFilter;
+    this.dataSource.filteredData = dataFilter;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
