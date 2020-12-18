@@ -351,9 +351,10 @@ export class AsociacionComponent implements OnInit {
 
   applyFilterDetalle(filterValue: string) {
 
-    if (filterValue.length < 3) {
-      return;
-    }
+    if (filterValue.length !== 0)
+      if (filterValue.length < 3) {
+        return;
+      }
 
     //dividir el filtro por spacio
     var palabras = filterValue.split(' ');
@@ -373,7 +374,6 @@ export class AsociacionComponent implements OnInit {
     });
 
     this.cargarEntidadesPorFiltroDetalles(filterValue);
-
   }
 
 
