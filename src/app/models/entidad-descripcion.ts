@@ -5,7 +5,12 @@ export interface EntidadDescripcion {
   descripcion: string;
   //Extra
   entidad: string;
-  Idioma: number;
+  idioma: string;
 }
 
+export interface EntidadDescripcionReporte {
+  IdDescripcion: number;
+  Idioma: string;
+  Descripcion: string;
+}
 

@@ -176,6 +176,12 @@
                 </li>
 
                 <li>
+                  <a routerLink="/RDescripcionesEntidad" *ngIf="isAdmin">
+                    <span class="sub-item">Descripciones</span>
+                  </a>
+                </li>
+
+                <li>
                   <a routerLink="/RRecursos" *ngIf="isAdmin">
                     <span class="sub-item">Recursos   </span>
                   </a>

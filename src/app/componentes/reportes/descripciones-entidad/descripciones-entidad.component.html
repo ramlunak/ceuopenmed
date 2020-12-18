@@ -1,0 +1,45 @@
+<!-- TOOL BAR-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+
+    <span class="material-spacer"></span>
+
+    <button mat-button (click)="Descargar()">
+      <mat-icon>save_alt</mat-icon>
+      Descargar
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<!--END TOOL BAR-->
+
+<table style="width: 100% !important;margin-top: 15px">
+  <tr>
+
+    <td valign="top">
+      <!-- GRID -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ceu-table">
+
+        <ng-container matColumnDef="IdDescripcion">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.idEntidadDescripcion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Idioma">
+          <th mat-header-cell *matHeaderCellDef> Idioma </th>
+          <td mat-cell *matCellDef="let element"><div style="margin:10px;">{{element.idioma}}</div> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator showFirstLastButtons [pageSize]="10" [pageSizeOptions]="[10, 30, 50]"></mat-paginator>
+      <!--END GRID -->
+    </td>
+  </tr>
+</table>

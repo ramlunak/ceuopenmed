@@ -1,3 +1,4 @@
+import { DescripcionesEntidadComponent } from './componentes/reportes/descripciones-entidad/descripciones-entidad.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -126,6 +127,7 @@ import { EntidadDescripcionComponent } from './componentes/Entity/entidad-descri
     RelacionesComponent,
     DetalleComponent,
     RecursosComponent,
+    DescripcionesEntidadComponent,
     RentidadesComponent,
     EntidadDescripcionComponent
   ],

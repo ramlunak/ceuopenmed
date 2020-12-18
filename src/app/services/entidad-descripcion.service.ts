@@ -48,7 +48,7 @@ export class EntidadDescripcionService {
     this.loadingSubject.next(true);
     return this.httpClient
       .get<any>(
-        this.CONSTANS.getApiUrl(this.BaseURL),
+        this.CONSTANS.getApiUrl(this.BaseURL + 'descripciones/0'),
         {
           headers: this.CONSTANS.getApiHeaders(this.authService.getToken()),
         }

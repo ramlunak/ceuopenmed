@@ -1,3 +1,4 @@
+import { DescripcionesEntidadComponent } from './../componentes/reportes/descripciones-entidad/descripciones-entidad.component';
 import { RentidadesComponent } from './../componentes/reportes/rentidades/rentidades.component';
 import { RecursosComponent } from './../componentes/reportes/recursos/recursos.component';
 import { DetalleComponent } from './../componentes/reportes/detalle/detalle.component';
@@ -92,6 +93,7 @@ const routes: Routes = [
   { path: 'REntidades', component: RentidadesComponent, canActivate: [AuthVerifyService] },
   { path: 'RDetalles', component: DetalleComponent, canActivate: [AuthVerifyService] },
   { path: 'RRecursos', component: RecursosComponent, canActivate: [AuthVerifyService] },
+  { path: 'RDescripcionesEntidad', component: DescripcionesEntidadComponent, canActivate: [AuthVerifyService] },
 
   { path: '404', component: NotFoundComponent },
   { path: '500', component: ServerErrorComponent },
