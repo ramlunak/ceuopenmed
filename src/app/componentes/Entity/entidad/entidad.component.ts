@@ -360,6 +360,8 @@ export class EntidadComponent implements OnInit {
         return;
       }
 
+     
+
     //dividir el filtro por spacio
     var palabras = filterValue.split(' ');
 
@@ -370,6 +372,16 @@ export class EntidadComponent implements OnInit {
       if (element != "" && element != " ") {
         if (this.dataSourceDetalle.filteredData.length > 0)
           this.dataSourceDetallePalabras.data = this.dataSourceDetalle.filteredData;
+
+          var filterEqual = element.substring(0,1);
+          if(filterEqual === "*"){
+            element = element.replace("*","");
+          this.dataSourceDetallePalabras.filterPredicate = (data: DetalleEntidad, filter: string) => {
+            return data.Entidad.toLocaleLowerCase() == element.toLocaleLowerCase();
+           };
+          }else{
+            this.applyPredicate();
+          }
 
         this.dataSourceDetallePalabras.filter = element.trim().toLowerCase();
         this.dataSourceDetalle.filteredData = this.dataSourceDetallePalabras.filteredData;
