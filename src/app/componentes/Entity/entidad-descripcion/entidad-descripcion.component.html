@@ -69,6 +69,7 @@
           <input disabled="true" matInput name="TipoEntidad" [value]="TIPO_ENTIDAD" placeholder="Tipo Entidad">
         </mat-form-field>
 
+        <div class="row col-12 col-md-4">      
         <mat-form-field class="ceu-full-width">
           <mat-label>Idioma</mat-label>
           <mat-select formControlName="IdIdioma" name="IdIdioma">
@@ -78,13 +79,14 @@
           </mat-select>
           <mat-error>Este campo es requerido.</mat-error>
         </mat-form-field>
+      </div>
 
         <mat-form-field class="ceu-full-width">
-          <textarea formControlName="Descripcion" matInput name="Descripcion" rows="10" placeholder="Descripcion"></textarea>
+          <textarea formControlName="Descripcion" matInput name="Descripcion" rows="7" placeholder="Descripcion"></textarea>
           <mat-error>Este campo es requerido.</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color='primary'
+        <button mat-raised-button color='primary' style="margin-bottom: 15px;"
           [disabled]="entidadDescripcionService.form.invalid || (entidadDescripcionService.loading$ | async)"
           *ngIf="transaccionIsNew" (click)="guardarClick()">
           <mat-icon *ngIf="entidadDescripcionService.loading$ | async">
@@ -92,7 +94,7 @@
             </mat-spinner>
           </mat-icon>Guardar
         </button>
-        <button mat-raised-button color='primary'
+        <button mat-raised-button color='primary' style="margin-bottom: 15px;"
           [disabled]="entidadDescripcionService.form.invalid || (entidadDescripcionService.loading$ | async)"
           *ngIf="!transaccionIsNew" data-dismiss="modal" (click)="guardarClick()">
           <mat-icon *ngIf="entidadDescripcionService.loading$ | async">
@@ -105,11 +107,8 @@
       <!--END FORMULARIO -->
 
     </td>
-    <td style="width: 10px">
-      <!-- DIVIDER -->
-
-      <!-- END -->
-    </td>
+  </tr>
+  <tr>
     <td valign="top">
       <!-- GRID -->
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ceu-table">
