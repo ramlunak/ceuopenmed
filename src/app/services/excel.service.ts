@@ -35,7 +35,8 @@ export class ExcelService {
     relaciones: any,
     entidades: any,
     detalles: any,
-    recursos: any): void {
+    recursos: any,
+    descripciones: any): void {
     var opts = [
       { sheetid: 'tipos_entidad', header: true },
       { sheetid: 'tipos_relaciones', header: true },
@@ -43,8 +44,9 @@ export class ExcelService {
       { sheetid: 'relaciones', header: true },
       { sheetid: 'entidades', header: true },
       { sheetid: 'detalles', header: true },
-      { sheetid: 'recursos', header: false }];
+      { sheetid: 'recursos', header: false },
+      { sheetid: 'descripciones', header: false }];
     var res = alasql('SELECT INTO XLSX("' + fileName + '.xlsx",?) FROM ?',
-      [opts, [tiposEntidad, tiposRelaciones, idiomas, relaciones, entidades, detalles, recursos]]);
+      [opts, [tiposEntidad, tiposRelaciones, idiomas, relaciones, entidades, detalles, recursos, descripciones]]);
   }
 }
