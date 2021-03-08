@@ -396,7 +396,7 @@ export class AsociacionComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource<Asociacion>(null);
     this.dataSource = new MatTableDataSource<Asociacion>(this.listEntidadesAux);
-    console.log(this.listEntidadesAux);
+    this.dataSource.paginator = this.paginator;
     if (filterValue == "")
       this.CargarDgvElements();
 
