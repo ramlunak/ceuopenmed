@@ -121,7 +121,6 @@ export class DescripcionesEntidadComponent implements OnInit {
         Descripcion: item.descripcion
       };
       this.listEntidadDescripcionReporte.push(descripcio);
-
     });
     console.log(this.dataSource.data);
     this.excelService.exportAsExcelFile(this.listEntidadDescripcionReporte, 'Descripciones');

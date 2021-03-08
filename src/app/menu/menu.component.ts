@@ -1,8 +1,11 @@
+import { EntidadDescripcionReporte } from './../models/entidad-descripcion';
+import { EntidadDescripcionService } from './../services/entidad-descripcion.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Asociacion, AsociacionReport } from '../models/asociacion';
 import { DetalleEntidad, DetalleEntidadReporte } from '../models/detalle-entidad';
 import { Entidad, EntidadReporte } from '../models/entidad';
+import { EntidadDescripcion } from '../models/entidad-descripcion';
 import { EntidadRecurso, EntidadRecursoReporte } from '../models/entidad-recurso';
 import { Idioma } from '../models/idioma';
 import { TipoAsociacion } from '../models/tipo-asociacion';
@@ -35,11 +38,13 @@ export class MenuComponent implements OnInit {
   dataSourceEntidad: MatTableDataSource<Entidad>;
   dataSourceDetalleEntidad: MatTableDataSource<DetalleEntidad>;
   dataSourceEntidadRecurso: MatTableDataSource<EntidadRecurso>;
+  dataSourceEntidadDescripcion: MatTableDataSource<EntidadDescripcion>;
 
   listDetalleEntidadReporte: DetalleEntidadReporte[] = [];
   listRecursosReporte: EntidadRecursoReporte[] = [];
   ListAsociacionReport: AsociacionReport[] = [];
   ListEntidadReporte: EntidadReporte[] = [];
+  listEntidadDescripcionReporte: EntidadDescripcionReporte[] = [];
 
   constructor(
     private authService: AuthService,
@@ -51,7 +56,8 @@ export class MenuComponent implements OnInit {
     private asociacionService: AsociacionService,
     public entidadService: EntidadService,
     private detalleEntidadService: DetalleEntidadService,
-    private entidadRecursoService: EntidadRecursoService
+    private entidadRecursoService: EntidadRecursoService,
+    private entidadDescripcionService: EntidadDescripcionService,
   ) { }
 
 
@@ -168,6 +174,7 @@ export class MenuComponent implements OnInit {
     this.entidadRecursoService.get().subscribe(result => {
       this.dataSourceEntidadRecurso = new MatTableDataSource<EntidadRecurso>(result.data);
 
+      this.CargarDgvElementsEntidadDescripcion();
       this.dataSourceEntidadRecurso.data.forEach(item => {
 
         if (item.IsImage.toString() === '0') {
@@ -179,6 +186,26 @@ export class MenuComponent implements OnInit {
           };
           this.listRecursosReporte.push(entidadRecurso);
         }
+      });
+
+    }, (error) => {
+      this.CargarDgvElementsEntidadDescripcion();
+    });
+  }
+
+
+  CargarDgvElementsEntidadDescripcion() {
+    this.entidadDescripcionService.get().subscribe(result => {
+      this.dataSourceEntidadDescripcion = new MatTableDataSource<EntidadDescripcion>(result.data);
+
+      this.dataSourceEntidadDescripcion.data.forEach(item => {
+        var descripcio = {
+          IdEntidad: item.idEntidad,
+          IdDescripcion: item.idEntidadDescripcion,
+          Idioma: item.idioma,
+          Descripcion: item.descripcion
+        };
+        this.listEntidadDescripcionReporte.push(descripcio);
       });
 
       this.exportAll();
@@ -200,7 +227,8 @@ export class MenuComponent implements OnInit {
       this.ListAsociacionReport,
       this.ListEntidadReporte,
       this.listDetalleEntidadReporte,
-      this.listRecursosReporte);
+      this.listRecursosReporte,
+      this.listEntidadDescripcionReporte);
   }
 
 }
