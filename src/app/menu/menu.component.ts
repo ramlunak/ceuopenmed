@@ -200,6 +200,7 @@ export class MenuComponent implements OnInit {
 
       this.dataSourceEntidadDescripcion.data.forEach(item => {
         var descripcio = {
+          IdEntidad: item.idEntidad,
           IdDescripcion: item.idEntidadDescripcion,
           Idioma: item.idioma,
           Descripcion: item.descripcion
